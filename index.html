@@ -28,7 +28,7 @@
             <div class="header-center">
                 <div class="view-switcher">
                     <button class="view-btn active" data-view="timeline">Timeline</button>
-                    <button class="view-btn" data-view="constellation">Constellation</button>
+                    <button class="view-btn" data-view="grid">Grid</button>
                 </div>
             </div>
             <div class="header-right">
@@ -54,32 +54,28 @@
 
         <!-- Main Canvas -->
         <main class="canvas-container">
-            <!-- Constellation View -->
-            <div id="constellationView" class="view">
-                <canvas id="constellationCanvas"></canvas>
-                <div class="canvas-overlay">
-                    <div class="legend">
-                        <div class="legend-item">
-                            <span class="legend-dot exceeded"></span>
-                            <span>Exceeded Hype</span>
-                        </div>
-                        <div class="legend-item">
-                            <span class="legend-dot matched"></span>
-                            <span>Matched Hype</span>
-                        </div>
-                        <div class="legend-item">
-                            <span class="legend-dot overhyped"></span>
-                            <span>Overhyped</span>
-                        </div>
+            <!-- Grid View -->
+            <div id="gridView" class="view">
+                <div class="grid-container" id="gridContainer">
+                    <div class="grid-sort">
+                        <span class="sort-label">Sort by:</span>
+                        <button class="sort-btn active" data-sort="date">Date</button>
+                        <button class="sort-btn" data-sort="gap">Gap</button>
+                        <button class="sort-btn" data-sort="hype">Hype</button>
+                        <button class="sort-btn" data-sort="reality">Reality</button>
                     </div>
+                    <div class="grid-events" id="gridEvents"></div>
                 </div>
             </div>
 
             <!-- Timeline View -->
             <div id="timelineView" class="view active">
+                <div class="timeline-hint">Drag to scroll • Click event for details</div>
                 <div class="timeline-container" id="timelineContainer">
-                    <div class="timeline-track"></div>
-                    <div id="timelineEvents" class="timeline-events"></div>
+                    <div class="timeline-scroll" id="timelineScroll">
+                        <div class="timeline-track"></div>
+                        <div id="timelineEvents" class="timeline-events"></div>
+                    </div>
                 </div>
             </div>
 
@@ -153,62 +149,60 @@
             </aside>
         </main>
 
-        <!-- Filter Bar -->
+        <!-- Filter Bar (Reorganized) -->
         <footer class="filter-bar">
-            <!-- Mobile: Collapsible filter panel -->
+            <!-- Mobile toggle -->
             <button class="filter-toggle" id="filterToggle">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
                 </svg>
                 <span>Filters</span>
-                <span class="filter-count" id="filterCount">0</span>
+                <span class="filter-count" id="filterCount"></span>
             </button>
 
             <div class="filter-panel" id="filterPanel">
-                <!-- Category Filters -->
-                <div class="filter-group">
-                    <div class="filter-group-header">
-                        <span class="filter-group-label">Category</span>
-                        <div class="filter-group-actions">
-                            <button class="filter-action" id="categoryAll">All</button>
-                            <button class="filter-action" id="categoryClear">Clear</button>
-                        </div>
-                    </div>
-                    <div class="filter-buttons" id="categoryFilters"></div>
+                <!-- 1. Event Count (TOP) -->
+                <div class="filter-stats">
+                    <span class="stat-number" id="visibleCount">0</span>
+                    <span class="stat-text">of</span>
+                    <span class="stat-number" id="totalCount">0</span>
+                    <span class="stat-text">events</span>
                 </div>
 
-                <!-- Company Filters -->
-                <div class="filter-group">
-                    <div class="filter-group-header">
-                        <span class="filter-group-label">Company</span>
-                        <div class="filter-group-actions">
-                            <button class="filter-action" id="companyAll">All</button>
-                            <button class="filter-action" id="companyClear">Clear</button>
+                <!-- 2. Filters (MIDDLE) -->
+                <div class="filter-section">
+                    <div class="filter-section-header">
+                        <div class="filter-actions">
+                            <button class="filter-action" id="filterAll">Select All</button>
+                            <button class="filter-action" id="filterClear">Clear</button>
                         </div>
                     </div>
-                    <div class="filter-buttons" id="companyFilters"></div>
+                    <div class="filter-buttons" id="tagFilters"></div>
                 </div>
-            </div>
 
-            <!-- Stats (always visible) -->
-            <div class="filter-stats">
-                <span class="stat"><span id="visibleCount">0</span> of <span id="totalCount">0</span> events</span>
-            </div>
-            <div class="footer-links">
-                <a href="legal.html">Legal Notice</a>
-                <a href="privacy.html">Privacy Policy</a>
+                <!-- 3. Time Range -->
+                <div class="filter-section time-section">
+                    <div class="time-range-wrapper">
+                        <div class="time-range-track"></div>
+                        <div class="time-range-selected" id="timeRangeSelected"></div>
+                        <input type="range" class="time-range-input" id="timeSliderMin" min="0" max="100" value="0">
+                        <input type="range" class="time-range-input" id="timeSliderMax" min="0" max="100" value="100">
+                    </div>
+                    <div class="time-labels">
+                        <span id="timeStart">2020</span>
+                        <span class="time-range-display" id="timeRangeDisplay">All Time</span>
+                        <span id="timeEnd">2025</span>
+                    </div>
+                </div>
+
+                <!-- 4. Legal/Privacy (BOTTOM) -->
+                <div class="footer-links">
+                    <a href="legal.html">Legal</a>
+                    <span class="footer-divider">·</span>
+                    <a href="privacy.html">Privacy</a>
+                </div>
             </div>
         </footer>
-
-        <!-- Time Slider -->
-        <div class="time-control">
-            <input type="range" id="timeSlider" min="0" max="100" value="100">
-            <div class="time-labels">
-                <span id="timeStart">2020</span>
-                <span id="timeCurrent">Now</span>
-                <span id="timeEnd">2025</span>
-            </div>
-        </div>
     </div>
 
     <script src="data.js"></script>
