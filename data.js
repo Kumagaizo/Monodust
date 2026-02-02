@@ -29,11 +29,11 @@ const COMPANIES = {
 
 // Neutral status - just facts, no judgment
 const STATUS = {
-    deployment: { id: 'deployment', label: 'deployment', color: '#10b981' },
-    incremental: { id: 'incremental', label: 'incremental', color: '#3b82f6' },
+    deployment: { id: 'deployment', label: 'Deployment', color: '#10b981' },
+    incremental: { id: 'incremental', label: 'Incremental', color: '#3b82f6' },
     delayed: { id: 'delayed', label: 'Delayed', color: '#f59e0b' },
-    limited: { id: 'limited', label: 'Limited', color: '#8b5cf6' },
-    discontinued: { id: 'discontinued', label: 'Ended', color: '#ef4444' }
+    limited: { id: 'limited', label: 'Limited Version', color: '#8b5cf6' },
+    discontinued: { id: 'discontinued', label: 'Discontinued', color: '#ef4444' }
 };
 
 // Events with evidence-based structure

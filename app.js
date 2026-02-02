@@ -91,8 +91,8 @@
             deployment: 'Deployment',
             incremental: 'Incremental',
             delayed: 'Delayed',
-            limited: 'Limited',
-            discontinued: 'Ended'
+            limited: 'Limited Version',
+            discontinued: 'Discontinued'
         };
         return labels[status] || status;
     }
