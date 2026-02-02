@@ -847,6 +847,7 @@ body {
     border-top: 1px solid var(--border-primary);
     z-index: 100;
     flex-shrink: 0;
+    min-height: auto;
 }
 
 .filter-toggle {
@@ -1136,11 +1137,13 @@ body {
     
     /* Filter Bar Mobile */
     .filter-bar {
+        display: flex;
         padding: 0;
     }
     
     .filter-toggle {
         display: flex;
+        width: 100%;
         border-bottom: 1px solid var(--border-primary);
     }
     
