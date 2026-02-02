@@ -61,7 +61,7 @@
 :root {
     /* Status Colors */
     --status-deployment: #10b981;
-    --status-active: #3b82f6;
+    --status-incremental: #3b82f6;
     --status-delayed: #f59e0b;
     --status-limited: #8b5cf6;
     --status-discontinued: #ef4444;
