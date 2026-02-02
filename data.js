@@ -29,8 +29,8 @@ const COMPANIES = {
 
 // Neutral status - just facts, no judgment
 const STATUS = {
-    shipped: { id: 'shipped', label: 'Shipped', color: '#10b981' },
-    active: { id: 'active', label: 'Active', color: '#3b82f6' },
+    deployment: { id: 'deployment', label: 'deployment', color: '#10b981' },
+    incremental: { id: 'incremental', label: 'incremental', color: '#3b82f6' },
     delayed: { id: 'delayed', label: 'Delayed', color: '#f59e0b' },
     limited: { id: 'limited', label: 'Limited', color: '#8b5cf6' },
     discontinued: { id: 'discontinued', label: 'Ended', color: '#ef4444' }
@@ -44,7 +44,7 @@ const EVENTS = [
         date: '2022-11-30',
         category: 'product',
         company: 'openai',
-        status: 'active',
+        status: 'incremental',
         claimed: {
             text: 'Research preview of conversational AI assistant. Free to use. Optimized for dialogue.',
             source: 'OpenAI Blog',
@@ -63,7 +63,7 @@ const EVENTS = [
         date: '2023-03-14',
         category: 'model',
         company: 'openai',
-        status: 'active',
+        status: 'incremental',
         claimed: {
             text: 'More capable and aligned than GPT-3.5. Accepts image inputs. Scores 90th percentile on bar exam.',
             source: 'OpenAI Technical Report',
@@ -82,7 +82,7 @@ const EVENTS = [
         date: '2023-02-07',
         category: 'product',
         company: 'microsoft',
-        status: 'active',
+        status: 'incremental',
         claimed: {
             text: 'AI-powered search combining GPT-4 with Bing index. "Your copilot for the web."',
             source: 'Microsoft Blog',
@@ -101,7 +101,7 @@ const EVENTS = [
         date: '2023-07-11',
         category: 'model',
         company: 'anthropic',
-        status: 'shipped',
+        status: 'deployment',
         claimed: {
             text: '100K token context window. Improved coding and reasoning. Available via API and claude.ai.',
             source: 'Anthropic Blog',
@@ -120,7 +120,7 @@ const EVENTS = [
         date: '2023-07-18',
         category: 'model',
         company: 'meta',
-        status: 'active',
+        status: 'incremental',
         claimed: {
             text: 'Free for research and commercial use. Models from 7B to 70B. Pre-trained and chat versions.',
             source: 'Meta AI Blog',
@@ -139,7 +139,7 @@ const EVENTS = [
         date: '2023-03-15',
         category: 'capability',
         company: 'other',
-        status: 'shipped',
+        status: 'deployment',
         claimed: {
             text: 'Major quality improvement. Better hands and anatomy. More photorealistic output.',
             source: 'Midjourney Discord',
@@ -165,7 +165,7 @@ const EVENTS = [
             url: 'https://github.blog/2023-03-22-github-copilot-x/'
         },
         outcome: {
-            text: 'Chat shipped. Voice and PR features delayed or scaled back. Core Copilot hit 1M+ subscribers.',
+            text: 'Chat deployment. Voice and PR features delayed or scaled back. Core Copilot hit 1M+ subscribers.',
             date: '2024-01-01'
         },
         impact: 'Transformed developer workflows despite partial feature delivery.',
@@ -177,7 +177,7 @@ const EVENTS = [
         date: '2023-07-26',
         category: 'model',
         company: 'stability',
-        status: 'active',
+        status: 'incremental',
         claimed: {
             text: 'Higher resolution. Better composition. Improved text rendering. Open weights.',
             source: 'Stability AI Blog',
@@ -196,7 +196,7 @@ const EVENTS = [
         date: '2023-11-17',
         category: 'business',
         company: 'openai',
-        status: 'shipped',
+        status: 'deployment',
         claimed: {
             text: 'Board stated loss of confidence in Altman\'s leadership. No specific reasons disclosed.',
             source: 'OpenAI Board Statement',
@@ -215,14 +215,14 @@ const EVENTS = [
         date: '2023-11-04',
         category: 'model',
         company: 'xai',
-        status: 'active',
+        status: 'incremental',
         claimed: {
             text: 'Real-time access to X/Twitter data. Witty personality. "Will answer spicy questions."',
             source: 'xAI Announcement',
             url: 'https://x.ai/'
         },
         outcome: {
-            text: 'Shipped for X Premium users. Real-time data access delivered. Quality improved with Grok-2.',
+            text: 'deployment for X Premium users. Real-time data access delivered. Quality improved with Grok-2.',
             date: '2024-08-01'
         },
         impact: 'Established xAI as third major US AI lab.',
@@ -234,7 +234,7 @@ const EVENTS = [
         date: '2023-12-06',
         category: 'model',
         company: 'google',
-        status: 'active',
+        status: 'incremental',
         claimed: {
             text: 'Gemini Ultra beats GPT-4 on 30 of 32 benchmarks. Native multimodal. Three sizes.',
             source: 'Google DeepMind Blog',
@@ -253,7 +253,7 @@ const EVENTS = [
         date: '2023-12-11',
         category: 'model',
         company: 'mistral',
-        status: 'active',
+        status: 'incremental',
         claimed: {
             text: 'European AI lab. Efficient models competitive with larger ones. Open weights available.',
             source: 'Mistral AI',
@@ -272,14 +272,14 @@ const EVENTS = [
         date: '2024-01-09',
         category: 'product',
         company: 'other',
-        status: 'shipped',
+        status: 'deployment',
         claimed: {
             text: '$199 AI device. Large Action Model can operate apps, book travel, order food.',
             source: 'Rabbit CES Keynote',
             url: 'https://www.rabbit.tech/'
         },
         outcome: {
-            text: 'Shipped April 2024. LAM was largely Android apps in cloud. Core features broken. Reviews negative.',
+            text: 'deployment April 2024. LAM was largely Android apps in cloud. Core features broken. Reviews negative.',
             date: '2024-06-01'
         },
         impact: 'Became cautionary tale for AI hardware hype.',
@@ -310,7 +310,7 @@ const EVENTS = [
         date: '2024-03-04',
         category: 'model',
         company: 'anthropic',
-        status: 'active',
+        status: 'incremental',
         claimed: {
             text: 'Claude 3 Opus matches/exceeds GPT-4. 200K context. Three tiers: Haiku, Sonnet, Opus.',
             source: 'Anthropic Blog',
@@ -348,14 +348,14 @@ const EVENTS = [
         date: '2024-04-18',
         category: 'model',
         company: 'meta',
-        status: 'active',
+        status: 'incremental',
         claimed: {
             text: '8B and 70B now, 400B+ coming. Best open-source performance.',
             source: 'Meta AI Blog',
             url: 'https://ai.meta.com/blog/meta-llama-3/'
         },
         outcome: {
-            text: '8B and 70B shipped strong. 405B released July, competitive with closed models.',
+            text: '8B and 70B deployment strong. 405B released July, competitive with closed models.',
             date: '2024-08-01'
         },
         impact: 'Cemented Meta as open-source AI leader.',
@@ -367,7 +367,7 @@ const EVENTS = [
         date: '2024-05-13',
         category: 'model',
         company: 'openai',
-        status: 'active',
+        status: 'incremental',
         claimed: {
             text: 'Native multimodal. Real-time voice with emotion. 2x faster, 50% cheaper.',
             source: 'OpenAI Spring Event',
@@ -386,7 +386,7 @@ const EVENTS = [
         date: '2024-06-20',
         category: 'model',
         company: 'anthropic',
-        status: 'active',
+        status: 'incremental',
         claimed: {
             text: 'Opus-level capability at Sonnet speed and price. Best-in-class vision.',
             source: 'Anthropic Blog',
@@ -405,7 +405,7 @@ const EVENTS = [
         date: '2024-08-13',
         category: 'model',
         company: 'xai',
-        status: 'active',
+        status: 'incremental',
         claimed: {
             text: 'Competitive with GPT-4 and Claude 3.5. Flux image generation integrated.',
             source: 'xAI Blog',
@@ -424,7 +424,7 @@ const EVENTS = [
         date: '2024-09-12',
         category: 'model',
         company: 'openai',
-        status: 'active',
+        status: 'incremental',
         claimed: {
             text: 'Reasoning model that "thinks" before answering. PhD-level on hard problems.',
             source: 'OpenAI Blog',
@@ -462,7 +462,7 @@ const EVENTS = [
         date: '2024-12-11',
         category: 'model',
         company: 'google',
-        status: 'active',
+        status: 'incremental',
         claimed: {
             text: 'Agentic AI era. Native tool use. 1M context Flash. Project Astra previewed.',
             source: 'Google Blog',
@@ -500,7 +500,7 @@ const EVENTS = [
         date: '2024-12-26',
         category: 'model',
         company: 'other',
-        status: 'active',
+        status: 'incremental',
         claimed: {
             text: 'Open-source matching frontier. Efficient MoE. Fraction of typical training cost.',
             source: 'DeepSeek',

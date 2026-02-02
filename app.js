@@ -88,8 +88,8 @@
 
     function getStatusLabel(status) {
         const labels = {
-            shipped: 'Shipped',
-            active: 'Active',
+            deployment: 'Deployment',
+            incremental: 'Incremental',
             delayed: 'Delayed',
             limited: 'Limited',
             discontinued: 'Ended'
