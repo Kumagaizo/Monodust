@@ -1,7 +1,5 @@
 /* ========================================
-   AI REALITY MAPPER - STYLES
-   Clean, minimal, professional interface
-   With light/dark mode support
+   Monodust - STYLES
    ======================================== */
 
 /* ========== CSS VARIABLES ========== */
@@ -969,6 +967,8 @@ body {
         align-items: stretch;
         gap: var(--space-md);
         width: 100%;
+        /* Let content wrap instead of forcing horizontal scroll on small screens */
+        overflow-x: visible;
         padding: var(--space-md) 0 0;
         border-top: 1px solid var(--border-subtle);
     }
@@ -979,6 +979,8 @@ body {
     
     .filter-group {
         width: 100%;
+        /* Allow groups to shrink on mobile to prevent overflow */
+        min-width: 0;
     }
     
     .filter-buttons {

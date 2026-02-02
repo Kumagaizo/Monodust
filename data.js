@@ -1,30 +1,7 @@
 /**
  * ========================================
- * AI REALITY MAPPER - DATA
+ * Monodust - DATA
  * ========================================
- * 
- * This file contains all the events and categories.
- * Edit this file to add new events!
- * 
- * HOW TO ADD A NEW EVENT:
- * 1. Copy an existing event object
- * 2. Change the values
- * 3. Add it to the EVENTS array
- * 4. Refresh the page
- * 
- * FIELDS EXPLAINED:
- * - id: Unique identifier (use-kebab-case)
- * - date: YYYY-MM-DD format
- * - title: Short, clear title
- * - hype: 1-10 (how much buzz/hype)
- * - reality: 1-10 (actual impact/delivery)
- * - category: Must match a key in CATEGORIES
- * - company: Must match a key in COMPANIES
- * - impact: Array of affected areas
- * - note: Your analysis (1-3 sentences)
- * - source: Where this was announced/reported
- * - prediction: What was expected
- * - outcome: What actually happened
  */
 
 const CATEGORIES = {
