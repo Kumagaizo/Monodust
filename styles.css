@@ -109,13 +109,8 @@ html, body {
 }
 
 body {
-    font-family: 'Geist Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    font-size: 14px;
-    line-height: 1.5;
     color: var(--text-primary);
     background: var(--bg-primary);
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
     transition: background var(--transition-base), color var(--transition-base);
 }
 
@@ -434,7 +429,7 @@ body {
 .panel-date {
     font-size: 12px;
     color: var(--text-tertiary);
-    font-family: 'Geist Mono', monospace;
+    font-family: var(--font-mono);
 }
 
 .panel-title {
@@ -506,7 +501,7 @@ body {
     justify-content: center;
     font-size: 24px;
     font-weight: 700;
-    font-family: 'Geist Mono', monospace;
+    font-family: var(--font-mono);
 }
 
 .score-label {
@@ -527,7 +522,7 @@ body {
 .score-gap {
     font-size: 14px;
     font-weight: 600;
-    font-family: 'Geist Mono', monospace;
+    font-family: var(--font-mono);
     padding: var(--space-xs) var(--space-sm);
     background: var(--bg-elevated);
     border-radius: var(--radius-sm);
@@ -712,7 +707,7 @@ body {
 .filter-stats {
     font-size: 12px;
     color: var(--text-muted);
-    font-family: 'Geist Mono', monospace;
+    font-family: var(--font-mono);
     white-space: nowrap;
     margin-left: auto;
 }
@@ -773,7 +768,7 @@ body {
     margin-top: var(--space-sm);
     font-size: 11px;
     color: var(--text-muted);
-    font-family: 'Geist Mono', monospace;
+    font-family: var(--font-mono);
 }
 
 .time-labels span:nth-child(2) {
@@ -855,7 +850,7 @@ body {
 .timeline-event-date {
     font-size: 10px;
     color: var(--text-muted);
-    font-family: 'Geist Mono', monospace;
+    font-family: var(--font-mono);
 }
 
 .timeline-event-scores {
@@ -863,7 +858,7 @@ body {
     gap: var(--space-sm);
     margin-top: var(--space-xs);
     font-size: 10px;
-    font-family: 'Geist Mono', monospace;
+    font-family: var(--font-mono);
 }
 
 .timeline-event-score {
@@ -906,7 +901,7 @@ body {
     font-size: 12px;
     font-weight: 600;
     color: var(--text-muted);
-    font-family: 'Geist Mono', monospace;
+    font-family: var(--font-mono);
 }
 
 /* ========== SCROLLBAR ========== */
