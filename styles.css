@@ -60,7 +60,7 @@
 
 :root {
     /* Status Colors */
-    --status-shipped: #10b981;
+    --status-deployment: #10b981;
     --status-active: #3b82f6;
     --status-delayed: #f59e0b;
     --status-limited: #8b5cf6;
@@ -364,8 +364,8 @@ body {
     border-radius: 50%;
 }
 
-.grid-card-status[data-status="shipped"]::before { background: var(--status-shipped); }
-.grid-card-status[data-status="active"]::before { background: var(--status-active); }
+.grid-card-status[data-status="deployment"]::before { background: var(--status-deployment); }
+.grid-card-status[data-status="incremental"]::before { background: var(--status-incremental); }
 .grid-card-status[data-status="delayed"]::before { background: var(--status-delayed); }
 .grid-card-status[data-status="limited"]::before { background: var(--status-limited); }
 .grid-card-status[data-status="discontinued"]::before { background: var(--status-discontinued); }
@@ -490,8 +490,8 @@ body {
 }
 
 /* Dot colors by status */
-.timeline-event[data-status="shipped"] .timeline-event-dot { border-color: var(--status-shipped); }
-.timeline-event[data-status="active"] .timeline-event-dot { border-color: var(--status-active); }
+.timeline-event[data-status="deployment"] .timeline-event-dot { border-color: var(--status-deployment); }
+.timeline-event[data-status="incremental"] .timeline-event-dot { border-color: var(--status-incremental); }
 .timeline-event[data-status="delayed"] .timeline-event-dot { border-color: var(--status-delayed); }
 .timeline-event[data-status="limited"] .timeline-event-dot { border-color: var(--status-limited); }
 .timeline-event[data-status="discontinued"] .timeline-event-dot { border-color: var(--status-discontinued); }
@@ -554,8 +554,8 @@ body {
     border-radius: 50%;
 }
 
-.timeline-event-status[data-status="shipped"]::before { background: var(--status-shipped); }
-.timeline-event-status[data-status="active"]::before { background: var(--status-active); }
+.timeline-event-status[data-status="deployment"]::before { background: var(--status-deployment); }
+.timeline-event-status[data-status="incremental"]::before { background: var(--status-incremental); }
 .timeline-event-status[data-status="delayed"]::before { background: var(--status-delayed); }
 .timeline-event-status[data-status="limited"]::before { background: var(--status-limited); }
 .timeline-event-status[data-status="discontinued"]::before { background: var(--status-discontinued); }
@@ -684,8 +684,8 @@ body {
     border-radius: 50%;
 }
 
-.status-badge[data-status="shipped"]::before { background: var(--status-shipped); }
-.status-badge[data-status="active"]::before { background: var(--status-active); }
+.status-badge[data-status="deployment"]::before { background: var(--status-deployment); }
+.status-badge[data-status="incremental"]::before { background: var(--status-incremental); }
 .status-badge[data-status="delayed"]::before { background: var(--status-delayed); }
 .status-badge[data-status="limited"]::before { background: var(--status-limited); }
 .status-badge[data-status="discontinued"]::before { background: var(--status-discontinued); }
