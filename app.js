@@ -589,7 +589,7 @@ class AIRealityMapper {
         this.elements.panelHype.textContent = event.hype;
         this.elements.panelReality.textContent = event.reality;
         this.elements.panelGap.textContent = gapText;
-        this.elements.panelGap.style.color = gap > 0 ? '#00d4aa' : gap < 0 ? '#ff6b35' : '#a78bfa';
+        this.elements.panelGap.style.color = gap > 0 ? '#41AE6D' : gap < 0 ? '#C82856' : '#907DCA';
         this.elements.panelNote.textContent = event.note;
         this.elements.panelPrediction.textContent = event.prediction;
         this.elements.panelOutcome.textContent = event.outcome;

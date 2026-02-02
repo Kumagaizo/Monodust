@@ -61,10 +61,10 @@
 
 :root {
     /* Accent Colors */
-    --accent-hype: #D21D5F;
+    --accent-hype: #C82856;
     --accent-reality: #41AE6D;
-    --accent-matched: #907DCA;
-    --accent-primary: #3D6DE6;
+    --accent-matched: #818181;
+    --accent-primary: #4D4DD4;
     
     /* Spacing */
     --space-xs: 4px;
@@ -394,17 +394,17 @@ body {
 }
 
 .grid-card-gap-value.exceeded {
-    background: rgba(0, 212, 170, 0.15);
+    background: color-mix(in srgb, var(--accent-reality) 15%, transparent);
     color: var(--accent-reality);
 }
 
 .grid-card-gap-value.matched {
-    background: rgba(167, 139, 250, 0.15);
+    background: color-mix(in srgb, var(--accent-matched) 15%, transparent);
     color: var(--accent-matched);
 }
 
 .grid-card-gap-value.overhyped {
-    background: rgba(255, 107, 53, 0.15);
+    background: color-mix(in srgb, var(--accent-hype) 15%, transparent);
     color: var(--accent-hype);
 }
 
