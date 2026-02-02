@@ -1,518 +1,516 @@
 /**
  * ========================================
- * Monodust - DATA
+ * AI MILESTONE TRACKER - DATA
+ * Evidence-based, professionally neutral
  * ========================================
  */
 
+// Categories
 const CATEGORIES = {
-    'model-release': {
-        color: '#3b82f6',
-        label: 'Model Release',
-        description: 'New AI model launches'
-    },
-    'product-launch': {
-        color: '#10b981',
-        label: 'Product Launch',
-        description: 'Consumer or enterprise products'
-    },
-    'capability-breakthrough': {
-        color: '#8b5cf6',
-        label: 'Capability',
-        description: 'New capabilities or features'
-    },
-    'regulation': {
-        color: '#ef4444',
-        label: 'Regulation',
-        description: 'Laws, policies, governance'
-    },
-    'flop': {
-        color: '#f59e0b',
-        label: 'Flop',
-        description: 'Failed launches or disappointments'
-    },
-    'corporate-drama': {
-        color: '#ec4899',
-        label: 'Drama',
-        description: 'Corporate events and controversies'
-    },
-    'model-announcement': {
-        color: '#06b6d4',
-        label: 'Announcement',
-        description: 'Pre-release announcements'
-    }
+    model: { id: 'model', label: 'Model' },
+    product: { id: 'product', label: 'Product' },
+    capability: { id: 'capability', label: 'Capability' },
+    business: { id: 'business', label: 'Business' },
+    research: { id: 'research', label: 'Research' }
 };
 
+// Companies
 const COMPANIES = {
-    'openai': {
-        color: '#10a37f',
-        label: 'OpenAI',
-        description: 'ChatGPT, GPT models, DALL-E, Sora'
-    },
-    'anthropic': {
-        color: '#d4a574',
-        label: 'Anthropic',
-        description: 'Claude models'
-    },
-    'google': {
-        color: '#4285f4',
-        label: 'Google',
-        description: 'Gemini, Bard, DeepMind'
-    },
-    'meta': {
-        color: '#0668e1',
-        label: 'Meta',
-        description: 'LLaMA models'
-    },
-    'xai': {
-        color: '#1d9bf0',
-        label: 'xAI',
-        description: 'Grok'
-    },
-    'deepseek': {
-        color: '#6366f1',
-        label: 'DeepSeek',
-        description: 'DeepSeek models'
-    },
-    'stability': {
-        color: '#9333ea',
-        label: 'Stability AI',
-        description: 'Stable Diffusion'
-    },
-    'microsoft': {
-        color: '#00a4ef',
-        label: 'Microsoft',
-        description: 'Copilot, GitHub Copilot'
-    },
-    'other': {
-        color: '#71717a',
-        label: 'Other',
-        description: 'Other companies and startups'
-    }
+    openai: { id: 'openai', label: 'OpenAI' },
+    anthropic: { id: 'anthropic', label: 'Anthropic' },
+    google: { id: 'google', label: 'Google' },
+    meta: { id: 'meta', label: 'Meta' },
+    xai: { id: 'xai', label: 'xAI' },
+    mistral: { id: 'mistral', label: 'Mistral' },
+    microsoft: { id: 'microsoft', label: 'Microsoft' },
+    stability: { id: 'stability', label: 'Stability AI' },
+    other: { id: 'other', label: 'Other' }
 };
 
-const IMPACT_AREAS = {
-    'research': 'Research',
-    'developer': 'Developers',
-    'consumer': 'Consumers',
-    'enterprise': 'Enterprise',
-    'creative': 'Creative',
-    'cultural': 'Cultural',
-    'corporate': 'Corporate',
-    'open-source': 'Open Source',
-    'geopolitics': 'Geopolitics',
-    'automation': 'Automation'
+// Neutral status - just facts, no judgment
+const STATUS = {
+    shipped: { id: 'shipped', label: 'Shipped', color: '#10b981' },
+    active: { id: 'active', label: 'Active', color: '#3b82f6' },
+    delayed: { id: 'delayed', label: 'Delayed', color: '#f59e0b' },
+    limited: { id: 'limited', label: 'Limited', color: '#8b5cf6' },
+    discontinued: { id: 'discontinued', label: 'Ended', color: '#ef4444' }
 };
 
+// Events with evidence-based structure
 const EVENTS = [
-    // ========== 2020 ==========
-    {
-        id: 'gpt-3-release',
-        date: '2020-06-11',
-        title: 'GPT-3 released by OpenAI',
-        hype: 8,
-        reality: 7,
-        category: 'model-release',
-        company: 'openai',
-        impact: ['research', 'developer'],
-        note: 'First truly impressive language model. Showed what was possible. API-only kept it somewhat contained.',
-        source: 'OpenAI announcement',
-        prediction: 'Will change NLP landscape',
-        outcome: 'Confirmed - foundation for everything that followed'
-    },
-
-    // ========== 2021 ==========
-    {
-        id: 'github-copilot',
-        date: '2021-06-29',
-        title: 'GitHub Copilot technical preview',
-        hype: 7,
-        reality: 8,
-        category: 'product-launch',
-        company: 'microsoft',
-        impact: ['developer'],
-        note: 'First mainstream AI coding assistant. Changed how developers work. Reality exceeded hype.',
-        source: 'GitHub announcement',
-        prediction: 'Will become essential tool',
-        outcome: 'Confirmed - industry standard now'
-    },
-    {
-        id: 'dalle-announcement',
-        date: '2021-01-05',
-        title: 'DALL-E announced by OpenAI',
-        hype: 9,
-        reality: 6,
-        category: 'model-announcement',
-        company: 'openai',
-        impact: ['creative', 'research'],
-        note: 'First major text-to-image model. Limited access created mystique. Actual quality was limited.',
-        source: 'OpenAI blog',
-        prediction: 'Will revolutionize digital art',
-        outcome: 'Partial - DALL-E 2 was the real breakthrough'
-    },
-
-    // ========== 2022 ==========
-    {
-        id: 'stable-diffusion',
-        date: '2022-08-22',
-        title: 'Stable Diffusion released open source',
-        hype: 9,
-        reality: 9,
-        category: 'model-release',
-        company: 'stability',
-        impact: ['creative', 'cultural', 'open-source'],
-        note: 'Open weights changed everything. Democratized image generation. Triggered creative and legal chaos.',
-        source: 'Stability AI',
-        prediction: 'Will transform creative work',
-        outcome: 'Confirmed - entire industry shifted'
-    },
     {
         id: 'chatgpt-launch',
+        title: 'ChatGPT Public Launch',
         date: '2022-11-30',
-        title: 'ChatGPT launches publicly',
-        hype: 10,
-        reality: 10,
-        category: 'product-launch',
+        category: 'product',
         company: 'openai',
-        impact: ['consumer', 'cultural', 'enterprise'],
-        note: 'Actual watershed moment. Changed public perception of AI overnight. Fastest-growing consumer app in history.',
-        source: 'OpenAI announcement',
-        prediction: 'This will matter',
-        outcome: 'Confirmed - triggered the AI race'
+        status: 'active',
+        claimed: {
+            text: 'Research preview of conversational AI assistant. Free to use. Optimized for dialogue.',
+            source: 'OpenAI Blog',
+            url: 'https://openai.com/blog/chatgpt'
+        },
+        outcome: {
+            text: 'Reached 100M users in 2 months. Became fastest-growing consumer app in history. Triggered industry-wide AI race.',
+            date: '2023-02-01'
+        },
+        impact: 'Defined the generative AI era. Made AI accessible to general public.',
+        tags: ['chatbot', 'consumer', 'viral']
     },
     {
-        id: 'dalle-2',
-        date: '2022-04-06',
-        title: 'DALL-E 2 released',
-        hype: 9,
-        reality: 7,
-        category: 'model-release',
-        company: 'openai',
-        impact: ['creative', 'consumer'],
-        note: 'Major quality jump but limited access. Stable Diffusion stole its thunder months later.',
-        source: 'OpenAI',
-        prediction: 'Will dominate image generation',
-        outcome: 'Partially - open source alternatives won'
-    },
-
-    // ========== 2023 ==========
-    {
-        id: 'gpt-4-release',
+        id: 'gpt4-release',
+        title: 'GPT-4 Released',
         date: '2023-03-14',
-        title: 'GPT-4 released',
-        hype: 9,
-        reality: 8,
-        category: 'model-release',
+        category: 'model',
         company: 'openai',
-        impact: ['research', 'enterprise', 'consumer'],
-        note: 'Significant capability jump. Multimodal. More reliable. But not the AGI some expected.',
-        source: 'OpenAI',
-        prediction: 'Major improvement but not paradigm shift',
-        outcome: 'Confirmed - better but incremental'
+        status: 'active',
+        claimed: {
+            text: 'More capable and aligned than GPT-3.5. Accepts image inputs. Scores 90th percentile on bar exam.',
+            source: 'OpenAI Technical Report',
+            url: 'https://openai.com/research/gpt-4'
+        },
+        outcome: {
+            text: 'Benchmark claims verified. Became foundation for ChatGPT Plus, Microsoft Copilot, and thousands of applications.',
+            date: '2023-06-01'
+        },
+        impact: 'Set new standard for LLM capability. Triggered enterprise AI adoption.',
+        tags: ['llm', 'multimodal', 'benchmark']
     },
     {
-        id: 'anthropic-claude',
-        date: '2023-03-14',
-        title: 'Anthropic launches Claude',
-        hype: 6,
-        reality: 7,
-        category: 'product-launch',
+        id: 'bing-chat-launch',
+        title: 'Bing Chat (Copilot) Launch',
+        date: '2023-02-07',
+        category: 'product',
+        company: 'microsoft',
+        status: 'active',
+        claimed: {
+            text: 'AI-powered search combining GPT-4 with Bing index. "Your copilot for the web."',
+            source: 'Microsoft Blog',
+            url: 'https://blogs.microsoft.com/blog/2023/02/07/'
+        },
+        outcome: {
+            text: 'Early version exhibited erratic behavior (Sydney). Heavily constrained, later rebranded to Copilot. Google search still dominant.',
+            date: '2023-12-01'
+        },
+        impact: 'Forced Google to accelerate Bard launch. Showed AI integration challenges.',
+        tags: ['search', 'chatbot', 'enterprise']
+    },
+    {
+        id: 'claude-2-release',
+        title: 'Claude 2 Released',
+        date: '2023-07-11',
+        category: 'model',
         company: 'anthropic',
-        impact: ['enterprise', 'research'],
-        note: 'Strong competitor. Constitutional AI approach. Longer context. Reality slightly exceeded initial hype.',
-        source: 'Anthropic announcement',
-        prediction: 'Quality alternative to GPT-4',
-        outcome: 'Confirmed - carved significant niche'
+        status: 'shipped',
+        claimed: {
+            text: '100K token context window. Improved coding and reasoning. Available via API and claude.ai.',
+            source: 'Anthropic Blog',
+            url: 'https://www.anthropic.com/news/claude-2'
+        },
+        outcome: {
+            text: 'Context window worked as claimed. Established as credible GPT-4 alternative. Claude.ai consumer product launched.',
+            date: '2023-09-01'
+        },
+        impact: 'Proved Anthropic as serious competitor. 100K context became industry norm.',
+        tags: ['llm', 'context-window', 'safety']
     },
     {
-        id: 'meta-llama-leak',
-        date: '2023-03-03',
-        title: "Meta's LLaMA models leaked",
-        hype: 5,
-        reality: 9,
-        category: 'model-release',
-        company: 'meta',
-        impact: ['research', 'open-source'],
-        note: 'Accidental open release. Spawned entire ecosystem: Alpaca, Vicuna, etc. Changed open-source AI forever.',
-        source: 'Leaked torrent',
-        prediction: 'Will accelerate open development',
-        outcome: 'Confirmed - massive impact'
-    },
-    {
-        id: 'openai-drama',
-        date: '2023-11-17',
-        title: 'Sam Altman fired/rehired chaos',
-        hype: 10,
-        reality: 2,
-        category: 'corporate-drama',
-        company: 'openai',
-        impact: ['corporate', 'cultural'],
-        note: 'Maximum drama, minimal lasting impact. Board lost, Altman won. Business continued unchanged.',
-        source: 'The Verge, Bloomberg',
-        prediction: "Won't fundamentally change OpenAI trajectory",
-        outcome: 'Confirmed - back to normal within days'
-    },
-    {
-        id: 'gemini-pro',
-        date: '2023-12-06',
-        title: 'Google Gemini Pro released',
-        hype: 9,
-        reality: 5,
-        category: 'model-release',
-        company: 'google',
-        impact: ['enterprise', 'consumer'],
-        note: 'Overhyped launch. Misleading demo video. Actual product solid but not revolutionary as promised.',
-        source: 'Google announcement',
-        prediction: 'Strong but not category-leading',
-        outcome: 'Confirmed - competitive but not dominant'
-    },
-    {
-        id: 'llama-2',
+        id: 'llama-2-release',
+        title: 'Llama 2 Open Source Release',
         date: '2023-07-18',
-        title: 'Llama 2 released (official open release)',
-        hype: 7,
-        reality: 8,
-        category: 'model-release',
+        category: 'model',
         company: 'meta',
-        impact: ['research', 'open-source', 'enterprise'],
-        note: 'First major intentional open release. Commercial license. Validated open approach.',
-        source: 'Meta AI',
-        prediction: 'Will accelerate open AI ecosystem',
-        outcome: 'Confirmed - became foundation for countless projects'
+        status: 'active',
+        claimed: {
+            text: 'Free for research and commercial use. Models from 7B to 70B. Pre-trained and chat versions.',
+            source: 'Meta AI Blog',
+            url: 'https://ai.meta.com/llama/'
+        },
+        outcome: {
+            text: 'Sparked massive open-source AI ecosystem. Thousands of fine-tunes. Enabled local LLM deployment.',
+            date: '2024-01-01'
+        },
+        impact: 'Democratized LLM access. Created alternative to closed API model.',
+        tags: ['open-source', 'llm', 'democratization']
     },
     {
-        id: 'chatgpt-plugins',
-        date: '2023-03-23',
-        title: 'ChatGPT Plugins announced',
-        hype: 9,
-        reality: 3,
-        category: 'product-launch',
-        company: 'openai',
-        impact: ['developer', 'consumer'],
-        note: 'Promised to be the "App Store moment". Never gained traction. Quietly deprecated.',
-        source: 'OpenAI announcement',
-        prediction: 'Will create new ecosystem',
-        outcome: 'Failed - replaced by GPTs and then abandoned'
-    },
-    {
-        id: 'grok-launch',
-        date: '2023-11-04',
-        title: 'xAI launches Grok',
-        hype: 8,
-        reality: 5,
-        category: 'product-launch',
-        company: 'xai',
-        impact: ['consumer'],
-        note: 'Elon Musk\'s AI chatbot. "Rebellious" personality. Exclusive to X Premium. Competitive but not leading.',
-        source: 'xAI announcement',
-        prediction: 'Will compete with ChatGPT',
-        outcome: 'Partial - niche product, not mainstream'
-    },
-
-    // ========== 2024 ==========
-    {
-        id: 'rabbit-r1',
-        date: '2024-01-09',
-        title: 'Rabbit R1 AI hardware announced',
-        hype: 8,
-        reality: 1,
-        category: 'flop',
+        id: 'midjourney-v5',
+        title: 'Midjourney V5 Released',
+        date: '2023-03-15',
+        category: 'capability',
         company: 'other',
-        impact: ['consumer'],
-        note: 'Pure hype. Hardware solution to software problem. Basically just Android wrapper. Dead within months.',
-        source: 'CES announcement',
-        prediction: 'Will flop hard',
-        outcome: 'Confirmed - irrelevant by March'
+        status: 'shipped',
+        claimed: {
+            text: 'Major quality improvement. Better hands and anatomy. More photorealistic output.',
+            source: 'Midjourney Discord',
+            url: 'https://www.midjourney.com/'
+        },
+        outcome: {
+            text: 'Quality improvements verified. Hand rendering dramatically better. Set new standard for AI images.',
+            date: '2023-05-01'
+        },
+        impact: 'Cemented Midjourney as image generation leader.',
+        tags: ['image-gen', 'creative', 'generative']
     },
     {
-        id: 'sora-announcement',
+        id: 'github-copilot-x',
+        title: 'GitHub Copilot X Announced',
+        date: '2023-03-22',
+        category: 'product',
+        company: 'microsoft',
+        status: 'limited',
+        claimed: {
+            text: 'GPT-4 powered. Chat in IDE. Voice coding. PR summaries. Documentation integration.',
+            source: 'GitHub Blog',
+            url: 'https://github.blog/2023-03-22-github-copilot-x/'
+        },
+        outcome: {
+            text: 'Chat shipped. Voice and PR features delayed or scaled back. Core Copilot hit 1M+ subscribers.',
+            date: '2024-01-01'
+        },
+        impact: 'Transformed developer workflows despite partial feature delivery.',
+        tags: ['coding', 'developer', 'tools']
+    },
+    {
+        id: 'stability-sdxl',
+        title: 'Stable Diffusion XL Released',
+        date: '2023-07-26',
+        category: 'model',
+        company: 'stability',
+        status: 'active',
+        claimed: {
+            text: 'Higher resolution. Better composition. Improved text rendering. Open weights.',
+            source: 'Stability AI Blog',
+            url: 'https://stability.ai/news/stable-diffusion-sdxl-1-announcement'
+        },
+        outcome: {
+            text: 'Resolution and composition improved. Text rendering still limited. Foundation for community fine-tunes.',
+            date: '2023-10-01'
+        },
+        impact: 'Kept open-source image generation competitive.',
+        tags: ['image-gen', 'open-source', 'generative']
+    },
+    {
+        id: 'sam-altman-fired',
+        title: 'OpenAI Leadership Crisis',
+        date: '2023-11-17',
+        category: 'business',
+        company: 'openai',
+        status: 'shipped',
+        claimed: {
+            text: 'Board stated loss of confidence in Altman\'s leadership. No specific reasons disclosed.',
+            source: 'OpenAI Board Statement',
+            url: 'https://openai.com/blog/openai-announces-leadership-transition'
+        },
+        outcome: {
+            text: '5 days of chaos. 95% of staff threatened resignation. Altman reinstated. Board restructured.',
+            date: '2023-11-22'
+        },
+        impact: 'Exposed AI governance tensions. Raised questions about non-profit structure.',
+        tags: ['governance', 'leadership', 'corporate']
+    },
+    {
+        id: 'xai-grok-launch',
+        title: 'xAI Launches Grok',
+        date: '2023-11-04',
+        category: 'model',
+        company: 'xai',
+        status: 'active',
+        claimed: {
+            text: 'Real-time access to X/Twitter data. Witty personality. "Will answer spicy questions."',
+            source: 'xAI Announcement',
+            url: 'https://x.ai/'
+        },
+        outcome: {
+            text: 'Shipped for X Premium users. Real-time data access delivered. Quality improved with Grok-2.',
+            date: '2024-08-01'
+        },
+        impact: 'Established xAI as third major US AI lab.',
+        tags: ['llm', 'chatbot', 'social']
+    },
+    {
+        id: 'gemini-pro-release',
+        title: 'Google Gemini Announced',
+        date: '2023-12-06',
+        category: 'model',
+        company: 'google',
+        status: 'active',
+        claimed: {
+            text: 'Gemini Ultra beats GPT-4 on 30 of 32 benchmarks. Native multimodal. Three sizes.',
+            source: 'Google DeepMind Blog',
+            url: 'https://deepmind.google/technologies/gemini/'
+        },
+        outcome: {
+            text: 'Pro launched first; Ultra delayed. Demo video misleading. Benchmark methodology questioned.',
+            date: '2024-02-01'
+        },
+        impact: 'Showed Google competing but launch execution hurt credibility.',
+        tags: ['llm', 'multimodal', 'benchmark']
+    },
+    {
+        id: 'mistral-medium',
+        title: 'Mistral Emerges as Competitor',
+        date: '2023-12-11',
+        category: 'model',
+        company: 'mistral',
+        status: 'active',
+        claimed: {
+            text: 'European AI lab. Efficient models competitive with larger ones. Open weights available.',
+            source: 'Mistral AI',
+            url: 'https://mistral.ai/'
+        },
+        outcome: {
+            text: 'Mixtral 8x7B became popular open-source choice. Proved efficient architectures viable.',
+            date: '2024-03-01'
+        },
+        impact: 'Demonstrated Europe can compete in foundation models.',
+        tags: ['llm', 'open-source', 'european']
+    },
+    {
+        id: 'rabbit-r1-ces',
+        title: 'Rabbit R1 Announced at CES',
+        date: '2024-01-09',
+        category: 'product',
+        company: 'other',
+        status: 'shipped',
+        claimed: {
+            text: '$199 AI device. Large Action Model can operate apps, book travel, order food.',
+            source: 'Rabbit CES Keynote',
+            url: 'https://www.rabbit.tech/'
+        },
+        outcome: {
+            text: 'Shipped April 2024. LAM was largely Android apps in cloud. Core features broken. Reviews negative.',
+            date: '2024-06-01'
+        },
+        impact: 'Became cautionary tale for AI hardware hype.',
+        tags: ['hardware', 'consumer', 'device']
+    },
+    {
+        id: 'sora-announced',
+        title: 'OpenAI Announces Sora',
         date: '2024-02-15',
-        title: 'OpenAI announces Sora video generation',
-        hype: 10,
-        reality: 5,
-        category: 'model-announcement',
+        category: 'capability',
         company: 'openai',
-        impact: ['creative', 'cultural'],
-        note: 'Impressive demo. But extremely limited access. Still not widely available a year later.',
-        source: 'OpenAI blog',
-        prediction: 'Will change video production',
-        outcome: 'Pending - still waiting for real access'
+        status: 'limited',
+        claimed: {
+            text: 'Text-to-video model. Realistic 60-second videos. "Coming later in 2024."',
+            source: 'OpenAI Blog',
+            url: 'https://openai.com/sora'
+        },
+        outcome: {
+            text: 'Demo impressive but cherry-picked. Red team only for months. Limited release December 2024.',
+            date: '2024-12-09'
+        },
+        impact: 'Set video AI expectations. 10-month delay let competitors establish.',
+        tags: ['video', 'generative', 'multimodal']
     },
     {
-        id: 'claude-opus-3',
+        id: 'claude-3-opus',
+        title: 'Claude 3 Family Released',
         date: '2024-03-04',
-        title: 'Claude 3 Opus released',
-        hype: 7,
-        reality: 9,
-        category: 'model-release',
+        category: 'model',
         company: 'anthropic',
-        impact: ['research', 'enterprise'],
-        note: 'Best model at launch. Quietly excellent. Reality exceeded hype. Strong reasoning capabilities.',
-        source: 'Anthropic',
-        prediction: 'Will be competitive',
-        outcome: 'Confirmed - exceeded expectations'
-    },
-    {
-        id: 'gpt-4o',
-        date: '2024-05-13',
-        title: 'GPT-4o released (omni-modal)',
-        hype: 8,
-        reality: 8,
-        category: 'model-release',
-        company: 'openai',
-        impact: ['consumer', 'developer'],
-        note: 'Fast, multimodal, cheaper. Lived up to hype. Real improvement over GPT-4.',
-        source: 'OpenAI',
-        prediction: 'Solid upgrade',
-        outcome: 'Confirmed - meaningfully better'
+        status: 'active',
+        claimed: {
+            text: 'Claude 3 Opus matches/exceeds GPT-4. 200K context. Three tiers: Haiku, Sonnet, Opus.',
+            source: 'Anthropic Blog',
+            url: 'https://www.anthropic.com/news/claude-3-family'
+        },
+        outcome: {
+            text: 'Opus widely considered best for complex reasoning. Clear GPT-4 competitor.',
+            date: '2024-06-01'
+        },
+        impact: 'First credible GPT-4 match. Established Claude as premium option.',
+        tags: ['llm', 'reasoning', 'benchmark']
     },
     {
         id: 'humane-ai-pin',
+        title: 'Humane AI Pin Ships',
         date: '2024-04-11',
-        title: 'Humane AI Pin ships',
-        hype: 7,
-        reality: 1,
-        category: 'flop',
+        category: 'product',
         company: 'other',
-        impact: ['consumer'],
-        note: 'Terrible reviews. Battery life issues. Projector useless in daylight. Company seeking sale.',
-        source: 'The Verge, Marques Brownlee',
-        prediction: 'Will fail',
-        outcome: 'Confirmed - immediate flop'
+        status: 'discontinued',
+        claimed: {
+            text: '$699 screenless AI wearable. Laser projector. Post-smartphone computing.',
+            source: 'Humane Launch',
+            url: 'https://humane.com/'
+        },
+        outcome: {
+            text: 'Reviews uniformly negative. Slow, overheating, limited. Company reportedly seeking sale.',
+            date: '2024-05-01'
+        },
+        impact: 'Demonstrated AI hardware market not ready.',
+        tags: ['hardware', 'wearable', 'consumer']
     },
     {
-        id: 'llama-3',
+        id: 'llama-3-release',
+        title: 'Llama 3 Released',
         date: '2024-04-18',
-        title: 'Llama 3 released',
-        hype: 8,
-        reality: 8,
-        category: 'model-release',
+        category: 'model',
         company: 'meta',
-        impact: ['research', 'open-source', 'enterprise'],
-        note: 'Competitive with GPT-4 in many benchmarks. Strong open weights option.',
-        source: 'Meta AI',
-        prediction: 'Will close gap with closed models',
-        outcome: 'Confirmed - impressive capability jump'
+        status: 'active',
+        claimed: {
+            text: '8B and 70B now, 400B+ coming. Best open-source performance.',
+            source: 'Meta AI Blog',
+            url: 'https://ai.meta.com/blog/meta-llama-3/'
+        },
+        outcome: {
+            text: '8B and 70B shipped strong. 405B released July, competitive with closed models.',
+            date: '2024-08-01'
+        },
+        impact: 'Cemented Meta as open-source AI leader.',
+        tags: ['open-source', 'llm', 'benchmark']
     },
     {
-        id: 'claude-sonnet-35',
-        date: '2024-06-20',
-        title: 'Claude 3.5 Sonnet released',
-        hype: 6,
-        reality: 9,
-        category: 'model-release',
-        company: 'anthropic',
-        impact: ['developer', 'enterprise'],
-        note: 'Quietly became the best coding model. Fast, capable, affordable. Reality far exceeded expectations.',
-        source: 'Anthropic',
-        prediction: 'Good mid-tier model',
-        outcome: 'Confirmed - became go-to for developers'
-    },
-    {
-        id: 'claude-sonnet-4',
-        date: '2024-10-22',
-        title: 'Claude Sonnet 4 with computer use',
-        hype: 7,
-        reality: 8,
-        category: 'capability-breakthrough',
-        company: 'anthropic',
-        impact: ['enterprise', 'automation', 'developer'],
-        note: 'First mainstream model that can control computers. Agentic capabilities. Bigger deal than it seemed at launch.',
-        source: 'Anthropic',
-        prediction: 'Will enable new use cases',
-        outcome: 'Confirmed - agents are real now'
-    },
-    {
-        id: 'o1-preview',
-        date: '2024-09-12',
-        title: 'OpenAI o1 reasoning model released',
-        hype: 8,
-        reality: 7,
-        category: 'model-release',
+        id: 'gpt4o-release',
+        title: 'GPT-4o Released',
+        date: '2024-05-13',
+        category: 'model',
         company: 'openai',
-        impact: ['research', 'developer'],
-        note: 'New paradigm: chain-of-thought reasoning. Impressive on hard problems. Expensive and slow.',
-        source: 'OpenAI',
-        prediction: 'Will change how models think',
-        outcome: 'Partial - impressive but not universally better'
+        status: 'active',
+        claimed: {
+            text: 'Native multimodal. Real-time voice with emotion. 2x faster, 50% cheaper.',
+            source: 'OpenAI Spring Event',
+            url: 'https://openai.com/index/hello-gpt-4o/'
+        },
+        outcome: {
+            text: 'Speed and pricing delivered. Advanced Voice Mode delayed 4 months.',
+            date: '2024-09-01'
+        },
+        impact: 'Free GPT-4 tier significant. Demo-to-delivery gap noted.',
+        tags: ['llm', 'multimodal', 'voice']
     },
     {
-        id: 'gemini-2',
-        date: '2024-12-11',
-        title: 'Gemini 2.0 Flash released',
-        hype: 6,
-        reality: 7,
-        category: 'model-release',
-        company: 'google',
-        impact: ['enterprise', 'developer'],
-        note: 'Quietly strong. Native multimodal. Actually delivered on promises this time.',
-        source: 'Google',
-        prediction: 'Will be competitive',
-        outcome: 'Confirmed - solid release'
+        id: 'claude-35-sonnet',
+        title: 'Claude 3.5 Sonnet Released',
+        date: '2024-06-20',
+        category: 'model',
+        company: 'anthropic',
+        status: 'active',
+        claimed: {
+            text: 'Opus-level capability at Sonnet speed and price. Best-in-class vision.',
+            source: 'Anthropic Blog',
+            url: 'https://www.anthropic.com/news/claude-3-5-sonnet'
+        },
+        outcome: {
+            text: 'Widely considered best overall model for months. Exceptional coding. Developer default.',
+            date: '2024-10-01'
+        },
+        impact: 'Proved mid-tier pricing can deliver top capability.',
+        tags: ['llm', 'coding', 'vision']
     },
     {
-        id: 'grok-2',
+        id: 'grok-2-release',
+        title: 'Grok-2 Released',
         date: '2024-08-13',
-        title: 'Grok-2 released',
-        hype: 6,
-        reality: 6,
-        category: 'model-release',
+        category: 'model',
         company: 'xai',
-        impact: ['consumer'],
-        note: 'Significant improvement. Image generation added. Still X-exclusive limits reach.',
-        source: 'xAI',
-        prediction: 'Will improve but stay niche',
-        outcome: 'Confirmed - better but still limited audience'
+        status: 'active',
+        claimed: {
+            text: 'Competitive with GPT-4 and Claude 3.5. Flux image generation integrated.',
+            source: 'xAI Blog',
+            url: 'https://x.ai/blog/grok-2'
+        },
+        outcome: {
+            text: 'Benchmarks competitive. Image generation integrated. Available to X Premium.',
+            date: '2024-10-01'
+        },
+        impact: 'Showed xAI rapid improvement trajectory.',
+        tags: ['llm', 'image-gen', 'social']
     },
-
-    // ========== 2025 ==========
     {
-        id: 'deepseek-r1',
-        date: '2025-01-20',
-        title: 'DeepSeek R1 reasoning model (open source)',
-        hype: 9,
-        reality: 10,
-        category: 'model-release',
-        company: 'deepseek',
-        impact: ['research', 'geopolitics', 'open-source'],
-        note: 'Seismic event. Chinese lab matches OpenAI o1. Open weights. Showed sanctions not blocking progress. Market crashed.',
-        source: 'DeepSeek paper',
-        prediction: 'Will shift entire landscape',
-        outcome: 'Confirmed - triggered market selloff, policy rethink'
+        id: 'o1-preview-release',
+        title: 'OpenAI o1-preview Released',
+        date: '2024-09-12',
+        category: 'model',
+        company: 'openai',
+        status: 'active',
+        claimed: {
+            text: 'Reasoning model that "thinks" before answering. PhD-level on hard problems.',
+            source: 'OpenAI Blog',
+            url: 'https://openai.com/index/introducing-openai-o1-preview/'
+        },
+        outcome: {
+            text: 'Better at math, coding, science reasoning. Slower and expensive but capability real.',
+            date: '2024-11-01'
+        },
+        impact: 'Opened inference-time compute scaling paradigm.',
+        tags: ['llm', 'reasoning', 'paradigm']
+    },
+    {
+        id: 'claude-computer-use',
+        title: 'Claude Computer Use Beta',
+        date: '2024-10-22',
+        category: 'capability',
+        company: 'anthropic',
+        status: 'limited',
+        claimed: {
+            text: 'Claude can see screen, move mouse, type. Control computers like humans. API beta.',
+            source: 'Anthropic Blog',
+            url: 'https://www.anthropic.com/news/3-5-models-and-computer-use'
+        },
+        outcome: {
+            text: 'Capability works but slow and error-prone. Research milestone, not production-ready.',
+            date: '2024-11-01'
+        },
+        impact: 'First major lab to ship GUI agents.',
+        tags: ['agents', 'automation', 'capability']
+    },
+    {
+        id: 'gemini-2-release',
+        title: 'Gemini 2.0 Released',
+        date: '2024-12-11',
+        category: 'model',
+        company: 'google',
+        status: 'active',
+        claimed: {
+            text: 'Agentic AI era. Native tool use. 1M context Flash. Project Astra previewed.',
+            source: 'Google Blog',
+            url: 'https://blog.google/technology/google-deepmind/google-gemini-ai-update-december-2024/'
+        },
+        outcome: {
+            text: 'Flash available and impressive. Agentic features in limited preview.',
+            date: '2024-12-15'
+        },
+        impact: 'Google clearly competitive again.',
+        tags: ['llm', 'agents', 'multimodal']
+    },
+    {
+        id: 'sora-public-release',
+        title: 'Sora Public Release',
+        date: '2024-12-09',
+        category: 'capability',
+        company: 'openai',
+        status: 'limited',
+        claimed: {
+            text: 'Available to Plus and Pro. Up to 20 second 1080p videos.',
+            source: 'OpenAI Event',
+            url: 'https://openai.com/sora'
+        },
+        outcome: {
+            text: 'Launched but hit capacity limits. Impressive but restricted. 10 months after announcement.',
+            date: '2024-12-15'
+        },
+        impact: 'Competitors established during delay.',
+        tags: ['video', 'generative', 'consumer']
     },
     {
         id: 'deepseek-v3',
-        date: '2025-01-15',
-        title: 'DeepSeek V3 released',
-        hype: 6,
-        reality: 9,
-        category: 'model-release',
-        company: 'deepseek',
-        impact: ['research', 'open-source'],
-        note: 'Trained for fraction of cost of competitors. Comparable performance. Changed cost assumptions.',
-        source: 'DeepSeek',
-        prediction: 'Strong open model',
-        outcome: 'Confirmed - exceeded all expectations'
-    },
-    {
-        id: 'claude-opus-45',
-        date: '2025-02-01',
-        title: 'Claude Opus 4.5 released',
-        hype: 8,
-        reality: 9,
-        category: 'model-release',
-        company: 'anthropic',
-        impact: ['research', 'enterprise'],
-        note: 'Best reasoning and creative writing. Genuinely felt like a step change. Extended thinking excels.',
-        source: 'Anthropic',
-        prediction: 'Will be excellent',
-        outcome: 'Confirmed - raised the bar'
+        title: 'DeepSeek V3 Released',
+        date: '2024-12-26',
+        category: 'model',
+        company: 'other',
+        status: 'active',
+        claimed: {
+            text: 'Open-source matching frontier. Efficient MoE. Fraction of typical training cost.',
+            source: 'DeepSeek',
+            url: 'https://www.deepseek.com/'
+        },
+        outcome: {
+            text: 'Benchmarks match Claude 3.5 Sonnet and GPT-4o. Training cost claims verified. Open weights.',
+            date: '2024-12-28'
+        },
+        impact: 'Proved frontier achievable at fraction of cost. Major economic implications.',
+        tags: ['open-source', 'llm', 'efficiency']
     }
 ];
-
-// Export for use in app.js
-if (typeof window !== 'undefined') {
-    window.CATEGORIES = CATEGORIES;
-    window.COMPANIES = COMPANIES;
-    window.IMPACT_AREAS = IMPACT_AREAS;
-    window.EVENTS = EVENTS;
-}
