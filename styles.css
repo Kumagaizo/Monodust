@@ -114,7 +114,9 @@ body {
     display: flex;
     flex-direction: column;
     height: 100vh;
+    height: 100dvh; /* Dynamic viewport height for mobile */
     overflow: hidden;
+    position: relative;
 }
 
 /* ========== HEADER ========== */
@@ -810,6 +812,8 @@ body {
     flex-direction: column;
     gap: var(--space-md);
     padding: var(--space-md) var(--space-lg);
+    overflow: visible;
+    width: 100%;
 }
 
 /* Stats */
@@ -1083,25 +1087,45 @@ body {
     
     /* Filter Bar - Collapsible on mobile */
     .filter-bar {
-        position: relative;
+        position: relative !important;
+        display: flex !important;
+        flex-direction: column !important;
+        width: 100% !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        z-index: 100 !important;
+        background: var(--bg-secondary) !important;
+        border-top: 1px solid var(--border-primary) !important;
     }
     
     .filter-toggle {
-        display: flex;
+        display: flex !important;
+        visibility: visible !important;
+        width: 100% !important;
+        padding: var(--space-md) !important;
+        border-bottom: 1px solid var(--border-primary) !important;
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
+        touch-action: manipulation;
+        min-height: 44px; /* iOS recommended touch target */
+        cursor: pointer;
     }
     
     .filter-panel {
-        display: none;
-        padding: var(--space-md);
+        display: none !important;
+        flex-direction: column !important;
+        padding: var(--space-md) !important;
+        width: 100% !important;
+        max-height: none !important;
     }
     
     .filter-bar.open .filter-panel {
-        display: flex;
+        display: flex !important;
     }
     
     .filter-buttons {
         max-height: 120px;
         overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
     }
 }
 
@@ -1125,6 +1149,31 @@ body {
     
     .panel-content {
         padding: var(--space-md);
+    }
+    
+    /* Ensure filter bar is always visible on small screens */
+    .filter-bar {
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+    }
+    
+    .filter-toggle {
+        min-height: 44px; /* Better touch target */
+    }
+}
+
+/* Additional mobile-specific fixes for touch devices */
+@media (max-width: 768px) and (pointer: coarse) {
+    .filter-bar {
+        display: flex !important;
+        visibility: visible !important;
+    }
+    
+    .filter-toggle {
+        display: flex !important;
+        visibility: visible !important;
+        min-height: 44px;
     }
 }
 
