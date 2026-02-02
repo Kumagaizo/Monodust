@@ -61,10 +61,10 @@
 
 :root {
     /* Accent Colors */
-    --accent-hype: #ff6b35;
-    --accent-reality: #00d4aa;
-    --accent-matched: #a78bfa;
-    --accent-primary: #3b82f6;
+    --accent-hype: #D21D5F;
+    --accent-reality: #41AE6D;
+    --accent-matched: #907DCA;
+    --accent-primary: #3D6DE6;
     
     /* Spacing */
     --space-xs: 4px;
