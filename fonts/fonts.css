@@ -37,3 +37,6 @@ body {
     font-family: var(--font-mono);
 }
 
+.is--bold {
+    font-weight: 600;
+}
