@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>AI Reality Mapper | Intertwined Intelligence</title>
+    <meta name="description" content="Cut through the noise. See what's really happening in AI.">
+    
+    <!-- Fonts -->
+    <link rel="stylesheet" href="fonts/fonts.css">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>◉</text></svg>">
+</head>
+<body>
+    <div id="app">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <div class="logo">
+                    <span class="logo-mark">◉</span>
+                    <span class="logo-text">AI Reality Mapper</span>
+                </div>
+            </div>
+            <div class="header-center">
+                <div class="view-switcher">
+                    <button class="view-btn" data-view="constellation">Constellation</button>
+                    <button class="view-btn active" data-view="timeline">Timeline</button>
+                </div>
+            </div>
+            <div class="header-right">
+                <button class="theme-toggle" id="themeToggle" title="Toggle light/dark mode">
+                    <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+                <span class="credit">by Intertwined Intelligence</span>
+            </div>
+        </header>
+
+        <!-- Main Canvas -->
+        <main class="canvas-container">
+            <!-- Constellation View -->
+            <div id="constellationView" class="view">
+                <canvas id="constellationCanvas"></canvas>
+                <div class="canvas-overlay">
+                    <div class="legend">
+                        <div class="legend-item">
+                            <span class="legend-dot exceeded"></span>
+                            <span>Exceeded Hype</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-dot matched"></span>
+                            <span>Matched Hype</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-dot overhyped"></span>
+                            <span>Overhyped</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Timeline View -->
+            <div id="timelineView" class="view active">
+                <div class="timeline-container" id="timelineContainer">
+                    <div class="timeline-track"></div>
+                    <div id="timelineEvents" class="timeline-events"></div>
+                </div>
+            </div>
+
+            <!-- Event Detail Panel -->
+            <aside id="eventPanel" class="event-panel">
+                <button class="panel-close" id="closePanel">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+                <div class="panel-content">
+                    <div class="panel-header">
+                        <span class="panel-category" id="panelCategory"></span>
+                        <span class="panel-date" id="panelDate"></span>
+                    </div>
+                    <h2 class="panel-title" id="panelTitle"></h2>
+                    
+                    <div class="score-display">
+                        <div class="score-item">
+                            <div class="score-ring hype">
+                                <svg viewBox="0 0 36 36">
+                                    <path class="score-ring-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                                    <path class="score-ring-fill" id="hypeRing" stroke-dasharray="0, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                                </svg>
+                                <span class="score-value" id="panelHype">0</span>
+                            </div>
+                            <span class="score-label">Hype</span>
+                        </div>
+                        <div class="score-divider">
+                            <span class="score-gap" id="panelGap">0</span>
+                        </div>
+                        <div class="score-item">
+                            <div class="score-ring reality">
+                                <svg viewBox="0 0 36 36">
+                                    <path class="score-ring-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                                    <path class="score-ring-fill" id="realityRing" stroke-dasharray="0, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                                </svg>
+                                <span class="score-value" id="panelReality">0</span>
+                            </div>
+                            <span class="score-label">Reality</span>
+                        </div>
+                    </div>
+
+                    <div class="panel-section">
+                        <h3 class="section-title">Analysis</h3>
+                        <p class="section-text" id="panelNote"></p>
+                    </div>
+
+                    <div class="panel-grid">
+                        <div class="panel-section">
+                            <h3 class="section-title">Prediction</h3>
+                            <p class="section-text" id="panelPrediction"></p>
+                        </div>
+                        <div class="panel-section">
+                            <h3 class="section-title">Outcome</h3>
+                            <p class="section-text" id="panelOutcome"></p>
+                        </div>
+                    </div>
+
+                    <div class="panel-section">
+                        <h3 class="section-title">Impact Areas</h3>
+                        <div class="impact-tags" id="panelImpact"></div>
+                    </div>
+
+                    <div class="panel-section">
+                        <h3 class="section-title">Source</h3>
+                        <p class="section-text section-text-muted" id="panelSource"></p>
+                    </div>
+                </div>
+            </aside>
+        </main>
+
+        <!-- Filter Bar -->
+        <footer class="filter-bar">
+            <!-- Mobile: Collapsible filter panel -->
+            <button class="filter-toggle" id="filterToggle">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+                </svg>
+                <span>Filters</span>
+                <span class="filter-count" id="filterCount">0</span>
+            </button>
+
+            <div class="filter-panel" id="filterPanel">
+                <!-- Category Filters -->
+                <div class="filter-group">
+                    <div class="filter-group-header">
+                        <span class="filter-group-label">Category</span>
+                        <div class="filter-group-actions">
+                            <button class="filter-action" id="categoryAll">All</button>
+                            <button class="filter-action" id="categoryClear">Clear</button>
+                        </div>
+                    </div>
+                    <div class="filter-buttons" id="categoryFilters"></div>
+                </div>
+
+                <!-- Company Filters -->
+                <div class="filter-group">
+                    <div class="filter-group-header">
+                        <span class="filter-group-label">Company</span>
+                        <div class="filter-group-actions">
+                            <button class="filter-action" id="companyAll">All</button>
+                            <button class="filter-action" id="companyClear">Clear</button>
+                        </div>
+                    </div>
+                    <div class="filter-buttons" id="companyFilters"></div>
+                </div>
+            </div>
+
+            <!-- Stats (always visible) -->
+            <div class="filter-stats">
+                <span class="stat"><span id="visibleCount">0</span> of <span id="totalCount">0</span> events</span>
+            </div>
+            <div class="footer-links">
+                <a href="legal.html">Legal Notice</a>
+                <a href="privacy.html">Privacy Policy</a>
+            </div>
+        </footer>
+
+        <!-- Time Slider -->
+        <div class="time-control">
+            <input type="range" id="timeSlider" min="0" max="100" value="100">
+            <div class="time-labels">
+                <span id="timeStart">2020</span>
+                <span id="timeCurrent">Now</span>
+                <span id="timeEnd">2025</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
