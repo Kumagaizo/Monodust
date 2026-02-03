@@ -524,7 +524,7 @@
         // Outcome (What Happened)
         dom.panelOutcome.textContent = event.outcome?.text || '';
         dom.panelOutcomeDate.textContent = event.outcome?.date 
-            ? `As of ${formatDate(event.outcome.date)}` 
+            ? `Observed: ${formatDate(event.outcome.date)}` 
             : '';
         
         // Impact
