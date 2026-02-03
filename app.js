@@ -12,10 +12,10 @@
     const state = {
         currentView: 'timeline',
         selectedEvent: null,
-        activeFilters: new Set(),
+        activeCompanies: new Set(),
+        activeCategories: new Set(),
         timeRange: { min: 0, max: 100 },
         gridSort: 'date',
-        allTags: new Set(),
         timelineOffset: 0,
         isDragging: false,
         dragStart: { x: 0, offset: 0 }
@@ -37,7 +37,7 @@
         panelCompany: document.getElementById('panelCompany'),
         panelDate: document.getElementById('panelDate'),
         panelTitle: document.getElementById('panelTitle'),
-        panelStatus: document.getElementById('panelStatus'),
+        panelCategory: document.getElementById('panelCategory'),
         panelClaimed: document.getElementById('panelClaimed'),
         panelSourceLink: document.getElementById('panelSourceLink'),
         panelSourceText: document.getElementById('panelSourceText'),
@@ -50,9 +50,12 @@
         filterPanel: document.getElementById('filterPanel'),
         filterToggle: document.getElementById('filterToggle'),
         filterCount: document.getElementById('filterCount'),
-        tagFilters: document.getElementById('tagFilters'),
-        filterAll: document.getElementById('filterAll'),
-        filterClear: document.getElementById('filterClear'),
+        companyFilters: document.getElementById('companyFilters'),
+        categoryFilters: document.getElementById('categoryFilters'),
+        companySelectAll: document.getElementById('companySelectAll'),
+        companyClear: document.getElementById('companyClear'),
+        categorySelectAll: document.getElementById('categorySelectAll'),
+        categoryClear: document.getElementById('categoryClear'),
         visibleCount: document.getElementById('visibleCount'),
         totalCount: document.getElementById('totalCount'),
         
@@ -86,24 +89,79 @@
         });
     }
 
-    function getStatusLabel(status) {
-        const labels = {
-            deployment: 'Deployment',
-            incremental: 'Incremental',
-            delayed: 'Delayed',
-            limited: 'Limited Version',
-            discontinued: 'Discontinued'
-        };
-        return labels[status] || status;
-    }
-
     function getCompanyLabel(companyId) {
         return COMPANIES[companyId]?.label || companyId;
     }
 
+    function getCategoryLabel(categoryId) {
+        return CATEGORIES[categoryId]?.label || categoryId;
+    }
+
+    // ========== URL STATE PERSISTENCE ==========
+    function saveStateToURL() {
+        const params = new URLSearchParams();
+        
+        // Only save if not all selected (default state)
+        const allCompanies = Object.keys(COMPANIES);
+        const allCategories = Object.keys(CATEGORIES);
+        
+        if (state.activeCompanies.size !== allCompanies.length) {
+            params.set('companies', Array.from(state.activeCompanies).join(','));
+        }
+        if (state.activeCategories.size !== allCategories.length) {
+            params.set('categories', Array.from(state.activeCategories).join(','));
+        }
+        if (state.timeRange.min !== 0 || state.timeRange.max !== 100) {
+            params.set('time', `${state.timeRange.min}-${state.timeRange.max}`);
+        }
+        if (state.currentView !== 'timeline') {
+            params.set('view', state.currentView);
+        }
+        
+        const queryString = params.toString();
+        const newURL = queryString ? `${window.location.pathname}?${queryString}` : window.location.pathname;
+        
+        window.history.replaceState({}, '', newURL);
+    }
+
+    function loadStateFromURL() {
+        const params = new URLSearchParams(window.location.search);
+        
+        // Companies
+        const companiesParam = params.get('companies');
+        if (companiesParam) {
+            state.activeCompanies = new Set(companiesParam.split(',').filter(c => COMPANIES[c]));
+        } else {
+            Object.keys(COMPANIES).forEach(k => state.activeCompanies.add(k));
+        }
+        
+        // Categories
+        const categoriesParam = params.get('categories');
+        if (categoriesParam) {
+            state.activeCategories = new Set(categoriesParam.split(',').filter(c => CATEGORIES[c]));
+        } else {
+            Object.keys(CATEGORIES).forEach(k => state.activeCategories.add(k));
+        }
+        
+        // Time range
+        const timeParam = params.get('time');
+        if (timeParam) {
+            const [min, max] = timeParam.split('-').map(Number);
+            if (!isNaN(min) && !isNaN(max)) {
+                state.timeRange = { min: Math.max(0, min), max: Math.min(100, max) };
+            }
+        }
+        
+        // View
+        const viewParam = params.get('view');
+        if (viewParam && ['timeline', 'grid'].includes(viewParam)) {
+            state.currentView = viewParam;
+        }
+    }
+
     // ========== INITIALIZATION ==========
     function init() {
-        collectTags();
+        loadStateFromURL();
         setupTimeRange();
         renderFilters();
         renderTimeline();
@@ -111,20 +169,8 @@
         setupEventListeners();
         updateStats();
         loadTheme();
-    }
-
-    function collectTags() {
-        EVENTS.forEach(event => {
-            if (event.tags) {
-                event.tags.forEach(tag => state.allTags.add(tag));
-            }
-            state.allTags.add(event.company);
-            state.allTags.add(event.category);
-            state.allTags.add(event.status);
-        });
-        
-        // Start with all filters active
-        state.allTags.forEach(tag => state.activeFilters.add(tag));
+        syncViewSwitcher();
+        syncTimeSliders();
     }
 
     function setupTimeRange() {
@@ -141,78 +187,114 @@
         dom.timeEnd.textContent = state.maxYear;
     }
 
-    // ========== FILTERS ==========
-    function renderFilters() {
-        dom.tagFilters.innerHTML = '';
-        
-        // Companies
-        Object.keys(COMPANIES).forEach(key => {
-            const company = COMPANIES[key];
-            const btn = createFilterButton(key, company.label);
-            dom.tagFilters.appendChild(btn);
+    function syncViewSwitcher() {
+        document.querySelectorAll('.view-btn').forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.view === state.currentView);
         });
-        
-        // Status
-        Object.keys(STATUS).forEach(key => {
-            const status = STATUS[key];
-            const btn = createFilterButton(key, status.label);
-            dom.tagFilters.appendChild(btn);
-        });
-        
-        // Categories
-        Object.keys(CATEGORIES).forEach(key => {
-            const cat = CATEGORIES[key];
-            const btn = createFilterButton(key, cat.label);
-            dom.tagFilters.appendChild(btn);
+        document.querySelectorAll('.view').forEach(v => {
+            v.classList.toggle('active', v.id === state.currentView + 'View');
         });
     }
 
-    function createFilterButton(id, label) {
+    function syncTimeSliders() {
+        dom.timeSliderMin.value = state.timeRange.min;
+        dom.timeSliderMax.value = state.timeRange.max;
+        updateTimeRangeVisual();
+    }
+
+    // ========== FILTERS ==========
+    function renderFilters() {
+        // Render company filters
+        dom.companyFilters.innerHTML = '';
+        Object.keys(COMPANIES).forEach(key => {
+            const company = COMPANIES[key];
+            const btn = createFilterButton(key, company.label, 'company');
+            dom.companyFilters.appendChild(btn);
+        });
+        
+        // Render category filters
+        dom.categoryFilters.innerHTML = '';
+        Object.keys(CATEGORIES).forEach(key => {
+            const cat = CATEGORIES[key];
+            const btn = createFilterButton(key, cat.label, 'category');
+            dom.categoryFilters.appendChild(btn);
+        });
+    }
+
+    function createFilterButton(id, label, type) {
         const btn = document.createElement('button');
-        btn.className = 'filter-btn' + (state.activeFilters.has(id) ? ' active' : '');
+        const isActive = type === 'company' 
+            ? state.activeCompanies.has(id) 
+            : state.activeCategories.has(id);
+        btn.className = 'filter-btn' + (isActive ? ' active' : '');
         btn.textContent = label;
         btn.dataset.filter = id;
-        btn.addEventListener('click', () => toggleFilter(id));
+        btn.dataset.type = type;
+        btn.addEventListener('click', () => toggleFilter(id, type));
         return btn;
     }
 
-    function toggleFilter(id) {
-        if (state.activeFilters.has(id)) {
-            state.activeFilters.delete(id);
+    function toggleFilter(id, type) {
+        const activeSet = type === 'company' ? state.activeCompanies : state.activeCategories;
+        
+        if (activeSet.has(id)) {
+            activeSet.delete(id);
         } else {
-            state.activeFilters.add(id);
+            activeSet.add(id);
         }
         updateFilterButtons();
         updateViews();
+        saveStateToURL();
     }
 
     function updateFilterButtons() {
         document.querySelectorAll('.filter-btn').forEach(btn => {
-            btn.classList.toggle('active', state.activeFilters.has(btn.dataset.filter));
+            const type = btn.dataset.type;
+            const id = btn.dataset.filter;
+            const isActive = type === 'company' 
+                ? state.activeCompanies.has(id) 
+                : state.activeCategories.has(id);
+            btn.classList.toggle('active', isActive);
         });
         updateFilterCount();
     }
 
     function updateFilterCount() {
-        const total = Object.keys(COMPANIES).length + Object.keys(STATUS).length + Object.keys(CATEGORIES).length;
-        const active = state.activeFilters.size;
-        const diff = total - active;
+        const totalCompanies = Object.keys(COMPANIES).length;
+        const totalCategories = Object.keys(CATEGORIES).length;
+        const activeCompanies = state.activeCompanies.size;
+        const activeCategories = state.activeCategories.size;
+        
+        const diff = (totalCompanies - activeCompanies) + (totalCategories - activeCategories);
         dom.filterCount.textContent = diff > 0 ? diff : '';
     }
 
-    function selectAllFilters() {
-        Object.keys(COMPANIES).forEach(k => state.activeFilters.add(k));
-        Object.keys(STATUS).forEach(k => state.activeFilters.add(k));
-        Object.keys(CATEGORIES).forEach(k => state.activeFilters.add(k));
-        state.allTags.forEach(t => state.activeFilters.add(t));
+    function selectAllCompanies() {
+        Object.keys(COMPANIES).forEach(k => state.activeCompanies.add(k));
         updateFilterButtons();
         updateViews();
+        saveStateToURL();
     }
 
-    function clearAllFilters() {
-        state.activeFilters.clear();
+    function clearAllCompanies() {
+        state.activeCompanies.clear();
         updateFilterButtons();
         updateViews();
+        saveStateToURL();
+    }
+
+    function selectAllCategories() {
+        Object.keys(CATEGORIES).forEach(k => state.activeCategories.add(k));
+        updateFilterButtons();
+        updateViews();
+        saveStateToURL();
+    }
+
+    function clearAllCategories() {
+        state.activeCategories.clear();
+        updateFilterButtons();
+        updateViews();
+        saveStateToURL();
     }
 
     // ========== TIME RANGE ==========
@@ -232,6 +314,12 @@
         state.timeRange.min = parseInt(dom.timeSliderMin.value);
         state.timeRange.max = parseInt(dom.timeSliderMax.value);
         
+        updateTimeRangeVisual();
+        updateViews();
+        saveStateToURL();
+    }
+
+    function updateTimeRangeVisual() {
         // Update visual
         const left = state.timeRange.min + '%';
         const width = (state.timeRange.max - state.timeRange.min) + '%';
@@ -245,19 +333,16 @@
             const range = state.maxTime - state.minTime;
             const startDate = new Date(state.minTime + (range * state.timeRange.min / 100));
             const endDate = new Date(state.minTime + (range * state.timeRange.max / 100));
-            dom.timeRangeDisplay.textContent = `${formatDateShort(startDate)} - ${formatDateShort(endDate)}`;
+            dom.timeRangeDisplay.textContent = `${formatDateShort(startDate)} – ${formatDateShort(endDate)}`;
         }
-        
-        updateViews();
     }
 
     // ========== FILTERING ==========
     function getFilteredEvents() {
         return EVENTS.filter(event => {
-            // Check company, category, status
-            if (!state.activeFilters.has(event.company)) return false;
-            if (!state.activeFilters.has(event.category)) return false;
-            if (!state.activeFilters.has(event.status)) return false;
+            // Check company and category
+            if (!state.activeCompanies.has(event.company)) return false;
+            if (!state.activeCategories.has(event.category)) return false;
             
             // Check time range
             const eventTime = new Date(event.date).getTime();
@@ -337,7 +422,7 @@
             const el = document.createElement('div');
             el.className = `timeline-event ${isAbove ? 'above' : 'below'}`;
             el.dataset.id = event.id;
-            el.dataset.status = event.status;
+            el.dataset.category = event.category;
             el.style.left = pos + 'px';
             
             el.innerHTML = `
@@ -346,8 +431,8 @@
                 <div class="timeline-event-card">
                     <div class="timeline-event-title">${event.title}</div>
                     <div class="timeline-event-date">${formatDate(event.date)}</div>
-                    <div class="timeline-event-status" data-status="${event.status}">
-                        ${getStatusLabel(event.status)}
+                    <div class="timeline-event-category" data-category="${event.category}">
+                        ${getCategoryLabel(event.category)}
                     </div>
                 </div>
             `;
@@ -383,8 +468,8 @@
             case 'date':
                 events.sort((a, b) => new Date(b.date) - new Date(a.date));
                 break;
-            case 'status':
-                events.sort((a, b) => a.status.localeCompare(b.status));
+            case 'category':
+                events.sort((a, b) => a.category.localeCompare(b.category));
                 break;
             case 'company':
                 events.sort((a, b) => a.company.localeCompare(b.company));
@@ -402,8 +487,8 @@
                     <span class="grid-card-date">${formatDateShort(event.date)}</span>
                 </div>
                 <div class="grid-card-title">${event.title}</div>
-                <div class="grid-card-status" data-status="${event.status}">
-                    ${getStatusLabel(event.status)}
+                <div class="grid-card-category" data-category="${event.category}">
+                    ${getCategoryLabel(event.category)}
                 </div>
             `;
             
@@ -426,9 +511,9 @@
         dom.panelDate.textContent = formatDate(event.date);
         dom.panelTitle.textContent = event.title;
         
-        // Status badge
-        dom.panelStatus.textContent = getStatusLabel(event.status);
-        dom.panelStatus.dataset.status = event.status;
+        // Category badge
+        dom.panelCategory.textContent = getCategoryLabel(event.category);
+        dom.panelCategory.dataset.category = event.category;
         
         // Claimed (What They Said)
         dom.panelClaimed.textContent = event.claimed?.text || '';
@@ -532,6 +617,8 @@
         document.querySelectorAll('.view').forEach(v => {
             v.classList.toggle('active', v.id === view + 'View');
         });
+        
+        saveStateToURL();
     }
 
     // ========== THEME ==========
@@ -559,9 +646,13 @@
         // Panel close
         dom.closePanel.addEventListener('click', hideEventPanel);
         
-        // Filter actions
-        dom.filterAll.addEventListener('click', selectAllFilters);
-        dom.filterClear.addEventListener('click', clearAllFilters);
+        // Company filter actions
+        dom.companySelectAll.addEventListener('click', selectAllCompanies);
+        dom.companyClear.addEventListener('click', clearAllCompanies);
+        
+        // Category filter actions
+        dom.categorySelectAll.addEventListener('click', selectAllCategories);
+        dom.categoryClear.addEventListener('click', clearAllCategories);
         
         // Filter toggle (mobile)
         dom.filterToggle.addEventListener('click', () => {
@@ -588,10 +679,28 @@
         // Timeline drag
         setupTimelineDrag();
         
-        // Keyboard
+        // Keyboard shortcuts
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                hideEventPanel();
+            // Don't trigger if user is typing in an input
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+            
+            switch(e.key) {
+                case 'Escape':
+                    hideEventPanel();
+                    break;
+                case '1':
+                    switchView('timeline');
+                    break;
+                case '2':
+                    switchView('grid');
+                    break;
+                case 't':
+                case 'T':
+                    toggleTheme();
+                    break;
+                case '?':
+                    showKeyboardHelp();
+                    break;
             }
         });
         
@@ -604,6 +713,21 @@
                 renderTimeline();
             }, 250);
         });
+
+        // Handle browser back/forward
+        window.addEventListener('popstate', () => {
+            loadStateFromURL();
+            updateFilterButtons();
+            syncTimeSliders();
+            syncViewSwitcher();
+            updateViews();
+        });
+    }
+
+    // ========== KEYBOARD HELP ==========
+    function showKeyboardHelp() {
+        // Simple alert for now - could be a modal in a more polished version
+        alert('Keyboard Shortcuts:\n\n1 - Timeline view\n2 - Grid view\nT - Toggle theme\nEsc - Close panel\n? - Show this help');
     }
 
     // ========== INIT ==========
