@@ -60,13 +60,13 @@
 
 :root {
     /* Category Colors (replacing status colors) */
-    --category-models: #3b82f6;        /* Blue - Models & Research */
-    --category-applications: #10b981;   /* Green - Applications & Products */
-    --category-hardware: #f59e0b;       /* Amber - Hardware & Infrastructure */
-    --category-policy: #8b5cf6;         /* Purple - Policy/Business/Society */
-    --category-physical: #ef4444;       /* Red - Physical AI & Robotics */
+    --category-models: #5782D7;        /* Blue - Models & Research */
+    --category-applications: #9BC4B6;   /* Green - Applications & Products */
+    --category-hardware: #D35062;       /* Amber - Hardware & Infrastructure */
+    --category-policy: #7871D9;         /* Purple - Policy/Business/Society */
+    --category-physical: #E3AB5C;       /* Red - Physical AI & Robotics */
     
-    --accent-primary: #4D4DD4;
+    --accent-primary: #9095AE;
     
     /* Spacing */
     --space-xs: 4px;
