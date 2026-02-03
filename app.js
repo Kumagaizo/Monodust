@@ -171,6 +171,7 @@
         loadTheme();
         syncViewSwitcher();
         syncTimeSliders();
+        scrollTimelineToLatest();
     }
 
     function setupTimeRange() {
@@ -446,6 +447,15 @@
             state.timelineOffset = Math.max(0, (minWidth - containerWidth) / 2);
             dom.timelineScroll.style.transform = `translateX(-${state.timelineOffset}px)`;
         }
+    }
+
+    function scrollTimelineToLatest() {
+        // Wait for DOM to be ready
+        requestAnimationFrame(() => {
+            const maxOffset = dom.timelineScroll.offsetWidth - dom.timelineContainer.offsetWidth;
+            state.timelineOffset = Math.max(0, maxOffset);
+            dom.timelineScroll.style.transform = `translateX(-${state.timelineOffset}px)`;
+        });
     }
 
     // ========== GRID ==========

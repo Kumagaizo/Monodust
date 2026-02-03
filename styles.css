@@ -104,9 +104,28 @@ body {
     background: var(--bg-primary);
     color: var(--text-primary);
     line-height: 1.5;
-    overflow: hidden;
+    /*overflow: hidden;*/
     height: 100vh;
     transition: background-color var(--transition-normal), color var(--transition-normal);
+}
+
+.section {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+}
+
+.container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    display: flex;
+    flex-direction: column;
+    row-gap: 3rem;
+}
+
+.content-wrapper {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
 }
 
 #app {
