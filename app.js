@@ -1238,6 +1238,8 @@
             resizeTimeout = setTimeout(() => {
                 state.timelineOffset = 0;
                 renderTimeline();
+                // Ensure we keep the latest events in view after layout changes
+                scrollTimelineToLatest();
             }, 250);
         });
 
