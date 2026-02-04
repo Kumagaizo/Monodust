@@ -65,9 +65,9 @@
     --category-policy:        #10B981;
     --category-physical:     #8B5CF6;
     
-    --accent-primary:         #99A0A1;
+    --accent-primary:         #ADA8A5;
     
-    --accent-rgb: 153, 160, 161; /* For the pulse chart - adjust to your accent color */
+    --accent-rgb: 173, 168, 165; /* For the pulse chart - adjust to your accent color */
     
     /* Spacing */
     --space-xs: 4px;
