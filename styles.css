@@ -1720,6 +1720,7 @@ body {
     .header {
         padding: var(--space-sm) var(--space-md);
         height: 48px;
+        overflow: hidden;
     }
     
     .header-left {
@@ -1733,6 +1734,11 @@ body {
     .header-center {
         flex: 1;
         justify-content: center;
+    }
+    
+    .header-right {
+        min-width: auto;
+        gap: var(--space-sm);
     }
     
     .credit {
@@ -1788,6 +1794,7 @@ body {
         display: flex !important;
         flex-direction: column !important;
         width: 100% !important;
+        overflow-x: hidden;
         visibility: visible !important;
         opacity: 1 !important;
         z-index: 100 !important;
