@@ -1637,6 +1637,13 @@ body {
     
     .race-podium {
         min-height: 120px;
+        flex-wrap: wrap;
+        gap: 0.4rem;
+        padding-top: 0.75rem;
+    }
+    
+    .podium-item {
+        flex: 1 1 70px;
     }
     
     .podium-bar {
@@ -1658,6 +1665,25 @@ body {
     .streak-number,
     .sleeper-days {
         font-size: 2rem;
+    }
+    
+    .race-podium {
+        gap: 0.35rem;
+        padding-top: 0.5rem;
+    }
+    
+    .podium-item {
+        flex: 1 1 60px;
+    }
+    
+    .podium-bar {
+        width: 36px;
+        padding: 0.4rem;
+    }
+    
+    .podium-label {
+        max-width: 72px;
+        font-size: 0.6rem;
     }
     
     .pulse-cell {
