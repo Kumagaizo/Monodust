@@ -35,6 +35,7 @@
                 <div class="view-switcher">
                     <button class="view-btn active" data-view="timeline" title="Timeline view (1)">Timeline</button>
                     <button class="view-btn" data-view="grid" title="Grid view (2)">Grid</button>
+                    <button class="view-btn" data-view="stats" title="Stats view (3)">Stats</button>
                 </div>
             </div>
             <div class="header-right">
@@ -81,6 +82,109 @@
                         <div class="timeline-track"></div>
                         <div id="timelineEvents" class="timeline-events"></div>
                     </div>
+                </div>
+            </div>
+
+            <!-- Stats View -->
+            <div id="statsView" class="view">
+                <div class="stats-container" id="statsContainer">
+                    
+                    <!-- Insight 1: The Acceleration -->
+                    <div class="insight-card insight-featured">
+                        <div class="insight-content">
+                            <div class="insight-headline" id="accelerationHeadline">Loading...</div>
+                            <div class="insight-detail" id="accelerationDetail"></div>
+                        </div>
+                    </div>
+
+                    <!-- Main Stats Grid -->
+                    <div class="stats-grid-insights">
+                        
+                        <!-- Insight 2: The Race -->
+                        <div class="insight-card">
+                            <div class="insight-header">
+                                <span class="insight-label">The Race</span>
+                            </div>
+                            <div class="race-podium" id="racePodium">
+                                <!-- Filled by JS -->
+                            </div>
+                            <div class="insight-footnote" id="raceFootnote"></div>
+                        </div>
+
+                        <!-- Insight 3: The Shift -->
+                        <div class="insight-card">
+                            <div class="insight-header">
+                                <span class="insight-label">The Shift</span>
+                            </div>
+                            <div class="shift-comparison" id="shiftComparison">
+                                <!-- Filled by JS -->
+                            </div>
+                        </div>
+
+                        <!-- Insight 4: Hottest Streak -->
+                        <div class="insight-card">
+                            <div class="insight-header">
+                                <span class="insight-label">Hottest Streak</span>
+                            </div>
+                            <div class="streak-content" id="streakContent">
+                                <!-- Filled by JS -->
+                            </div>
+                        </div>
+
+                        <!-- Insight 5: The Sleeper -->
+                        <div class="insight-card">
+                            <div class="insight-header">
+                                <span class="insight-label">The Quiet One</span>
+                            </div>
+                            <div class="sleeper-content" id="sleeperContent">
+                                <!-- Filled by JS -->
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Visual Timeline: Year over Year comparison -->
+                    <div class="insight-card insight-wide">
+                        <div class="insight-header">
+                            <span class="insight-label">AI Development Pulse</span>
+                            <span class="insight-subtitle">Monthly milestone density</span>
+                        </div>
+                        <div class="pulse-chart" id="pulseChart">
+                            <!-- Filled by JS -->
+                        </div>
+                        <div class="pulse-legend" id="pulseLegend"></div>
+                    </div>
+
+                    <!-- Bottom Row -->
+                    <div class="stats-grid-bottom">
+                        
+                        <!-- Category Evolution -->
+                        <div class="insight-card">
+                            <div class="insight-header">
+                                <span class="insight-label">Focus Shift</span>
+                                <span class="insight-subtitle">What's getting attention now vs before</span>
+                            </div>
+                            <div class="focus-shift" id="focusShift">
+                                <!-- Filled by JS -->
+                            </div>
+                        </div>
+
+                        <!-- Trending Tags Cloud -->
+                        <div class="insight-card">
+                            <div class="insight-header">
+                                <span class="insight-label">Buzzwords</span>
+                                <span class="insight-subtitle">Most frequent themes</span>
+                            </div>
+                            <div class="stats-tags" id="topTags"></div>
+                        </div>
+
+                    </div>
+
+                    <!-- Fun Facts Footer -->
+                    <div class="fun-facts" id="funFacts">
+                        <!-- Filled by JS -->
+                    </div>
+
                 </div>
             </div>
 

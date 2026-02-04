@@ -21,7 +21,8 @@ const COMPANIES = {
     google: { id: 'google', label: 'Google DeepMind' },
     mistral: { id: 'mistral', label: 'Mistral AI' },
     xai: { id: 'xai', label: 'xAI' },
-    meta: { id: 'meta', label: 'Meta AI' }
+    meta: { id: 'meta', label: 'Meta AI' },
+    deepseek: { id: 'deepseek', label: 'DeepSeek' }
 };
 
 // Events with evidence-based structure
@@ -1077,7 +1078,7 @@ const EVENTS = [
         title: 'DeepSeek R1: Open Reasoning Revolution',
         date: '2025-01-20',
         category: 'models',
-        company: 'meta',
+        company: 'deepseek',
         claimed: {
             text: 'Open-weights reasoning model matching o1 performance. Full chain-of-thought visible. Trained using RL without expensive human annotation. Costs fraction of Western models.',
             source: 'DeepSeek GitHub',
@@ -1087,7 +1088,7 @@ const EVENTS = [
             text: 'Benchmarks verified: 79.8% on AIME 2024 (vs o1\'s 79.2%), 97.3% on MATH-500. Reasoning traces show genuine problem decomposition. Downloaded 1M+ times in first week. Chinese efficiency shocked industry.',
             date: '2025-01-27'
         },
-        impact: 'Democratized reasoning models overnight. Proved expensive proprietary training not required. Triggered market panic about Western AI moat. Reasoning became commodity within weeks.',
+        impact: 'Democratized reasoning models overnight. Proved expensive proprietary training not required. Triggered market panic about Western AI moat. Reasoning became commodity within weeks. Challenged scaling law orthodoxy and massive training budget assumptions. Proved Chinese labs globally competitive. Open-source reasoning capabilities democratized. Sparked intense debate about AI development costs. Market-moving event.',
         tags: ['open-source', 'reasoning', 'paradigm-shift', 'chinese-ai', 'efficiency']
     },
     {
@@ -1793,7 +1794,7 @@ const EVENTS = [
         title: 'DeepSeek Coder V3 Released',
         date: '2025-08-15',
         category: 'models',
-        company: 'meta',
+        company: 'deepseek',
         claimed: {
             text: 'Specialized coding model. 236B parameters. Open weights. Matches GPT-4o on coding benchmarks. Trained for $3M.',
             source: 'DeepSeek',
@@ -2082,6 +2083,45 @@ const EVENTS = [
         impact: 'Reinforced platform strategy. Agent maturity acknowledged. Developer ecosystem priority. But incremental vs transformative. Execution over innovation phase.',
         tags: ['platform', 'developer', 'agents', 'ecosystem', 'event']
     },
+
+    {
+        id: 'gemini-3-pro-launch',
+        title: 'Google Gemini 3 Pro Released',
+        date: '2025-11-18',
+        category: 'models',
+        company: 'google',
+        claimed: {
+            text: 'Most intelligent model for multimodal understanding. 1501 Elo on LMArena (top leaderboard position). 91.9% GPQA Diamond, 76.2% SWE-bench Verified. 1M token context window, 64K output. State-of-the-art reasoning.',
+            source: 'Google Blog',
+            url: 'https://blog.google/products/gemini/gemini-3/'
+        },
+        outcome: {
+            text: 'Topped LMArena leaderboard. Deep Think mode achieves 41% on Humanity\'s Last Exam vs 37.5% standard. Integrated across all Google products day-one: Search, Gemini app, Vertex AI, AI Studio, Antigravity IDE. 2B monthly users for AI Overviews.',
+            date: '2025-11-20'
+        },
+        impact: 'Reclaimed competitive position after Bard/early Gemini struggles. Multimodal reasoning breakthrough with native "pointing" for zero-shot object detection. Agentic coding capabilities. Unified platform across consumer and enterprise. January 2025 knowledge cutoff.',
+        tags: ['multimodal', 'reasoning', 'agentic', 'leaderboard-leader', 'integration', 'flagship']
+    },
+
+    {
+        id: 'claude-opus-4-5-launch',
+        title: 'Claude Opus 4.5 Released',
+        date: '2025-11-24',
+        category: 'models',
+        company: 'anthropic',
+        claimed: {
+            text: 'Best model in the world for coding, agents, computer use. 80.9% SWE-bench Verified (first to break 80%). 66.3% OSWorld. Hybrid reasoning with configurable effort levels. 200K context window.',
+            source: 'Anthropic Blog',
+            url: 'https://www.anthropic.com/news/claude-opus-4-5'
+        },
+        outcome: {
+            text: 'Beat all competitors on coding benchmarks. Scored higher than any Anthropic job candidate on internal 2-hour performance engineering test. 67% price reduction vs Opus 4 ($5 input/$25 output). Endless chat with automatic context compaction. Available day-one across apps, API, cloud platforms.',
+            date: '2025-11-26'
+        },
+        impact: 'Reclaimed coding crown from Gemini 3. State-of-the-art agentic workflows. Token efficiency breakthrough: 76% fewer tokens at medium effort vs Sonnet 4.5. Enterprise adoption surge with Microsoft Foundry, AWS Bedrock, Vertex AI. Terminal-Bench 15% improvement. Completes 4.5 family (Haiku, Sonnet, Opus).',
+        tags: ['coding', 'agentic', 'swe-bench', 'efficiency', 'enterprise', 'flagship', 'breakthrough']
+    },
+
     {
         id: 'google-gemini-exp-1114',
         title: 'Gemini Exp 1114 Released',
@@ -2174,6 +2214,26 @@ const EVENTS = [
     },
 
     // === DECEMBER 2025 ===
+
+    {
+        id: 'gpt-5-2-launch',
+        title: 'GPT-5.2 Family Released',
+        date: '2025-12-11',
+        category: 'models',
+        company: 'openai',
+        claimed: {
+            text: 'Most capable model for professional knowledge work. 70.9% beats/ties human experts on GDPval tasks across 44 occupations. 98.7% accuracy on Tau2-bench telecom. 11x faster than experts, <1% cost. Three tiers: Instant, Thinking, Pro.',
+            source: 'OpenAI Blog',
+            url: 'https://openai.com/index/introducing-gpt-5-2/'
+        },
+        outcome: {
+            text: 'Released early December in response to Gemini 3 (internal "code red"). August 2025 knowledge cutoff. 30% fewer response-level errors vs GPT-5.1 Thinking. Custom GPTs migrated January 12, 2026. Updated default personality more conversational. Under-18 principles strengthened.',
+            date: '2025-12-15'
+        },
+        impact: 'Professional knowledge work automation milestone. First model at/above human expert level on GDPval. Competitive pressure response to Gemini 3. Vision + long-context improvements. Artifact creation enhanced for slides/spreadsheets. Models retired Feb 13: GPT-5, GPT-4o, GPT-4.1, o4-mini.',
+        tags: ['professional-work', 'reasoning', 'human-parity', 'competitive-response', 'flagship']
+    },
+
     {
         id: 'openai-o1-pro-mode',
         title: 'OpenAI o1 Pro Mode Released',
@@ -2324,6 +2384,25 @@ const EVENTS = [
     // ========================================
 
     // === JANUARY 2026 ===
+
+    {
+        id: 'deepseek-r1-paper-expansion',
+        title: 'DeepSeek R1 Paper Expanded to 86 Pages',
+        date: '2026-01-04',
+        category: 'models',
+        company: 'deepseek',
+        claimed: {
+            text: 'Complete training pipeline disclosed. Three-stage "Dev" process (Dev1, Dev2, Dev3) detailed. Monte Carlo Tree Search admitted to have failed. Full reproducibility documentation. Nature publication synchronized back to arXiv.',
+            source: 'DeepSeek arXiv',
+            url: 'https://github.com/deepseek-ai/DeepSeek-R1'
+        },
+        outcome: {
+            text: 'Unprecedented transparency for frontier model. Negative results disclosed (MCTS failure saves community compute). Full technical details enable replication. Signals V4 model imminent (rumored mid-February Lunar New Year release focused on coding).',
+            date: '2026-01-09'
+        },
+        impact: 'Prior art established for R1 techniques. Open-source community fully enabled. Research reproducibility breakthrough. Sets new standard for model transparency. V4 expected to pivot from pure reasoning to software engineering dominance.',
+        tags: ['research', 'transparency', 'open-source', 'methodology', 'reproducibility']
+    },
 
     {
         id: 'tii-falcon-h1r-7b',
@@ -2576,6 +2655,45 @@ const EVENTS = [
         },
         impact: 'Signals OpenAI hardware ambitions. Jony Ive involvement suggests Apple-level design. New category beyond smartphone AI assistants. H2 2026 launch timing.',
         tags: ['hardware', 'consumer', 'device', 'design', 'ambient-ai']
+    },
+
+    // === FEBRUARY 2026 ===
+    {
+        id: 'gpt-5-2-codex-launch',
+        title: 'GPT-5.2-Codex Released',
+        date: '2026-02-02',
+        category: 'applications',
+        company: 'openai',
+        claimed: {
+            text: 'Most advanced agentic coding model for complex software engineering. Optimized for long-horizon work, large refactors/migrations, Windows environments. Significantly stronger cybersecurity capabilities (below "High" Preparedness Framework threshold).',
+            source: 'OpenAI Blog',
+            url: 'https://openai.com/index/introducing-gpt-5-2-codex/'
+        },
+        outcome: {
+            text: 'SWE-Bench Pro and Terminal-Bench 2.0 state-of-the-art. React vulnerability discovered/disclosed by researcher using GPT-5.1-Codex-Max. 40% latency reduction announced Feb 3. Gradual rollout: paid ChatGPT immediately, API coming weeks, invite-only trusted access for vetted cybersecurity professionals.',
+            date: '2026-02-03'
+        },
+        impact: 'Dual-use AI concerns actualized with responsible disclosure approach. Professional cybersecurity tool with deployment safeguards. Context compaction enables endless sessions. Native compaction improves token efficiency. Deployment strategy designed for future capability growth and safety scaling.',
+        tags: ['coding', 'cybersecurity', 'dual-use', 'agentic', 'responsible-deployment', 'safety']
+    },
+
+    {
+        id: 'openai-model-retirement-feb-2026',
+        title: 'OpenAI Retires GPT-5, GPT-4o, GPT-4.1, o4-mini',
+        date: '2026-02-13',
+        category: 'policy',
+        company: 'openai',
+        claimed: {
+            text: 'Low usage justifies retirement. Only 0.1% daily users still use GPT-4o. Most users migrated to GPT-5.2 family. ChatGPT access ends Feb 13. API access unchanged for now.',
+            source: 'OpenAI Help Center',
+            url: 'https://help.openai.com/en/articles/9624314-model-release-notes'
+        },
+        outcome: {
+            text: 'Consumer consolidation to GPT-5.2 family. Resources focused on newer models. Altman acknowledged underestimating user emotional attachment to GPT-4o. Adult-specific ChatGPT version in development. Age-prediction tools deployed.',
+            date: '2026-02-13'
+        },
+        impact: 'Industry shift toward fewer, more capable flagship models. User experience focus over model proliferation. Product strategy consolidation. Reflects rapid pace of model improvement making older versions obsolete within months.',
+        tags: ['model-retirement', 'consolidation', 'product-strategy', 'user-migration']
     }
 
 ];

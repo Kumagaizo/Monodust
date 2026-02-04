@@ -26,6 +26,7 @@
         // Views
         timelineView: document.getElementById('timelineView'),
         gridView: document.getElementById('gridView'),
+        statsView: document.getElementById('statsView'),
         timelineScroll: document.getElementById('timelineScroll'),
         timelineEvents: document.getElementById('timelineEvents'),
         timelineContainer: document.getElementById('timelineContainer'),
@@ -154,7 +155,7 @@
         
         // View
         const viewParam = params.get('view');
-        if (viewParam && ['timeline', 'grid'].includes(viewParam)) {
+        if (viewParam && ['timeline', 'grid', 'stats'].includes(viewParam)) {
             state.currentView = viewParam;
         }
     }
@@ -166,6 +167,7 @@
         renderFilters();
         renderTimeline();
         renderGrid();
+        renderStats();
         setupEventListeners();
         updateStats();
         loadTheme();
@@ -359,6 +361,7 @@
     function updateViews() {
         renderTimeline();
         renderGrid();
+        renderStats();
         updateStats();
     }
 
@@ -506,6 +509,517 @@
             dom.gridEvents.appendChild(card);
         });
     }
+
+    // ========== STATS ==========
+        
+    function renderStats() {
+        const events = getFilteredEvents();
+        
+        if (events.length === 0) {
+            renderEmptyStats();
+            return;
+        }
+        
+        // Calculate and render each insight
+        renderAccelerationInsight(events);
+        renderRacePodium(events);
+        renderShiftComparison(events);
+        renderHottestStreak(events);
+        renderSleeper(events);
+        renderPulseChart(events);
+        renderFocusShift(events);
+        renderTopTags(events);
+        renderFunFacts(events);
+    }
+
+    function renderEmptyStats() {
+        document.getElementById('accelerationHeadline').textContent = 'No milestones match current filters';
+        document.getElementById('accelerationDetail').textContent = 'Try adjusting your filters to see insights.';
+        // Clear other sections
+        ['racePodium', 'shiftComparison', 'streakContent', 'sleeperContent', 'pulseChart', 'focusShift', 'topTags', 'funFacts'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.innerHTML = '';
+        });
+    }
+
+    // ========== INSIGHT 1: THE ACCELERATION ==========
+    function renderAccelerationInsight(events) {
+        const sortedByDate = [...events].sort((a, b) => new Date(a.date) - new Date(b.date));
+        const now = new Date();
+        
+        // Find the rate of acceleration
+        const recentMonths = 6;
+        const recentCutoff = new Date(now.getTime() - recentMonths * 30 * 24 * 60 * 60 * 1000);
+        const recentEvents = events.filter(e => new Date(e.date) >= recentCutoff);
+        
+        // Compare to same period a year ago
+        const yearAgoStart = new Date(recentCutoff.getTime() - 365 * 24 * 60 * 60 * 1000);
+        const yearAgoEnd = new Date(now.getTime() - 365 * 24 * 60 * 60 * 1000);
+        const yearAgoEvents = events.filter(e => {
+            const d = new Date(e.date);
+            return d >= yearAgoStart && d <= yearAgoEnd;
+        });
+        
+        const headlineEl = document.getElementById('accelerationHeadline');
+        const detailEl = document.getElementById('accelerationDetail');
+        
+        if (yearAgoEvents.length > 0 && recentEvents.length > 0) {
+            const multiplier = (recentEvents.length / yearAgoEvents.length).toFixed(1);
+            
+            if (multiplier >= 1.5) {
+                headlineEl.textContent = `AI is moving ${multiplier}× faster than last year`;
+                detailEl.textContent = `In the last ${recentMonths} months: ${recentEvents.length} milestones. Same period last year: ${yearAgoEvents.length}. The pace is accelerating.`;
+            } else if (multiplier >= 1) {
+                headlineEl.textContent = `${recentEvents.length} milestones in the last ${recentMonths} months`;
+                detailEl.textContent = `Steady pace compared to last year (${yearAgoEvents.length} in the same period). The industry maintains momentum.`;
+            } else {
+                headlineEl.textContent = `The pace has shifted`;
+                detailEl.textContent = `${recentEvents.length} milestones recently vs ${yearAgoEvents.length} same time last year. Quality over quantity?`;
+            }
+        } else {
+            // Calculate milestones per month overall
+            if (sortedByDate.length >= 2) {
+                const firstDate = new Date(sortedByDate[0].date);
+                const lastDate = new Date(sortedByDate[sortedByDate.length - 1].date);
+                const monthsSpan = Math.max(1, (lastDate - firstDate) / (30 * 24 * 60 * 60 * 1000));
+                const perMonth = (events.length / monthsSpan).toFixed(1);
+                
+                headlineEl.textContent = `${perMonth} AI milestones every month`;
+                detailEl.textContent = `Tracking ${events.length} developments across ${Object.keys(COMPANIES).length} major players from ${firstDate.getFullYear()} to ${lastDate.getFullYear()}.`;
+            } else {
+                headlineEl.textContent = `${events.length} milestone${events.length !== 1 ? 's' : ''} tracked`;
+                detailEl.textContent = 'Adjust filters to see more data points.';
+            }
+        }
+    }
+
+    // ========== INSIGHT 2: THE RACE (Podium) ==========
+    function renderRacePodium(events) {
+        const container = document.getElementById('racePodium');
+        const footnote = document.getElementById('raceFootnote');
+        container.innerHTML = '';
+        
+        // Count by company
+        const counts = {};
+        events.forEach(e => {
+            counts[e.company] = (counts[e.company] || 0) + 1;
+        });
+        
+        // Sort by count
+        const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+        const maxCount = sorted[0]?.[1] || 1;
+        
+        // Show top 6 (all main companies)
+        const top = sorted.slice(0, 7);
+        
+        top.forEach(([company, count], index) => {
+            const item = document.createElement('div');
+            item.className = 'podium-item';
+            
+            const height = 50 + (count / maxCount) * 90; // 50-140px range
+            
+            item.innerHTML = `
+                <div class="podium-bar" data-company="${company}" style="height: ${height}px">
+                    <span class="podium-count">${count}</span>
+                    <span class="podium-rank">${index + 1}</span>
+                </div>
+                <span class="podium-label">${getCompanyLabel(company)}</span>
+            `;
+            
+            container.appendChild(item);
+        });
+        
+        // Calculate lead
+        if (sorted.length >= 2) {
+            const [leader, leaderCount] = sorted[0];
+            const [second, secondCount] = sorted[1];
+            const lead = leaderCount - secondCount;
+            footnote.textContent = `${getCompanyLabel(leader)} leads by ${lead} milestone${lead !== 1 ? 's' : ''}`;
+        } else {
+            footnote.textContent = '';
+        }
+    }
+
+    // ========== INSIGHT 3: THE SHIFT ==========
+    function renderShiftComparison(events) {
+        const container = document.getElementById('shiftComparison');
+        container.innerHTML = '';
+        
+        // Split events: recent 12 months vs older
+        const now = new Date();
+        const oneYearAgo = new Date(now.getTime() - 365 * 24 * 60 * 60 * 1000);
+        
+        const recent = events.filter(e => new Date(e.date) >= oneYearAgo);
+        const older = events.filter(e => new Date(e.date) < oneYearAgo);
+        
+        if (older.length === 0 || recent.length === 0) {
+            // Show simple category breakdown instead
+            const counts = {};
+            events.forEach(e => counts[e.category] = (counts[e.category] || 0) + 1);
+            const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+            const max = sorted[0]?.[1] || 1;
+            
+            sorted.forEach(([cat, count]) => {
+                const row = document.createElement('div');
+                row.className = 'shift-row';
+                row.innerHTML = `
+                    <span class="shift-category">${getCategoryLabel(cat)}</span>
+                    <div class="shift-bars">
+                        <div class="shift-bar-new" data-category="${cat}" style="width: ${(count/max)*100}%"></div>
+                    </div>
+                    <span class="shift-change neutral">${count}</span>
+                `;
+                container.appendChild(row);
+            });
+            return;
+        }
+        
+        // Calculate category percentages for each period
+        const recentCounts = {};
+        const olderCounts = {};
+        recent.forEach(e => recentCounts[e.category] = (recentCounts[e.category] || 0) + 1);
+        older.forEach(e => olderCounts[e.category] = (olderCounts[e.category] || 0) + 1);
+        
+        // All categories
+        const categories = Object.keys(CATEGORIES);
+        const changes = categories.map(cat => {
+            const recentPct = (recentCounts[cat] || 0) / recent.length * 100;
+            const olderPct = (olderCounts[cat] || 0) / older.length * 100;
+            const change = recentPct - olderPct;
+            return { cat, recentPct, olderPct, change };
+        }).sort((a, b) => Math.abs(b.change) - Math.abs(a.change));
+        
+        changes.forEach(({ cat, recentPct, olderPct, change }) => {
+            const row = document.createElement('div');
+            row.className = 'shift-row';
+            
+            const changeClass = change > 2 ? 'positive' : change < -2 ? 'negative' : 'neutral';
+            const changeText = change > 0 ? `+${change.toFixed(0)}%` : `${change.toFixed(0)}%`;
+            
+            row.innerHTML = `
+                <span class="shift-category">${getCategoryLabel(cat)}</span>
+                <div class="shift-bars">
+                    <div class="shift-bar-old" style="width: ${olderPct}%"></div>
+                    <div class="shift-bar-new" data-category="${cat}" style="width: ${recentPct}%"></div>
+                </div>
+                <span class="shift-change ${changeClass}">${changeText}</span>
+            `;
+            
+            container.appendChild(row);
+        });
+    }
+
+    // ========== INSIGHT 4: HOTTEST STREAK ==========
+    function renderHottestStreak(events) {
+        const container = document.getElementById('streakContent');
+        
+        // Find company with most milestones in a rolling 30-day window
+        const sortedByDate = [...events].sort((a, b) => new Date(a.date) - new Date(b.date));
+        
+        let bestStreak = { company: null, count: 0, start: null, end: null };
+        
+        // For each company, find their best 30-day streak
+        Object.keys(COMPANIES).forEach(company => {
+            const companyEvents = sortedByDate.filter(e => e.company === company);
+            
+            companyEvents.forEach((event, i) => {
+                const startDate = new Date(event.date);
+                const endDate = new Date(startDate.getTime() + 30 * 24 * 60 * 60 * 1000);
+                const count = companyEvents.filter(e => {
+                    const d = new Date(e.date);
+                    return d >= startDate && d <= endDate;
+                }).length;
+                
+                if (count > bestStreak.count) {
+                    bestStreak = { company, count, start: startDate, end: endDate };
+                }
+            });
+        });
+        
+        if (bestStreak.company) {
+            const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            const startStr = `${monthNames[bestStreak.start.getMonth()]} ${bestStreak.start.getFullYear()}`;
+            
+            container.innerHTML = `
+                <div class="streak-company">${getCompanyLabel(bestStreak.company)}</div>
+                <div class="streak-number">${bestStreak.count}</div>
+                <span class="streak-unit">milestones in 30 days</span>
+                <div class="streak-period">Peak month: ${startStr}</div>
+            `;
+        } else {
+            container.innerHTML = '<div class="streak-company">No streaks found</div>';
+        }
+    }
+
+    // ========== INSIGHT 5: THE SLEEPER ==========
+    function renderSleeper(events) {
+        const container = document.getElementById('sleeperContent');
+        const now = new Date();
+        
+        // Find company with longest gap since last milestone
+        const lastMilestoneByCompany = {};
+        events.forEach(e => {
+            const d = new Date(e.date);
+            if (!lastMilestoneByCompany[e.company] || d > lastMilestoneByCompany[e.company].date) {
+                lastMilestoneByCompany[e.company] = { date: d, title: e.title };
+            }
+        });
+        
+        // Find the one with oldest last milestone
+        let sleeper = null;
+        let maxGap = 0;
+        
+        Object.entries(lastMilestoneByCompany).forEach(([company, data]) => {
+            const gap = now - data.date;
+            if (gap > maxGap) {
+                maxGap = gap;
+                sleeper = { company, ...data };
+            }
+        });
+        
+        if (sleeper) {
+            const days = Math.floor(maxGap / (24 * 60 * 60 * 1000));
+            const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            const lastStr = `${monthNames[sleeper.date.getMonth()]} ${sleeper.date.getDate()}, ${sleeper.date.getFullYear()}`;
+            
+            container.innerHTML = `
+                <div class="sleeper-company">${getCompanyLabel(sleeper.company)}</div>
+                <div class="sleeper-days">${days}</div>
+                <span class="sleeper-label">days since last update</span>
+                <div class="sleeper-since">Last: "${sleeper.title.slice(0, 35)}${sleeper.title.length > 35 ? '...' : ''}"</div>
+            `;
+        } else {
+            container.innerHTML = '<div class="sleeper-company">No data</div>';
+        }
+    }
+
+    // ========== PULSE CHART (GitHub-style heatmap) ==========
+    function renderPulseChart(events) {
+        const container = document.getElementById('pulseChart');
+        const legendContainer = document.getElementById('pulseLegend');
+        container.innerHTML = '';
+        
+        // Get year range
+        const years = [...new Set(events.map(e => new Date(e.date).getFullYear()))].sort();
+        
+        if (years.length === 0) return;
+        
+        // Count events by year-month
+        const countByYearMonth = {};
+        events.forEach(e => {
+            const d = new Date(e.date);
+            const key = `${d.getFullYear()}-${d.getMonth()}`;
+            countByYearMonth[key] = (countByYearMonth[key] || 0) + 1;
+        });
+        
+        // Find max for scaling
+        const maxCount = Math.max(...Object.values(countByYearMonth), 1);
+        
+        // Month names for header
+        const monthNames = ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'];
+        const fullMonthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        
+        // Build the grid HTML
+        let html = '';
+        
+        // Header row with month labels
+        html += '<div class="pulse-row pulse-header-row">';
+        html += '<span class="pulse-year-label"></span>'; // Empty corner
+        monthNames.forEach(m => {
+            html += `<span class="pulse-month-label">${m}</span>`;
+        });
+        html += '</div>';
+        
+        // Data rows for each year
+        years.forEach(year => {
+            html += '<div class="pulse-row">';
+            html += `<span class="pulse-year-label">${year}</span>`;
+            
+            for (let month = 0; month < 12; month++) {
+                const key = `${year}-${month}`;
+                const count = countByYearMonth[key] || 0;
+                
+                // Calculate intensity level (0-5)
+                const level = count === 0 ? 0 : Math.min(5, Math.ceil((count / maxCount) * 5));
+                
+                const tooltip = `${fullMonthNames[month]} ${year}: ${count} milestone${count !== 1 ? 's' : ''}`;
+                
+                html += `<div class="pulse-cell" data-level="${level}" title="${tooltip}"></div>`;
+            }
+            
+            html += '</div>';
+        });
+        
+        container.innerHTML = html;
+        
+        // Legend
+        legendContainer.innerHTML = `
+            <span class="pulse-legend-label">Less</span>
+            <span class="pulse-legend-box" data-level="0"></span>
+            <span class="pulse-legend-box" data-level="1"></span>
+            <span class="pulse-legend-box" data-level="2"></span>
+            <span class="pulse-legend-box" data-level="3"></span>
+            <span class="pulse-legend-box" data-level="4"></span>
+            <span class="pulse-legend-box" data-level="5"></span>
+            <span class="pulse-legend-label">More</span>
+        `;
+    }
+
+    // ========== FOCUS SHIFT ==========
+    function renderFocusShift(events) {
+        const container = document.getElementById('focusShift');
+        container.innerHTML = '';
+        
+        // Recent 6 months vs previous 6 months
+        const now = new Date();
+        const sixMonthsAgo = new Date(now.getTime() - 180 * 24 * 60 * 60 * 1000);
+        const twelveMonthsAgo = new Date(now.getTime() - 365 * 24 * 60 * 60 * 1000);
+        
+        const recent = events.filter(e => new Date(e.date) >= sixMonthsAgo);
+        const previous = events.filter(e => {
+            const d = new Date(e.date);
+            return d >= twelveMonthsAgo && d < sixMonthsAgo;
+        });
+        
+        // Calculate category ranks
+        const getTopCategories = (evts) => {
+            const counts = {};
+            evts.forEach(e => counts[e.category] = (counts[e.category] || 0) + 1);
+            return Object.entries(counts).sort((a, b) => b[1] - a[1]);
+        };
+        
+        const recentTop = getTopCategories(recent);
+        const previousTop = getTopCategories(previous);
+        
+        // Get max for scaling
+        const recentMax = recentTop[0]?.[1] || 1;
+        
+        // Show comparison
+        recentTop.forEach(([cat, count]) => {
+            const prevCount = previousTop.find(([c]) => c === cat)?.[1] || 0;
+            const prevRank = previousTop.findIndex(([c]) => c === cat) + 1;
+            const currentRank = recentTop.findIndex(([c]) => c === cat) + 1;
+            
+            const rankChange = prevRank === 0 ? 'new' : prevRank - currentRank;
+            let arrow = '→';
+            let arrowClass = 'same';
+            
+            if (rankChange === 'new' || rankChange > 0) {
+                arrow = '↑';
+                arrowClass = 'up';
+            } else if (rankChange < 0) {
+                arrow = '↓';
+                arrowClass = 'down';
+            }
+            
+            const changeText = rankChange === 'new' ? 'NEW' : 
+                            rankChange > 0 ? `+${rankChange}` : 
+                            rankChange < 0 ? `${rankChange}` : '—';
+            
+            const item = document.createElement('div');
+            item.className = 'focus-item';
+            item.innerHTML = `
+                <span class="focus-category">${getCategoryLabel(cat)}</span>
+                <span class="focus-arrow ${arrowClass}">${arrow}</span>
+                <span class="focus-change">${changeText}</span>
+                <div class="focus-bar">
+                    <div class="focus-bar-fill" data-category="${cat}" style="width: ${(count/recentMax)*100}%"></div>
+                </div>
+            `;
+            container.appendChild(item);
+        });
+    }
+
+    // ========== TOP TAGS ==========
+    function renderTopTags(events) {
+        const container = document.getElementById('topTags');
+        container.innerHTML = '';
+        
+        // Aggregate all tags
+        const tagCounts = {};
+        events.forEach(event => {
+            (event.tags || []).forEach(tag => {
+                tagCounts[tag] = (tagCounts[tag] || 0) + 1;
+            });
+        });
+        
+        // Sort and take top 15
+        const sorted = Object.entries(tagCounts)
+            .sort((a, b) => b[1] - a[1])
+            .slice(0, 15);
+        
+        const maxCount = sorted[0]?.[1] || 1;
+        
+        sorted.forEach(([tag, count], index) => {
+            const el = document.createElement('span');
+            el.className = 'stats-tag';
+            
+            // Size based on frequency
+            if (index < 3) {
+                el.dataset.size = 'large';
+            } else if (index < 7) {
+                el.dataset.size = 'medium';
+            }
+            
+            el.innerHTML = `${tag}<span class="stats-tag-count">${count}</span>`;
+            container.appendChild(el);
+        });
+    }
+
+    // ========== FUN FACTS ==========
+    function renderFunFacts(events) {
+        const container = document.getElementById('funFacts');
+        container.innerHTML = '';
+        
+        // Fact 1: Busiest day of week
+        const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        const dayCounts = [0, 0, 0, 0, 0, 0, 0];
+        events.forEach(e => {
+            const day = new Date(e.date).getDay();
+            dayCounts[day]++;
+        });
+        const busiestDay = dayCounts.indexOf(Math.max(...dayCounts));
+        
+        // Fact 2: Most common tag
+        const tagCounts = {};
+        events.forEach(e => (e.tags || []).forEach(t => tagCounts[t] = (tagCounts[t] || 0) + 1));
+        const topTag = Object.entries(tagCounts).sort((a, b) => b[1] - a[1])[0];
+        
+        // Fact 3: Longest gap between any two consecutive events
+        const sortedByDate = [...events].sort((a, b) => new Date(a.date) - new Date(b.date));
+        let longestGap = 0;
+        let gapStart = null;
+        for (let i = 1; i < sortedByDate.length; i++) {
+            const gap = new Date(sortedByDate[i].date) - new Date(sortedByDate[i-1].date);
+            if (gap > longestGap) {
+                longestGap = gap;
+                gapStart = new Date(sortedByDate[i-1].date);
+            }
+        }
+        const longestGapDays = Math.floor(longestGap / (24 * 60 * 60 * 1000));
+        
+        // Render facts
+        const facts = [
+            {
+                text: `<span class="fun-fact-highlight">${dayNames[busiestDay]}</span> is the busiest day for AI announcements`
+            },
+            {
+                text: topTag ? `"<span class="fun-fact-highlight">${topTag[0]}</span>" appears in ${topTag[1]} milestones` : null
+            },
+            {
+                text: longestGapDays > 0 ? `Longest quiet period: <span class="fun-fact-highlight">${longestGapDays} days</span>` : null
+            }
+        ].filter(f => f.text);
+        
+        facts.forEach(fact => {
+            const el = document.createElement('div');
+            el.className = 'fun-fact';
+            el.innerHTML = `
+                <span class="fun-fact-text">${fact.text}</span>
+            `;
+            container.appendChild(el);
+        });
+    }   
 
     // ========== EVENT PANEL ==========
     function showEventPanel(event) {
@@ -704,6 +1218,9 @@
                 case '2':
                     switchView('grid');
                     break;
+                case '3':
+                    switchView('stats');
+                    break;
                 case 't':
                 case 'T':
                     toggleTheme();
@@ -736,8 +1253,7 @@
 
     // ========== KEYBOARD HELP ==========
     function showKeyboardHelp() {
-        // Simple alert for now - could be a modal in a more polished version
-        alert('Keyboard Shortcuts:\n\n1 - Timeline view\n2 - Grid view\nT - Toggle theme\nEsc - Close panel\n? - Show this help');
+        alert('Keyboard Shortcuts:\n\n1 - Timeline view\n2 - Grid view\n3 - Stats view\nT - Toggle theme\nEsc - Close panel\n? - Show this help');
     }
 
     // ========== INIT ==========
