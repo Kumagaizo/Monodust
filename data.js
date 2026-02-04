@@ -2657,6 +2657,25 @@ const EVENTS = [
         tags: ['hardware', 'consumer', 'device', 'design', 'ambient-ai']
     },
 
+    {
+        id: 'openai-model-retirement-announced-feb-2026',
+        title: 'OpenAI Announces Retirement of GPT-5, GPT-4o, GPT-4.1, o4-mini',
+        date: '2026-01-29',
+        category: 'policy',
+        company: 'openai',
+        claimed: {
+            text: 'Models will retire from ChatGPT February 13, 2026. Only 0.1% daily users still use GPT-4o. Most migrated to GPT-5.2 family. API access unchanged for now.',
+            source: 'OpenAI Blog',
+            url: 'https://openai.com/index/retiring-gpt-4o-and-older-models/'
+        },
+        outcome: {
+            text: 'Announcement made January 29. Second attempt to retire GPT-4o after user backlash forced reinstatement in August 2025. Altman acknowledged underestimating user emotional attachment. Petition launched by users. GPT-5.1 and 5.2 incorporated GPT-4o warmth feedback.',
+            date: '2026-01-30'
+        },
+        impact: 'Signals industry shift toward fewer, more capable flagship models. User experience prioritized over model proliferation. Product consolidation strategy. Reflects rapid model improvement cycle. Adult-specific ChatGPT version and age-prediction tools in development.',
+        tags: ['model-retirement', 'announcement', 'product-strategy', 'user-feedback', 'consolidation']
+    },
+
     // === FEBRUARY 2026 ===
     {
         id: 'gpt-5-2-codex-launch',
@@ -2675,25 +2694,6 @@ const EVENTS = [
         },
         impact: 'Dual-use AI concerns actualized with responsible disclosure approach. Professional cybersecurity tool with deployment safeguards. Context compaction enables endless sessions. Native compaction improves token efficiency. Deployment strategy designed for future capability growth and safety scaling.',
         tags: ['coding', 'cybersecurity', 'dual-use', 'agentic', 'responsible-deployment', 'safety']
-    },
-
-    {
-        id: 'openai-model-retirement-feb-2026',
-        title: 'OpenAI Retires GPT-5, GPT-4o, GPT-4.1, o4-mini',
-        date: '2026-02-13',
-        category: 'policy',
-        company: 'openai',
-        claimed: {
-            text: 'Low usage justifies retirement. Only 0.1% daily users still use GPT-4o. Most users migrated to GPT-5.2 family. ChatGPT access ends Feb 13. API access unchanged for now.',
-            source: 'OpenAI Help Center',
-            url: 'https://help.openai.com/en/articles/9624314-model-release-notes'
-        },
-        outcome: {
-            text: 'Consumer consolidation to GPT-5.2 family. Resources focused on newer models. Altman acknowledged underestimating user emotional attachment to GPT-4o. Adult-specific ChatGPT version in development. Age-prediction tools deployed.',
-            date: '2026-02-13'
-        },
-        impact: 'Industry shift toward fewer, more capable flagship models. User experience focus over model proliferation. Product strategy consolidation. Reflects rapid pace of model improvement making older versions obsolete within months.',
-        tags: ['model-retirement', 'consolidation', 'product-strategy', 'user-migration']
     }
 
 ];
