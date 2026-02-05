@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>AI Milestones Timeline | Kumagaizo</title>
+    <title>AI Milestones & Breakthroughs | Kumagaizo</title>
     <meta name="description" content="Comprehensive timeline of AI milestones from OpenAI, Anthropic, Google, Meta, and more. Tracking of model releases, capabilities, and industry developments.">
     
     <!-- Fonts -->
@@ -25,10 +25,10 @@
             </div>
             <div class="header-left">
                 <div class="logo">
-                    <span class="logo-mark">¦</span>
                     <a href="/" class="logo-link">
-                        <span class="logo-text">AI Milestones Timeline</span>
-                    </a>                      
+                        <span class="logo-mark">Kumagaizo</span>
+                    </a>
+                    <span class="logo-text">AI Milestones Timeline</span>               
                 </div>
             </div>
             <div class="header-center">
@@ -85,11 +85,15 @@
                 </div>
             </div>
 
+<!-- ========================================
+     EXPANDED STATS VIEW - REPLACE LINES 88-189 in index.html
+     ======================================== -->
+
             <!-- Stats View -->
             <div id="statsView" class="view">
                 <div class="stats-container" id="statsContainer">
                     
-                    <!-- Insight 1: The Acceleration -->
+                    <!-- ========== ROW 1: HERO INSIGHT ========== -->
                     <div class="insight-card insight-featured">
                         <div class="insight-content">
                             <div class="insight-headline" id="accelerationHeadline">Loading...</div>
@@ -97,79 +101,131 @@
                         </div>
                     </div>
 
-                    <!-- Main Stats Grid -->
+                    <!-- ========== ROW 2: CORE METRICS (4 columns) ========== -->
                     <div class="stats-grid-insights">
                         
-                        <!-- Insight 2: The Race -->
+                        <!-- The Race (Podium) -->
                         <div class="insight-card">
                             <div class="insight-header">
                                 <span class="insight-label">The Race</span>
                             </div>
-                            <div class="race-podium" id="racePodium">
-                                <!-- Filled by JS -->
-                            </div>
+                            <div class="race-podium" id="racePodium"></div>
                             <div class="insight-footnote" id="raceFootnote"></div>
                         </div>
 
-                        <!-- Insight 3: The Shift -->
+                        <!-- The Shift -->
                         <div class="insight-card">
                             <div class="insight-header">
                                 <span class="insight-label">The Shift</span>
                             </div>
-                            <div class="shift-comparison" id="shiftComparison">
-                                <!-- Filled by JS -->
-                            </div>
+                            <div class="shift-comparison" id="shiftComparison"></div>
                         </div>
 
-                        <!-- Insight 4: Hottest Streak -->
+                        <!-- Hottest Streak -->
                         <div class="insight-card">
                             <div class="insight-header">
                                 <span class="insight-label">Hottest Streak</span>
                             </div>
-                            <div class="streak-content" id="streakContent">
-                                <!-- Filled by JS -->
-                            </div>
+                            <div class="streak-content" id="streakContent"></div>
                         </div>
 
-                        <!-- Insight 5: The Sleeper -->
+                        <!-- The Quiet One -->
                         <div class="insight-card">
                             <div class="insight-header">
                                 <span class="insight-label">The Quiet One</span>
                             </div>
-                            <div class="sleeper-content" id="sleeperContent">
-                                <!-- Filled by JS -->
-                            </div>
+                            <div class="sleeper-content" id="sleeperContent"></div>
                         </div>
 
                     </div>
 
-                    <!-- Visual Timeline: Year over Year comparison -->
+                    <!-- ========== ROW 3: PULSE CHART (Full Width) ========== -->
                     <div class="insight-card insight-wide">
                         <div class="insight-header">
                             <span class="insight-label">AI Development Pulse</span>
                             <span class="insight-subtitle">Monthly milestone density</span>
                         </div>
-                        <div class="pulse-chart" id="pulseChart">
-                            <!-- Filled by JS -->
-                        </div>
+                        <div class="pulse-chart" id="pulseChart"></div>
                         <div class="pulse-legend" id="pulseLegend"></div>
                     </div>
 
-                    <!-- Bottom Row -->
+                    <!-- ========== ROW 4: COMPANY DEEP DIVE (2 columns) ========== -->
+                    <div class="stats-grid-two">
+                        
+                        <!-- Company Focus Radar -->
+                        <div class="insight-card">
+                            <div class="insight-header">
+                                <span class="insight-label">Company DNA</span>
+                                <span class="insight-subtitle">Category focus fingerprint</span>
+                            </div>
+                            <div class="company-radar" id="companyRadar"></div>
+                        </div>
+
+                        <!-- Company Timeline -->
+                        <div class="insight-card">
+                            <div class="insight-header">
+                                <span class="insight-label">Activity Timeline</span>
+                                <span class="insight-subtitle">When each company ships</span>
+                            </div>
+                            <div class="company-timeline" id="companyTimeline"></div>
+                        </div>
+
+                    </div>
+
+                    <!-- ========== ROW 5: MOMENTUM & PATTERNS (3 columns) ========== -->
+                    <div class="stats-grid-three">
+                        
+                        <!-- Momentum Tracker -->
+                        <div class="insight-card">
+                            <div class="insight-header">
+                                <span class="insight-label">Momentum</span>
+                                <span class="insight-subtitle">90-day acceleration</span>
+                            </div>
+                            <div class="momentum-chart" id="momentumChart"></div>
+                        </div>
+
+                        <!-- First Mover Analysis -->
+                        <div class="insight-card">
+                            <div class="insight-header">
+                                <span class="insight-label">First Movers</span>
+                                <span class="insight-subtitle">Who leads each category</span>
+                            </div>
+                            <div class="first-mover" id="firstMover"></div>
+                        </div>
+
+                        <!-- Day of Week Pattern -->
+                        <div class="insight-card">
+                            <div class="insight-header">
+                                <span class="insight-label">Launch Days</span>
+                                <span class="insight-subtitle">Preferred announcement days</span>
+                            </div>
+                            <div class="day-pattern" id="dayPattern"></div>
+                        </div>
+
+                    </div>
+
+                    <!-- ========== ROW 6: CATEGORY DOMINANCE (Full Width) ========== -->
+                    <div class="insight-card insight-wide">
+                        <div class="insight-header">
+                            <span class="insight-label">Category Dominance</span>
+                            <span class="insight-subtitle">Who owns each space</span>
+                        </div>
+                        <div class="category-rings" id="categoryRings"></div>
+                    </div>
+
+                    <!-- ========== ROW 7: TAGS & TRENDS (2 columns) ========== -->
                     <div class="stats-grid-bottom">
                         
-                        <!-- Category Evolution -->
+                        <!-- Focus Shift -->
                         <div class="insight-card">
                             <div class="insight-header">
                                 <span class="insight-label">Focus Shift</span>
                                 <span class="insight-subtitle">What's getting attention now vs before</span>
                             </div>
-                            <div class="focus-shift" id="focusShift">
-                                <!-- Filled by JS -->
-                            </div>
+                            <div class="focus-shift" id="focusShift"></div>
                         </div>
 
-                        <!-- Trending Tags Cloud -->
+                        <!-- Trending Tags -->
                         <div class="insight-card">
                             <div class="insight-header">
                                 <span class="insight-label">Buzzwords</span>
@@ -180,10 +236,17 @@
 
                     </div>
 
-                    <!-- Fun Facts Footer -->
-                    <div class="fun-facts" id="funFacts">
-                        <!-- Filled by JS -->
+                    <!-- ========== ROW 8: TAG CONNECTIONS (Full Width) ========== -->
+                    <div class="insight-card insight-wide">
+                        <div class="insight-header">
+                            <span class="insight-label">Tag Connections</span>
+                            <span class="insight-subtitle">Which themes appear together</span>
+                        </div>
+                        <div class="tag-network" id="tagNetwork"></div>
                     </div>
+
+                    <!-- ========== ROW 9: FUN FACTS FOOTER ========== -->
+                    <div class="fun-facts" id="funFacts"></div>
 
                 </div>
             </div>

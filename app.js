@@ -520,7 +520,7 @@
             return;
         }
         
-        // Calculate and render each insight
+        // Original insights
         renderAccelerationInsight(events);
         renderRacePodium(events);
         renderShiftComparison(events);
@@ -530,13 +530,30 @@
         renderFocusShift(events);
         renderTopTags(events);
         renderFunFacts(events);
+        
+        // NEW: Extended insights
+        renderCompanyRadar(events);
+        renderCompanyTimeline(events);
+        renderMomentumChart(events);
+        renderFirstMover(events);
+        renderDayPattern(events);
+        renderCategoryRings(events);
+        renderTagNetwork(events);
     }
 
     function renderEmptyStats() {
         document.getElementById('accelerationHeadline').textContent = 'No milestones match current filters';
         document.getElementById('accelerationDetail').textContent = 'Try adjusting your filters to see insights.';
-        // Clear other sections
-        ['racePodium', 'shiftComparison', 'streakContent', 'sleeperContent', 'pulseChart', 'focusShift', 'topTags', 'funFacts'].forEach(id => {
+        
+        // Clear all sections including new ones
+        const sections = [
+            'racePodium', 'shiftComparison', 'streakContent', 'sleeperContent', 
+            'pulseChart', 'focusShift', 'topTags', 'funFacts',
+            'companyRadar', 'companyTimeline', 'momentumChart', 
+            'firstMover', 'dayPattern', 'categoryRings', 'tagNetwork'
+        ];
+        
+        sections.forEach(id => {
             const el = document.getElementById(id);
             if (el) el.innerHTML = '';
         });
@@ -1019,7 +1036,514 @@
             `;
             container.appendChild(el);
         });
-    }   
+    }
+
+    function getStatsTooltip() {
+        let tooltip = document.getElementById('statsTooltip');
+        if (!tooltip) {
+            tooltip = document.createElement('div');
+            tooltip.id = 'statsTooltip';
+            tooltip.className = 'stats-tooltip';
+            document.body.appendChild(tooltip);
+        }
+        return tooltip;
+    }
+    
+    function showTooltip(e, text) {
+        const tooltip = getStatsTooltip();
+        tooltip.textContent = text;
+        tooltip.style.left = e.clientX + 'px';
+        tooltip.style.top = (e.clientY - 40) + 'px';
+        tooltip.classList.add('visible');
+    }
+    
+    function moveTooltip(e) {
+        const tooltip = getStatsTooltip();
+        tooltip.style.left = e.clientX + 'px';
+        tooltip.style.top = (e.clientY - 40) + 'px';
+    }
+    
+    function hideTooltip() {
+        const tooltip = getStatsTooltip();
+        tooltip.classList.remove('visible');
+    }
+
+    // ========== COMPANY RADAR (DNA) ==========
+    function renderCompanyRadar(events) {
+        const container = document.getElementById('companyRadar');
+        if (!container) return;
+        container.innerHTML = '';
+        
+        // Count by company and category
+        const companyCategories = {};
+        const companies = [...new Set(events.map(e => e.company))];
+        
+        events.forEach(e => {
+            if (!companyCategories[e.company]) {
+                companyCategories[e.company] = {};
+            }
+            companyCategories[e.company][e.category] = (companyCategories[e.company][e.category] || 0) + 1;
+        });
+        
+        // Get all categories
+        const categories = Object.keys(CATEGORIES);
+        
+        // Sort companies by total count
+        const sortedCompanies = companies.sort((a, b) => {
+            const totalA = Object.values(companyCategories[a] || {}).reduce((s, v) => s + v, 0);
+            const totalB = Object.values(companyCategories[b] || {}).reduce((s, v) => s + v, 0);
+            return totalB - totalA;
+        });
+        
+        // Create bars for each company
+        sortedCompanies.forEach(company => {
+            const data = companyCategories[company] || {};
+            const total = Object.values(data).reduce((s, v) => s + v, 0);
+            if (total === 0) return;
+            
+            const row = document.createElement('div');
+            row.className = 'radar-company';
+            
+            let barsHTML = '';
+            categories.forEach(cat => {
+                const count = data[cat] || 0;
+                const percent = (count / total) * 100;
+                if (percent > 0) {
+                    barsHTML += `<div class="radar-segment" data-category="${cat}" data-tooltip="${CATEGORIES[cat].label}: ${count} (${Math.round(percent)}%)" style="width: ${percent}%"></div>`;
+                }
+            });
+            
+            row.innerHTML = `
+                <span class="radar-label">${getCompanyLabel(company)}</span>
+                <div class="radar-bars">${barsHTML}</div>
+            `;
+            
+            container.appendChild(row);
+        });
+        
+        // Add tooltip listeners to segments
+        container.querySelectorAll('.radar-segment').forEach(segment => {
+            segment.addEventListener('mouseenter', (e) => showTooltip(e, segment.dataset.tooltip));
+            segment.addEventListener('mousemove', moveTooltip);
+            segment.addEventListener('mouseleave', hideTooltip);
+        });
+        
+        // Add legend
+        const legend = document.createElement('div');
+        legend.className = 'radar-legend';
+        legend.innerHTML = categories.map(cat => `
+            <div class="radar-legend-item">
+                <span class="radar-legend-dot" style="background: var(--cat-${cat})"></span>
+                <span>${CATEGORIES[cat].label.split(' ')[0]}</span>
+            </div>
+        `).join('');
+        container.appendChild(legend);
+    }
+
+    // ========== COMPANY TIMELINE ==========
+    function renderCompanyTimeline(events) {
+        const container = document.getElementById('companyTimeline');
+        if (!container) return;
+        container.innerHTML = '';
+        
+        // Get date range
+        const dates = events.map(e => new Date(e.date).getTime());
+        const minDate = Math.min(...dates);
+        const maxDate = Math.max(...dates);
+        const range = maxDate - minDate || 1;
+        
+        // Group by company
+        const companyData = {};
+        events.forEach(e => {
+            if (!companyData[e.company]) {
+                companyData[e.company] = { events: [], first: Infinity, last: 0 };
+            }
+            const time = new Date(e.date).getTime();
+            companyData[e.company].events.push(time);
+            companyData[e.company].first = Math.min(companyData[e.company].first, time);
+            companyData[e.company].last = Math.max(companyData[e.company].last, time);
+        });
+        
+        // Sort by first appearance (who entered first)
+        const sorted = Object.entries(companyData).sort((a, b) => a[1].first - b[1].first);
+        
+        sorted.forEach(([company, data]) => {
+            const left = ((data.first - minDate) / range) * 100;
+            const width = Math.max(((data.last - data.first) / range) * 100, 2);
+            const tooltipText = `${data.events.length} milestones · ${new Date(data.first).toLocaleDateString()} → ${new Date(data.last).toLocaleDateString()}`;
+            
+            const row = document.createElement('div');
+            row.className = 'timeline-company-row';
+            row.innerHTML = `
+                <span class="timeline-company-label">${getCompanyLabel(company)}</span>
+                <div class="timeline-bar-container">
+                    <div class="timeline-bar-fill" data-company="${company}" 
+                         data-tooltip="${tooltipText}"
+                         style="left: ${left}%; width: ${width}%">
+                        <span class="timeline-count">${data.events.length}</span>
+                    </div>
+                </div>
+            `;
+            container.appendChild(row);
+        });
+        
+        // Add tooltip listeners
+        container.querySelectorAll('.timeline-bar-fill').forEach(bar => {
+            bar.addEventListener('mouseenter', (e) => showTooltip(e, bar.dataset.tooltip));
+            bar.addEventListener('mousemove', moveTooltip);
+            bar.addEventListener('mouseleave', hideTooltip);
+        });
+        
+        // Add axis
+        const minYear = new Date(minDate).getFullYear();
+        const maxYear = new Date(maxDate).getFullYear();
+        const axis = document.createElement('div');
+        axis.className = 'timeline-axis';
+        axis.innerHTML = `<span>${minYear}</span><span>${maxYear}</span>`;
+        container.appendChild(axis);
+    }
+
+    // ========== MOMENTUM CHART ==========
+    function renderMomentumChart(events) {
+        const container = document.getElementById('momentumChart');
+        if (!container) return;
+        container.innerHTML = '';
+        
+        const now = new Date();
+        const ninetyDaysAgo = new Date(now.getTime() - 90 * 24 * 60 * 60 * 1000);
+        const oneEightyDaysAgo = new Date(now.getTime() - 180 * 24 * 60 * 60 * 1000);
+        
+        // Count recent vs previous 90 days
+        const companyMomentum = {};
+        
+        events.forEach(e => {
+            const date = new Date(e.date);
+            if (!companyMomentum[e.company]) {
+                companyMomentum[e.company] = { recent: 0, previous: 0 };
+            }
+            
+            if (date >= ninetyDaysAgo) {
+                companyMomentum[e.company].recent++;
+            } else if (date >= oneEightyDaysAgo) {
+                companyMomentum[e.company].previous++;
+            }
+        });
+        
+        // Calculate momentum (change)
+        const momentum = Object.entries(companyMomentum)
+            .map(([company, data]) => ({
+                company,
+                change: data.recent - data.previous,
+                recent: data.recent,
+                previous: data.previous
+            }))
+            .filter(m => m.recent > 0 || m.previous > 0)
+            .sort((a, b) => b.change - a.change);
+        
+        if (momentum.length === 0) {
+            container.innerHTML = '<div class="empty-state">No recent activity to compare</div>';
+            return;
+        }
+        
+        const maxChange = Math.max(...momentum.map(m => Math.abs(m.change)), 1);
+        
+        momentum.forEach(({ company, change, recent, previous }) => {
+            const barWidth = change === 0 ? 0 : (Math.abs(change) / maxChange) * 45;
+            const isPositive = change >= 0;
+            const tooltipText = `Last 90 days: ${recent} · Previous 90 days: ${previous}`;
+            
+            const row = document.createElement('div');
+            row.className = 'momentum-row';
+            
+            if (change === 0) {
+                row.innerHTML = `
+                    <span class="momentum-label">${getCompanyLabel(company)}</span>
+                    <div class="momentum-bar-container">
+                        <div class="momentum-center"></div>
+                        <div class="momentum-zero" data-tooltip="${tooltipText}">
+                            <span class="momentum-value">0</span>
+                        </div>
+                    </div>
+                `;
+            } else {
+                row.innerHTML = `
+                    <span class="momentum-label">${getCompanyLabel(company)}</span>
+                    <div class="momentum-bar-container">
+                        <div class="momentum-center"></div>
+                        <div class="momentum-bar ${isPositive ? 'positive' : 'negative'}" 
+                             data-tooltip="${tooltipText}"
+                             style="width: ${Math.max(barWidth, 8)}%">
+                            <span class="momentum-value">${change > 0 ? '+' : ''}${change}</span>
+                        </div>
+                    </div>
+                `;
+            }
+            container.appendChild(row);
+        });
+        
+        // Add tooltip listeners
+        container.querySelectorAll('.momentum-bar, .momentum-zero').forEach(bar => {
+            bar.addEventListener('mouseenter', (e) => showTooltip(e, bar.dataset.tooltip));
+            bar.addEventListener('mousemove', moveTooltip);
+            bar.addEventListener('mouseleave', hideTooltip);
+        });
+        
+        // Add axis labels
+        const axis = document.createElement('div');
+        axis.className = 'momentum-axis';
+        axis.innerHTML = '<span>← Slowing</span><span>Accelerating →</span>';
+        container.appendChild(axis);
+    }
+
+    // ========== FIRST MOVER ==========
+    function renderFirstMover(events) {
+        const container = document.getElementById('firstMover');
+        if (!container) return;
+        container.innerHTML = '';
+        
+        // For each category, find who has the most
+        const categoryLeaders = {};
+        
+        events.forEach(e => {
+            if (!categoryLeaders[e.category]) {
+                categoryLeaders[e.category] = {};
+            }
+            categoryLeaders[e.category][e.company] = (categoryLeaders[e.category][e.company] || 0) + 1;
+        });
+        
+        // Find leader for each category
+        const categories = Object.keys(CATEGORIES);
+        
+        const results = categories.map(cat => {
+            const data = categoryLeaders[cat] || {};
+            const entries = Object.entries(data).sort((a, b) => b[1] - a[1]);
+            const leader = entries[0];
+            return {
+                category: cat,
+                leader: leader ? leader[0] : null,
+                count: leader ? leader[1] : 0,
+                total: Object.values(data).reduce((s, v) => s + v, 0),
+                breakdown: entries.slice(0, 3) // Top 3 for tooltip
+            };
+        }).filter(r => r.leader);
+        
+        results.forEach(({ category, leader, count, total, breakdown }) => {
+            const percent = total > 0 ? (count / total) * 100 : 0;
+            const tooltipText = breakdown.map(([c, n]) => `${getCompanyLabel(c)}: ${n}`).join(' · ');
+            
+            const row = document.createElement('div');
+            row.className = 'first-mover-row';
+            row.dataset.tooltip = tooltipText;
+            row.innerHTML = `
+                <span class="first-mover-category">${CATEGORIES[category].label.split(' ')[0]}</span>
+                <span class="first-mover-company">${getCompanyLabel(leader)}</span>
+                <span class="first-mover-count">${count}/${total}</span>
+                <div class="first-mover-bar">
+                    <div class="first-mover-bar-fill" style="width: ${percent}%"></div>
+                </div>
+            `;
+            container.appendChild(row);
+        });
+        
+        // Add tooltip listeners
+        container.querySelectorAll('.first-mover-row').forEach(row => {
+            row.addEventListener('mouseenter', (e) => showTooltip(e, row.dataset.tooltip));
+            row.addEventListener('mousemove', moveTooltip);
+            row.addEventListener('mouseleave', hideTooltip);
+        });
+    }
+
+    // ========== DAY PATTERN ==========
+    function renderDayPattern(events) {
+        const container = document.getElementById('dayPattern');
+        if (!container) return;
+        container.innerHTML = '';
+        
+        const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+        const fullDays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        const dayCounts = [0, 0, 0, 0, 0, 0, 0];
+        
+        events.forEach(e => {
+            const day = new Date(e.date).getDay();
+            dayCounts[day]++;
+        });
+        
+        const maxCount = Math.max(...dayCounts, 1);
+        const maxDay = dayCounts.indexOf(maxCount);
+        const total = dayCounts.reduce((a, b) => a + b, 0);
+        
+        days.forEach((day, i) => {
+            const count = dayCounts[i];
+            const percent = (count / maxCount) * 100;
+            const isMax = i === maxDay && count > 0;
+            const percentage = total > 0 ? Math.round((count / total) * 100) : 0;
+            const tooltipText = `${fullDays[i]}: ${count} milestones (${percentage}% of all)`;
+            
+            const row = document.createElement('div');
+            row.className = 'day-row';
+            row.innerHTML = `
+                <span class="day-label">${day}</span>
+                <div class="day-bar-container">
+                    <div class="day-bar ${isMax ? 'day-highlight' : ''}" data-tooltip="${tooltipText}" style="width: ${percent}%">
+                        <span class="day-count">${count}</span>
+                    </div>
+                </div>
+            `;
+            container.appendChild(row);
+        });
+        
+        // Add tooltip listeners
+        container.querySelectorAll('.day-bar').forEach(bar => {
+            bar.addEventListener('mouseenter', (e) => showTooltip(e, bar.dataset.tooltip));
+            bar.addEventListener('mousemove', moveTooltip);
+            bar.addEventListener('mouseleave', hideTooltip);
+        });
+    }
+    
+
+    // ========== CATEGORY RINGS (Donut Charts) ==========
+    function renderCategoryRings(events) {
+        const container = document.getElementById('categoryRings');
+        if (!container) return;
+        container.innerHTML = '';
+        
+        const categories = Object.keys(CATEGORIES);
+        
+        // Company colors for the rings
+        const companyColors = {
+            openai: '#10a37f',
+            anthropic: '#cc9366',
+            google: '#4285f4',
+            meta: '#0088ff',
+            mistral: '#ff7b00',
+            xai: '#888888',
+            deepseek: '#4e79a7'
+        };
+        
+        categories.forEach(category => {
+            const categoryEvents = events.filter(e => e.category === category);
+            if (categoryEvents.length === 0) return;
+            
+            // Count by company
+            const companyCounts = {};
+            categoryEvents.forEach(e => {
+                companyCounts[e.company] = (companyCounts[e.company] || 0) + 1;
+            });
+            
+            const total = categoryEvents.length;
+            const sorted = Object.entries(companyCounts).sort((a, b) => b[1] - a[1]);
+            const leader = sorted[0];
+            
+            // Create ring segments
+            const radius = 38;
+            const circumference = 2 * Math.PI * radius;
+            let currentOffset = 0;
+            
+            let segmentsHTML = '';
+            sorted.forEach(([company, count]) => {
+                const percent = count / total;
+                const dashLength = percent * circumference;
+                const dashOffset = -currentOffset;
+                const color = companyColors[company] || '#6366f1';
+                
+                segmentsHTML += `
+                    <circle 
+                        class="ring-segment" 
+                        cx="50" cy="50" r="${radius}"
+                        stroke="${color}"
+                        stroke-dasharray="${dashLength} ${circumference - dashLength}"
+                        stroke-dashoffset="${dashOffset}"
+                        data-tooltip="${getCompanyLabel(company)}: ${count} (${Math.round(percent * 100)}%)"
+                    />
+                `;
+                currentOffset += dashLength;
+            });
+            
+            const ringContainer = document.createElement('div');
+            ringContainer.className = 'ring-container';
+            ringContainer.innerHTML = `
+                <div class="ring-chart">
+                    <svg class="ring-svg" viewBox="0 0 100 100">
+                        ${segmentsHTML}
+                    </svg>
+                    <div class="ring-center">
+                        <div class="ring-total">${total}</div>
+                    </div>
+                </div>
+                <div class="ring-category-label">${CATEGORIES[category].label}</div>
+                <div class="ring-leader">${getCompanyLabel(leader[0])}</div>
+            `;
+            
+            container.appendChild(ringContainer);
+            
+            // Add tooltip listeners to segments
+            ringContainer.querySelectorAll('.ring-segment').forEach(segment => {
+                segment.addEventListener('mouseenter', (e) => showTooltip(e, segment.dataset.tooltip));
+                segment.addEventListener('mousemove', moveTooltip);
+                segment.addEventListener('mouseleave', hideTooltip);
+            });
+        });
+    }
+
+    // ========== TAG NETWORK (Co-occurrence) ==========
+    function renderTagNetwork(events) {
+        const container = document.getElementById('tagNetwork');
+        if (!container) return;
+        container.innerHTML = '';
+        
+        // Count tag co-occurrences
+        const cooccurrence = {};
+        
+        events.forEach(e => {
+            if (!e.tags || e.tags.length < 2) return;
+            
+            // For each pair of tags
+            for (let i = 0; i < e.tags.length; i++) {
+                for (let j = i + 1; j < e.tags.length; j++) {
+                    const tag1 = e.tags[i];
+                    const tag2 = e.tags[j];
+                    // Sort to ensure consistent key
+                    const key = [tag1, tag2].sort().join('|||');
+                    cooccurrence[key] = (cooccurrence[key] || 0) + 1;
+                }
+            }
+        });
+        
+        // Sort by frequency and take top pairs
+        const sorted = Object.entries(cooccurrence)
+            .sort((a, b) => b[1] - a[1])
+            .slice(0, 15);
+        
+        if (sorted.length === 0) {
+            container.innerHTML = '<div style="text-align: center; color: var(--text-tertiary); font-size: 0.75rem;">Not enough tag data</div>';
+            return;
+        }
+        
+        const maxCount = sorted[0][1];
+        
+        sorted.forEach(([key, count]) => {
+            const [tag1, tag2] = key.split('|||');
+            const isStrong = count >= maxCount * 0.7;
+            
+            const connection = document.createElement('div');
+            connection.className = `tag-connection ${isStrong ? 'strong' : ''}`;
+            connection.innerHTML = `
+                <span class="tag-connection-item">${formatTagLabel(tag1)}</span>
+                <span class="tag-connection-link">↔</span>
+                <span class="tag-connection-item">${formatTagLabel(tag2)}</span>
+                <span class="tag-connection-count">×${count}</span>
+            `;
+            container.appendChild(connection);
+        });
+    }
+
+    // Helper: Format tag label (capitalize, replace dashes)
+    function formatTagLabel(tag) {
+        return tag
+            .split('-')
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(' ');
+    }
 
     // ========== EVENT PANEL ==========
     function showEventPanel(event) {
