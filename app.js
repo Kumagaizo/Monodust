@@ -1409,15 +1409,16 @@
         
         const categories = Object.keys(CATEGORIES);
         
-        // Company colors for the rings
+        // Company colors from CSS variables (single source of truth)
+        const rootStyles = getComputedStyle(document.documentElement);
         const companyColors = {
-            openai: '#10a37f',
-            anthropic: '#cc9366',
-            google: '#4285f4',
-            meta: '#0088ff',
-            mistral: '#ff7b00',
-            xai: '#888888',
-            deepseek: '#4e79a7'
+            openai: rootStyles.getPropertyValue('--company-openai').trim() || '#10a37f',
+            anthropic: rootStyles.getPropertyValue('--company-anthropic').trim() || '#cc9366',
+            google: rootStyles.getPropertyValue('--company-google').trim() || '#4285f4',
+            meta: rootStyles.getPropertyValue('--company-meta').trim() || '#0088ff',
+            mistral: rootStyles.getPropertyValue('--company-mistral').trim() || '#ff7b00',
+            xai: rootStyles.getPropertyValue('--company-xai').trim() || '#888888',
+            deepseek: rootStyles.getPropertyValue('--company-deepseek').trim() || '#4e79a7'
         };
         
         categories.forEach(category => {

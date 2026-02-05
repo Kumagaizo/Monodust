@@ -59,15 +59,54 @@
 }
 
 :root {
-    --category-models:        #6366F1;
-    --category-applications:  #0EA5E9;
-    --category-hardware:      #F59E0B;
-    --category-policy:        #10B981;
-    --category-physical:     #8B5CF6;
+    /* ==========================================
+       COLOR SYSTEM - ALL COLORS MANAGED HERE
+       ========================================== */
     
-    --accent-primary:         #ADA8A5;
+    /* Accent Color - Pure Neutral Steel */
+    --accent: #494960;
+    --accent-rgb: 73, 73, 96;
+
+    /* Semantic Colors - High-Tech Tones (Corrected)
+    They now stand out from the Zinc categories without being "too much" */
+    --color-success: #a9a9c0;      /* Vibrant Green (Actionable) */
+    --color-success-rgb: 169, 169, 192;
+    --color-error: #494960;        /* Crisp Red (Distinct from Anthropic) */
+    --color-error-rgb: 73, 73, 96;
+
+    /* Company Colors - Matte Brand Finish
+    Desaturated by ~15% to sit perfectly on the Zinc structure */
+    --company-openai: #108a6a;      /* Muted OpenAI Green */
+    --company-openai-rgb: 16, 138, 106;
+    --company-anthropic: #c46a4d;   /* Muted Anthropic Brass (Earthier, not Red) */
+    --company-anthropic-rgb: 196, 106, 77;
+    --company-google: #5585d9;      /* Muted Google Blue */
+    --company-google-rgb: 85, 133, 217;
+    --company-meta: #3b82f6;        /* Modern Meta Blue */
+    --company-meta-rgb: 59, 130, 246;
+    --company-mistral: #e67e22;     /* Muted Mistral Orange */
+    --company-mistral-rgb: 230, 126, 34;
+    --company-xai: #71717a;         /* Zinc-Steel for xAI */
+    --company-xai-rgb: 113, 113, 122;
+    --company-deepseek: #5a6fa6;    /* Muted Navy */
+    --company-deepseek-rgb: 90, 111, 166;
+
+    /* Category Colors - The "Indigo-Slate" Scale
+    Now perfectly in tandem with your #494960 accent. */
+    --cat-models: #23232f;         /* Deepest Midnight (Category Base) */
+    --cat-models-rgb: 35, 35, 47;
+    --cat-applications: #494960;   /* Your Accent Color (Direct Match) */
+    --cat-applications-rgb: 73, 73, 96;
+    --cat-hardware: #787891;       /* Mid Slate Blue */
+    --cat-hardware-rgb: 120, 120, 145;
+    --cat-policy: #a9a9c0;         /* Light Slate Blue */
+    --cat-policy-rgb: 169, 169, 192;
+    --cat-physical: #c8c8d5;       /* Darkened Silver Slate - Clean & Professional */
+    --cat-physical-rgb: 200, 200, 213;
     
-    --accent-rgb: 173, 168, 165; /* For the pulse chart - adjust to your accent color */
+    /* ==========================================
+       SPACING, TYPOGRAPHY, ETC.
+       ========================================== */
     
     /* Spacing */
     --space-xs: 4px;
@@ -196,7 +235,7 @@ body {
 .logo-text {
     font-size: 0.875rem;
     font-weight: 600;
-    color: var(--accent-primary);
+    color: var(--accent);
     letter-spacing: -0.02em;
     text-decoration: none;
 }
@@ -402,11 +441,11 @@ body {
     border-radius: 50%;
 }
 
-.grid-card-category[data-category="models"]::before { background: var(--category-models); }
-.grid-card-category[data-category="applications"]::before { background: var(--category-applications); }
-.grid-card-category[data-category="hardware"]::before { background: var(--category-hardware); }
-.grid-card-category[data-category="policy"]::before { background: var(--category-policy); }
-.grid-card-category[data-category="physical"]::before { background: var(--category-physical); }
+.grid-card-category[data-category="models"]::before { background: var(--cat-models); }
+.grid-card-category[data-category="applications"]::before { background: var(--cat-applications); }
+.grid-card-category[data-category="hardware"]::before { background: var(--cat-hardware); }
+.grid-card-category[data-category="policy"]::before { background: var(--cat-policy); }
+.grid-card-category[data-category="physical"]::before { background: var(--cat-physical); }
 
 /* ========== TIMELINE VIEW ========== */
 
@@ -523,16 +562,16 @@ body {
 }
 
 .timeline-event.selected .timeline-event-dot {
-    border-color: var(--accent-primary);
+    border-color: var(--accent);
     box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.3);
 }
 
 /* Dot colors by category */
-.timeline-event[data-category="models"] .timeline-event-dot { border-color: var(--category-models); }
-.timeline-event[data-category="applications"] .timeline-event-dot { border-color: var(--category-applications); }
-.timeline-event[data-category="hardware"] .timeline-event-dot { border-color: var(--category-hardware); }
-.timeline-event[data-category="policy"] .timeline-event-dot { border-color: var(--category-policy); }
-.timeline-event[data-category="physical"] .timeline-event-dot { border-color: var(--category-physical); }
+.timeline-event[data-category="models"] .timeline-event-dot { border-color: var(--cat-models); }
+.timeline-event[data-category="applications"] .timeline-event-dot { border-color: var(--cat-applications); }
+.timeline-event[data-category="hardware"] .timeline-event-dot { border-color: var(--cat-hardware); }
+.timeline-event[data-category="policy"] .timeline-event-dot { border-color: var(--cat-policy); }
+.timeline-event[data-category="physical"] .timeline-event-dot { border-color: var(--cat-physical); }
 
 /* Connector */
 .timeline-event-connector {
@@ -592,11 +631,11 @@ body {
     border-radius: 50%;
 }
 
-.timeline-event-category[data-category="models"]::before { background: var(--category-models); }
-.timeline-event-category[data-category="applications"]::before { background: var(--category-applications); }
-.timeline-event-category[data-category="hardware"]::before { background: var(--category-hardware); }
-.timeline-event-category[data-category="policy"]::before { background: var(--category-policy); }
-.timeline-event-category[data-category="physical"]::before { background: var(--category-physical); }
+.timeline-event-category[data-category="models"]::before { background: var(--cat-models); }
+.timeline-event-category[data-category="applications"]::before { background: var(--cat-applications); }
+.timeline-event-category[data-category="hardware"]::before { background: var(--cat-hardware); }
+.timeline-event-category[data-category="policy"]::before { background: var(--cat-policy); }
+.timeline-event-category[data-category="physical"]::before { background: var(--cat-physical); }
 
 /* Empty State */
 .empty-state {
@@ -722,11 +761,11 @@ body {
     border-radius: 50%;
 }
 
-.category-badge[data-category="models"]::before { background: var(--category-models); }
-.category-badge[data-category="applications"]::before { background: var(--category-applications); }
-.category-badge[data-category="hardware"]::before { background: var(--category-hardware); }
-.category-badge[data-category="policy"]::before { background: var(--category-policy); }
-.category-badge[data-category="physical"]::before { background: var(--category-physical); }
+.category-badge[data-category="models"]::before { background: var(--cat-models); }
+.category-badge[data-category="applications"]::before { background: var(--cat-applications); }
+.category-badge[data-category="hardware"]::before { background: var(--cat-hardware); }
+.category-badge[data-category="policy"]::before { background: var(--cat-policy); }
+.category-badge[data-category="physical"]::before { background: var(--cat-physical); }
 
 /* Panel Sections */
 .panel-section {
@@ -761,7 +800,7 @@ body {
     align-items: center;
     gap: 6px;
     font-size: 0.75rem;
-    color: var(--accent-primary);
+    color: var(--accent);
     text-decoration: none;
     margin-top: var(--space-sm);
     transition: opacity var(--transition-fast);
@@ -833,7 +872,7 @@ body {
     min-width: 18px;
     height: 18px;
     padding: 0 5px;
-    background: var(--accent-primary);
+    background: var(--accent);
     color: white;
     border-radius: var(--radius-full);
     font-size: 0.6875rem;
@@ -995,7 +1034,7 @@ body {
     position: absolute;
     top: 50%;
     height: 4px;
-    background: var(--accent-primary);
+    background: var(--accent);
     border-radius: var(--radius-full);
     transform: translateY(-50%);
     pointer-events: none;
@@ -1123,7 +1162,6 @@ body {
     align-items: center;
     gap: 1.5rem;
     background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
-    border: 1px solid var(--accent);
     padding: 2rem;
 }
 
@@ -1220,13 +1258,13 @@ body {
     transition: all 0.3s ease;
 }
 
-.podium-bar[data-company="openai"] { background: #13A47D; }
-.podium-bar[data-company="anthropic"] { background: #D87756; }
-.podium-bar[data-company="google"] { background:#1566E6; }
-.podium-bar[data-company="meta"] { background:#A0D4F3; }
-.podium-bar[data-company="mistral"] { background: #ff7000; }
-.podium-bar[data-company="xai"] { background: #7E97D2; }
-.podium-bar[data-company="deepseek"] { background: #4D6BFE; }
+.podium-bar[data-company="openai"] { background: var(--company-openai); }
+.podium-bar[data-company="anthropic"] { background: var(--company-anthropic); }
+.podium-bar[data-company="google"] { background:var(--company-google); }
+.podium-bar[data-company="meta"] { background:var(--company-meta); }
+.podium-bar[data-company="mistral"] { background: var(--company-mistral); }
+.podium-bar[data-company="xai"] { background: var(--company-xai); }
+.podium-bar[data-company="deepseek"] { background: var(--company-deepseek); }
 
 .podium-count {
     font-size: 1rem;
@@ -1299,11 +1337,11 @@ body {
     border-radius: 3px;
 }
 
-.shift-bar-new[data-category="models"] { background: var(--category-models); }
-.shift-bar-new[data-category="applications"] { background: var(--category-applications); }
-.shift-bar-new[data-category="hardware"] { background: var(--category-hardware); }
-.shift-bar-new[data-category="policy"] { background: var(--category-policy); }
-.shift-bar-new[data-category="physical"] { background: var(--category-physical); }
+.shift-bar-new[data-category="models"] { background: var(--cat-models); }
+.shift-bar-new[data-category="applications"] { background: var(--cat-applications); }
+.shift-bar-new[data-category="hardware"] { background: var(--cat-hardware); }
+.shift-bar-new[data-category="policy"] { background: var(--cat-policy); }
+.shift-bar-new[data-category="physical"] { background: var(--cat-physical); }
 
 .shift-change {
     width: 50px;
@@ -1539,11 +1577,11 @@ body {
     transition: width 0.3s ease;
 }
 
-.focus-bar-fill[data-category="models"] { background: var(--category-models); }
-.focus-bar-fill[data-category="applications"] { background: var(--category-applications); }
-.focus-bar-fill[data-category="hardware"] { background: var(--category-hardware); }
-.focus-bar-fill[data-category="policy"] { background: var(--category-policy); }
-.focus-bar-fill[data-category="physical"] { background: var(--category-physical); }
+.focus-bar-fill[data-category="models"] { background: var(--cat-models); }
+.focus-bar-fill[data-category="applications"] { background: var(--cat-applications); }
+.focus-bar-fill[data-category="hardware"] { background: var(--cat-hardware); }
+.focus-bar-fill[data-category="policy"] { background: var(--cat-policy); }
+.focus-bar-fill[data-category="physical"] { background: var(--cat-physical); }
 
 /* ========== TAGS ========== */
 .stats-tags {
@@ -1948,15 +1986,6 @@ body {
    Add this to the END of your styles.css
    ======================================== */
 
-/* Category Colors - Add these to your :root if not already present */
-:root {
-    --cat-models: #8b5cf6;
-    --cat-applications: #10b981;
-    --cat-hardware: #f59e0b;
-    --cat-policy: #ef4444;
-    --cat-physical: #3b82f6;
-}
-
 /* ========== GRID LAYOUTS ========== */
 .stats-grid-two {
     display: grid;
@@ -2082,13 +2111,13 @@ body {
     justify-content: center;
 }
 
-.timeline-bar-fill[data-company="openai"] { background: linear-gradient(90deg, rgba(16, 163, 127, 0.4), rgba(16, 163, 127, 0.8)); }
-.timeline-bar-fill[data-company="anthropic"] { background: linear-gradient(90deg, rgba(204, 147, 102, 0.4), rgba(204, 147, 102, 0.8)); }
-.timeline-bar-fill[data-company="google"] { background: linear-gradient(90deg, rgba(66, 133, 244, 0.4), rgba(66, 133, 244, 0.8)); }
-.timeline-bar-fill[data-company="meta"] { background: linear-gradient(90deg, rgba(0, 136, 255, 0.4), rgba(0, 136, 255, 0.8)); }
-.timeline-bar-fill[data-company="mistral"] { background: linear-gradient(90deg, rgba(255, 123, 0, 0.4), rgba(255, 123, 0, 0.8)); }
-.timeline-bar-fill[data-company="xai"] { background: linear-gradient(90deg, rgba(136, 136, 136, 0.4), rgba(136, 136, 136, 0.8)); }
-.timeline-bar-fill[data-company="deepseek"] { background: linear-gradient(90deg, rgba(78, 121, 167, 0.4), rgba(78, 121, 167, 0.8)); }
+.timeline-bar-fill[data-company="openai"] { background: var(--company-openai); }
+.timeline-bar-fill[data-company="anthropic"] { background: var(--company-anthropic); }
+.timeline-bar-fill[data-company="google"] { background: var(--company-google); }
+.timeline-bar-fill[data-company="meta"] { background: var(--company-meta); }
+.timeline-bar-fill[data-company="mistral"] { background: var(--company-mistral); }
+.timeline-bar-fill[data-company="xai"] { background: var(--company-xai); }
+.timeline-bar-fill[data-company="deepseek"] { background: var(--company-deepseek); }
 
 .timeline-count {
     font-size: 0.6rem;
@@ -2590,11 +2619,11 @@ body {
 }
 
 .momentum-bar.positive {
-    background: linear-gradient(90deg, rgba(16, 185, 129, 0.6), rgba(16, 185, 129, 1));
+    background: linear-gradient(90deg, rgba(var(--color-success-rgb), 0.6), rgba(var(--color-success-rgb), 1));
 }
 
 .momentum-bar.negative {
-    background: linear-gradient(270deg, rgba(239, 68, 68, 0.4), rgba(239, 68, 68, 0.7));
+    background: linear-gradient(270deg, rgba(var(--color-error-rgb), 0.4), rgba(var(--color-error-rgb), 0.7));
 }
 
 .momentum-value {
@@ -2809,11 +2838,11 @@ body {
 /* ========== DARK/LIGHT THEME REFINEMENTS ========== */
 
 [data-theme="light"] .momentum-bar.positive {
-    background: linear-gradient(90deg, rgba(16, 185, 129, 0.7), rgba(16, 185, 129, 1));
+    background: linear-gradient(90deg, rgba(var(--color-success-rgb), 0.7), rgba(var(--color-success-rgb), 1));
 }
 
 [data-theme="light"] .momentum-bar.negative {
-    background: linear-gradient(270deg, rgba(239, 68, 68, 0.5), rgba(239, 68, 68, 0.8));
+    background: linear-gradient(270deg, rgba(var(--color-error-rgb), 0.5), rgba(var(--color-error-rgb), 0.8));
 }
 
 [data-theme="light"] .ring-center {
@@ -2865,29 +2894,29 @@ body {
 /* Use a more visible accent color for the pulse chart */
 /* Override with a vibrant purple/indigo that stands out */
 
-.pulse-cell[data-level="1"] { background: rgba(99, 102, 241, 0.25) !important; }
-.pulse-cell[data-level="2"] { background: rgba(99, 102, 241, 0.4) !important; }
-.pulse-cell[data-level="3"] { background: rgba(99, 102, 241, 0.55) !important; }
-.pulse-cell[data-level="4"] { background: rgba(99, 102, 241, 0.7) !important; }
-.pulse-cell[data-level="5"] { background: rgba(99, 102, 241, 0.9) !important; }
+.pulse-cell[data-level="1"] { background: rgba(var(--accent-rgb), 0.25) !important; }
+.pulse-cell[data-level="2"] { background: rgba(var(--accent-rgb), 0.4) !important; }
+.pulse-cell[data-level="3"] { background: rgba(var(--accent-rgb), 0.55) !important; }
+.pulse-cell[data-level="4"] { background: rgba(var(--accent-rgb), 0.7) !important; }
+.pulse-cell[data-level="5"] { background: rgba(var(--accent-rgb), 0.9) !important; }
 
 /* Also fix the legend boxes */
-.pulse-legend-box[data-level="1"] { background: rgba(99, 102, 241, 0.25) !important; }
-.pulse-legend-box[data-level="2"] { background: rgba(99, 102, 241, 0.4) !important; }
-.pulse-legend-box[data-level="3"] { background: rgba(99, 102, 241, 0.55) !important; }
-.pulse-legend-box[data-level="4"] { background: rgba(99, 102, 241, 0.7) !important; }
-.pulse-legend-box[data-level="5"] { background: rgba(99, 102, 241, 0.9) !important; }
+.pulse-legend-box[data-level="1"] { background: rgba(var(--accent-rgb), 0.25) !important; }
+.pulse-legend-box[data-level="2"] { background: rgba(var(--accent-rgb), 0.4) !important; }
+.pulse-legend-box[data-level="3"] { background: rgba(var(--accent-rgb), 0.55) !important; }
+.pulse-legend-box[data-level="4"] { background: rgba(var(--accent-rgb), 0.7) !important; }
+.pulse-legend-box[data-level="5"] { background: rgba(var(--accent-rgb), 0.9) !important; }
 
 
 /* ========== FIX 2: DAY PATTERN BAR VISIBILITY ========== */
 
 .day-bar {
-    background: linear-gradient(90deg, rgba(99, 102, 241, 0.4), rgba(99, 102, 241, 0.7)) !important;
+    background: rgba(var(--accent-rgb), 0.4) !important;
 }
 
 .day-highlight {
-    background: linear-gradient(90deg, rgb(99, 102, 241), rgb(129, 132, 255)) !important;
-    box-shadow: 0 0 12px rgba(99, 102, 241, 0.5) !important;
+    background: rgba(var(--accent-rgb), 0.8) !important;
+    box-shadow: 0 0 12px rgba(var(--accent-rgb), 0.5) !important;
 }
 
 /* Ensure the count text is visible on all bars */
@@ -2902,7 +2931,7 @@ body {
 }
 
 [data-theme="light"] .day-highlight {
-    background: linear-gradient(90deg, rgb(79, 82, 221), rgb(99, 102, 241)) !important;
+    background: linear-gradient(90deg, var(--accent), var(--accent)) !important;
 }
 
 
@@ -2910,17 +2939,17 @@ body {
 /* Use consistent, visible colors */
 
 .momentum-bar.positive {
-    background: linear-gradient(90deg, rgba(16, 185, 129, 0.7), rgb(16, 185, 129)) !important;
+    background: linear-gradient(90deg, rgba(var(--color-success-rgb), 0.7), var(--color-success)) !important;
 }
 
 .momentum-bar.negative {
-    background: linear-gradient(270deg, rgba(239, 68, 68, 0.5), rgb(239, 68, 68)) !important;
+    background: linear-gradient(270deg, rgba(var(--color-error-rgb), 0.5), var(--color-error)) !important;
 }
 
 /* Ensure any company without specific color still shows */
 
 .timeline-bar-fill {
-    background: linear-gradient(90deg, rgba(99, 102, 241, 0.4), rgba(99, 102, 241, 0.8));
+    background: linear-gradient(90deg, rgba(var(--accent-rgb), 0.4), rgba(var(--accent-rgb), 0.8));
 }
 
 .first-mover-bar {
@@ -2929,7 +2958,7 @@ body {
 }
 
 .first-mover-bar-fill {
-    background: linear-gradient(90deg, rgba(99, 102, 241, 0.6), rgb(99, 102, 241)) !important;
+    background: linear-gradient(90deg, rgba(var(--accent-rgb), 0.6), var(--accent)) !important;
     min-width: 2px;
 }
 
