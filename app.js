@@ -1,7 +1,6 @@
 /**
  * ========================================
  * AI MILESTONE TRACKER - APPLICATION
- * Evidence-based, professionally neutral
  * ========================================
  */
 
