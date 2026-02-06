@@ -379,7 +379,7 @@
         if (events.length === 0) {
             dom.timelineEvents.innerHTML = `
                 <div class="empty-state">
-                    <div class="empty-state-icon">◉</div>
+                    <div class="empty-state-icon">×</div>
                     <div class="empty-state-text">No milestones match filters</div>
                 </div>
             `;
@@ -469,7 +469,7 @@
         if (events.length === 0) {
             dom.gridEvents.innerHTML = `
                 <div class="empty-state">
-                    <div class="empty-state-icon">◉</div>
+                    <div class="empty-state-icon">×</div>
                     <div class="empty-state-text">No milestones match filters</div>
                 </div>
             `;

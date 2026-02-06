@@ -1644,6 +1644,24 @@ const EVENTS = [
         tags: ['search', 'application', 'real-time', 'competition', 'citations']
     },
     {
+        id: 'xai-grok-4-release',
+        title: 'xAI Releases Grok 4',
+        date: '2025-07-09',
+        category: 'models',
+        company: 'xai',
+        claimed: {
+            text: 'Most intelligent model in the world with native multimodal understanding, tool use, real-time search integration, advanced reasoning, and reduced hallucinations. Includes Grok 4 Heavy variant for maximum performance. Available to SuperGrok/Premium+ users and xAI API.',
+            source: 'xAI Blog',
+            url: 'https://x.ai/news/grok-4'
+        },
+        outcome: {
+            text: 'Launched July 9-14, 2025. Immediate access via grok.com, X, iOS/Android apps, and API. Introduced SuperGrok Heavy tier for Grok 4 Heavy. Strong performance in reasoning/tool-calling benchmarks; positioned as direct competitor to GPT-4o / Claude 3.5 / Gemini. Rapid iteration cycle continues.',
+            date: '2025-07-14'
+        },
+        impact: 'Elevated xAI to top-tier frontier contender with native multimodality and tool integration. Distribution via X and aggressive pricing drove fast adoption. Set foundation for incremental updates and video/audio expansions. Competitive pressure intensified on OpenAI/Anthropic.',
+        tags: ['llm', 'multimodal', 'tool-use', 'real-time', 'frontier-model', 'xai']
+    },
+    {
         id: 'anthropic-batch-api',
         title: 'Claude Batch API Released',
         date: '2025-07-12',
@@ -2139,6 +2157,24 @@ const EVENTS = [
         },
         impact: 'Google reasoning capability demonstrated. But late to market. Experimental vs production unclear. Reasoning commoditization reinforced.',
         tags: ['reasoning', 'experimental', 'thinking-mode', 'benchmark']
+    },
+    {
+        id: 'xai-grok-4-1-release',
+        title: 'xAI Releases Grok 4.1',
+        date: '2025-11-17',
+        category: 'models',
+        company: 'xai',
+        claimed: {
+            text: 'Incremental upgrade to Grok 4 with major improvements in reasoning, multimodal understanding, personality/emotional intelligence, creative/collaborative interactions, and ~65% reduction in factual hallucinations. 2M token context support in advanced tiers. Immediate rollout in Auto mode and model picker.',
+            source: 'xAI Blog',
+            url: 'https://x.ai/news/grok-4-1'
+        },
+        outcome: {
+            text: 'Released November 17, 2025 after silent rollout/refinement period (blind evals on live traffic). Available to all users on grok.com, X, apps, and API. Enhanced real-world usability; benchmarks showed gains in truth-seeking and complex tasks. Followed by Grok 4.1 Fast variant for speed.',
+            date: '2025-11-19'
+        },
+        impact: 'Refined Grok 4 into more reliable, emotionally attuned flagship. Addressed key weaknesses (hallucinations, personality). Strengthened xAI\'s position in agentic/creative workflows amid competition. Built momentum toward Grok 5 expectations and multimodal tools like Imagine.',
+        tags: ['llm', 'reasoning', 'multimodal', 'hallucination-reduction', 'emotional-intelligence', 'xai']
     },
     {
         id: 'anthropic-mcp-protocol',
