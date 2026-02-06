@@ -2750,6 +2750,24 @@ const EVENTS = [
         tags: ['coding', 'agentic', 'tool', 'app', 'workflow', 'openai']
     },
     {
+        id: 'xai-spacex-merger-acquisition',
+        title: 'SpaceX Acquires xAI in Record $1.25 Trillion Deal',
+        date: '2026-02-02',
+        category: 'policy',
+        company: 'xai',
+        claimed: {
+            text: 'SpaceX acquires xAI to form the most ambitious vertically-integrated innovation engine on (and off) Earth, combining AI (Grok models), rockets, Starlink space-based internet, and real-time information platform (X). Mission: scaling to make a sentient sun to understand the Universe and extend the light of consciousness to the stars. Plans include orbital data centers for low-cost AI compute.',
+            source: 'xAI / SpaceX',
+            url: 'https://x.ai/news/xai-joins-spacex'
+        },
+        outcome: {
+            text: 'Announced February 2, 2026 via @xai post ("One Team") linking to update; Elon Musk followed with "To the stars! @SpaceX & @xAI are now one company." Structured as SpaceX acquiring xAI (xAI becomes wholly-owned subsidiary). Combined valuation ~$1.25T (SpaceX ~$1T, xAI ~$250B). Immediate integration for shared compute/innovation; tax-free reorganization benefits noted. Widely covered as largest M&A ever; SpaceX IPO plans remain on track for later 2026.',
+            date: '2026-02-03'
+        },
+        impact: 'Unifies Musk\'s AI and space empires under SpaceX, providing xAI stable funding/infrastructure amid massive compute needs. Enables long-term orbital data center ambitions for AI scaling. Creates most valuable private company; intensifies vertical integration in frontier tech. Raises questions on antitrust, investor dilution, and execution feasibility of space-based compute. Boosts momentum for SpaceX IPO and potential further consolidations (e.g., Tesla speculation).',
+        tags: ['merger', 'acquisition', 'corporate', 'compute-scaling', 'orbital-data-centers', 'xai', 'spacex']
+    },
+    {
         id: 'anthropic-claude-opus-4-6',
         title: 'Anthropic Releases Claude Opus 4.6',
         date: '2026-02-05',
