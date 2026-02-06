@@ -63,46 +63,43 @@
        COLOR SYSTEM - ALL COLORS MANAGED HERE
        ========================================== */
     
-    /* Accent Color - Pure Neutral Steel */
-    --accent: #494960;
-    --accent-rgb: 73, 73, 96;
+    /* Accent Color */
+    --accent: #4a4a4a;
+    --accent-rgb: 74, 74, 74;
 
-    /* Semantic Colors - High-Tech Tones (Corrected)
-    They now stand out from the Zinc categories without being "too much" */
-    --color-success: #a9a9c0;      /* Vibrant Green (Actionable) */
-    --color-success-rgb: 169, 169, 192;
-    --color-error: #494960;        /* Crisp Red (Distinct from Anthropic) */
-    --color-error-rgb: 73, 73, 96;
+    /* Semantic Colors */
+    --color-success: #969696;
+    --color-success-rgb: 150, 150, 150;
+    --color-error: #333333;
+    --color-error-rgb: 51, 51, 51;
 
-    /* Company Colors - Matte Brand Finish
-    Desaturated by ~15% to sit perfectly on the Zinc structure */
-    --company-openai: #108a6a;      /* Muted OpenAI Green */
-    --company-openai-rgb: 16, 138, 106;
-    --company-anthropic: #c46a4d;   /* Muted Anthropic Brass (Earthier, not Red) */
-    --company-anthropic-rgb: 196, 106, 77;
-    --company-google: #5585d9;      /* Muted Google Blue */
-    --company-google-rgb: 85, 133, 217;
-    --company-meta: #3b82f6;        /* Modern Meta Blue */
-    --company-meta-rgb: 59, 130, 246;
-    --company-mistral: #e67e22;     /* Muted Mistral Orange */
-    --company-mistral-rgb: 230, 126, 34;
-    --company-xai: #71717a;         /* Zinc-Steel for xAI */
-    --company-xai-rgb: 113, 113, 122;
-    --company-deepseek: #5a6fa6;    /* Muted Navy */
-    --company-deepseek-rgb: 90, 111, 166;
+    /* Company Colors */
+    --company-openai: #00b386;
+    --company-openai-rgb: 0, 179, 134;   
+    --company-anthropic: #d95f47;
+    --company-anthropic-rgb: 217, 95, 71;    
+    --company-google: #3366ff;
+    --company-google-rgb: 51, 102, 255;    
+    --company-meta: #006aff;
+    --company-meta-rgb: 0, 106, 255;    
+    --company-mistral: #ff6a00;
+    --company-mistral-rgb: 255, 106, 0;    
+    --company-xai: #7a7aff;
+    --company-xai-rgb: 122, 122, 255;    
+    --company-deepseek: #4d6fff;
+    --company-deepseek-rgb: 77, 111, 255;
 
-    /* Category Colors - The "Indigo-Slate" Scale
-    Now perfectly in tandem with your #494960 accent. */
-    --cat-models: #23232f;         /* Deepest Midnight (Category Base) */
-    --cat-models-rgb: 35, 35, 47;
-    --cat-applications: #494960;   /* Your Accent Color (Direct Match) */
-    --cat-applications-rgb: 73, 73, 96;
-    --cat-hardware: #787891;       /* Mid Slate Blue */
-    --cat-hardware-rgb: 120, 120, 145;
-    --cat-policy: #a9a9c0;         /* Light Slate Blue */
-    --cat-policy-rgb: 169, 169, 192;
-    --cat-physical: #c8c8d5;       /* Darkened Silver Slate - Clean & Professional */
-    --cat-physical-rgb: 200, 200, 213;
+    /* Category Colors */
+    --cat-models:        #1e1e1e;
+    --cat-models-rgb:    30, 30, 30;    
+    --cat-applications:  #333333;
+    --cat-applications-rgb: 51, 51, 51;    
+    --cat-hardware:      #4a4a4a;
+    --cat-hardware-rgb:  74, 74, 74;    
+    --cat-policy:        #6b6b6b;
+    --cat-policy-rgb:    107, 107, 107;    
+    --cat-physical:      #969696;
+    --cat-physical-rgb:  150, 150, 150;
     
     /* ==========================================
        SPACING, TYPOGRAPHY, ETC.
