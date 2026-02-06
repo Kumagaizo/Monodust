@@ -112,6 +112,8 @@
     --space-lg: 24px;
     --space-xl: 32px;
     --space-2xl: 48px;
+    --bar-height: 21px;
+    --bar-border-radius: 3px;
     
     /* Typography */
     --font-sans: 'Geist Sans', system-ui, -apple-system, sans-serif;
@@ -1263,7 +1265,7 @@ body {
 .podium-bar {
     width: 48px;
     background: var(--bg-tertiary);
-    border-radius: 6px 6px 0 0;
+    border-radius: 6px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -1579,7 +1581,7 @@ body {
 
 .focus-bar {
     flex: 1;
-    height: 6px;
+    height: var(--bar-height);
     background: var(--bg-tertiary);
     border-radius: 3px;
     overflow: hidden;
@@ -2039,7 +2041,7 @@ body {
     flex: 1;
     display: flex;
     gap: 3px;
-    height: 18px;
+    height: var(--bar-height);
 }
 
 .radar-segment {
@@ -2108,7 +2110,7 @@ body {
 
 .timeline-bar-container {
     flex: 1;
-    height: 16px;
+    height: var(--bar-height);
     background: var(--bg-tertiary);
     border-radius: 3px;
     position: relative;
@@ -2176,7 +2178,7 @@ body {
     flex: 1;
     display: flex;
     align-items: center;
-    height: 20px;
+    height: var(--bar-height);
     position: relative;
 }
 
@@ -2190,8 +2192,8 @@ body {
 
 .momentum-bar {
     position: absolute;
-    height: 14px;
-    border-radius: 3px;
+    height: 100%;
+    border-radius: var(--bar-border-radius);
     display: flex;
     align-items: center;
     min-width: 2px;
@@ -2199,16 +2201,18 @@ body {
 
 .momentum-bar.positive {
     left: 50%;
-    background: linear-gradient(90deg, var(--accent), rgba(var(--accent-rgb), 0.6));
+    background: var(--color-success);
     justify-content: flex-end;
-    padding-right: 4px;
+    padding-right: 6px;
+    border-radius: 0px var(--bar-border-radius) var(--bar-border-radius) 0px;
 }
 
 .momentum-bar.negative {
     right: 50%;
-    background: linear-gradient(270deg, var(--text-tertiary), rgba(var(--text-tertiary), 0.4));
+    background: var(--color-error);
     justify-content: flex-start;
-    padding-left: 4px;
+    padding-left: 6px;
+    border-radius: var(--bar-border-radius) 0px 0px var(--bar-border-radius);    
 }
 
 .momentum-value {
@@ -2265,17 +2269,17 @@ body {
 }
 
 .first-mover-bar {
-    width: 40px;
-    height: 6px;
+    width: 60px;
+    height: var(--bar-height);
     background: var(--bg-secondary);
-    border-radius: 3px;
+    border-radius: var(--bar-border-radius);
     overflow: hidden;
 }
 
 .first-mover-bar-fill {
     height: 100%;
     background: var(--accent);
-    border-radius: 3px;
+    border-radius: 2px;
 }
 
 /* ========== DAY PATTERN ========== */
@@ -2303,7 +2307,7 @@ body {
 
 .day-bar-container {
     flex: 1;
-    height: 18px;
+    height: var(--bar-height);
     background: var(--bg-tertiary);
     border-radius: 3px;
     overflow: hidden;
@@ -2650,7 +2654,7 @@ body {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    height: 14px;
+    height: 100%;
     background: var(--bg-secondary);
     border: 1px solid var(--border-secondary);
     border-radius: 3px;
