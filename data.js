@@ -1018,7 +1018,7 @@ const EVENTS = [
         title: 'DeepSeek V3 Released',
         date: '2024-12-26',
         category: 'models',
-        company: 'meta',
+        company: 'deepseek',
         claimed: {
             text: 'Open-weights frontier model. MoE architecture. Trained for $5.5M. Matches Claude 3.5 Sonnet.',
             source: 'DeepSeek',
@@ -1165,6 +1165,24 @@ const EVENTS = [
     },
 
     // === FEBRUARY 2025 ===
+    {
+        id: 'deepseek-global-adoption-regulatory-impact',
+        title: 'DeepSeek Models Spark Global Adoption Surge & Regulatory Scrutiny',
+        date: '2025-02-01',
+        category: 'policy',
+        company: 'deepseek',
+        claimed: {
+            text: 'Post-R1 release, DeepSeek achieves massive downloads and usage in Global South/China (e.g., dominant market shares in several countries per Microsoft/Freedom House data). Privacy concerns lead to GDPR-related scrutiny, bans in some Western entities, and debates on data storage in China.',
+            source: 'Microsoft AI Adoption Report / Various Regulatory Coverage',
+            url: 'https://www.microsoft.com/en-us/corporate-responsibility/topics/ai-economy-institute/reports/global-ai-adoption-2025/'
+        },
+        outcome: {
+            text: 'Early 2025: App surges to #1 in US iOS free downloads briefly. Regulatory responses include clarifications sought on data policies; some bans/proposals in US/EU. Global South adoption grows significantly (11–56% shares in select countries). No major DeepSeek policy response; focus remains on model openness.',
+            date: '2025-03-01'
+        },
+        impact: 'Highlights open-source Chinese AI accessibility vs. Western privacy/security concerns. Accelerates debate on geopolitical AI divides and export control effectiveness. Reinforces efficiency/open-weights as competitive lever despite regulatory friction.',
+        tags: ['regulation', 'global-adoption', 'privacy', 'geopolitics', 'open-source']
+    },
     {
         id: 'claude-opus-4',
         title: 'Claude Opus 4 Released',
@@ -2250,7 +2268,42 @@ const EVENTS = [
     },
 
     // === DECEMBER 2025 ===
-
+    {
+        id: 'deepseek-v3-2-release',
+        title: 'DeepSeek Releases V3.2 & V3.2-Speciale',
+        date: '2025-12-01',
+        category: 'models',
+        company: 'deepseek',
+        claimed: {
+            text: 'Reasoning-first models for agents. V3.2: Official successor to V3.2-Exp with thinking integrated into tool-use (thinking/non-thinking modes), massive agent data synthesis (1,800+ environments, 85k+ instructions). V3.2-Speciale: Maxed-out reasoning variant rivaling Gemini-3.0-Pro. Gold-medal performance on IMO, CMO, ICPC World Finals, IOI 2025.',
+            source: 'DeepSeek',
+            url: 'https://huggingface.co/deepseek-ai/DeepSeek-V3.2'
+        },
+        outcome: {
+            text: 'Launched December 1, 2025. V3.2 immediately available on web, app, API (balanced speed/reasoning, GPT-5 level claimed). V3.2-Speciale API-only (temporary endpoint until Dec 15, 2025; no tool-use, higher token usage for evaluation/research). Tech report details thinking-in-tool-use breakthrough. Community adoption rapid; positioned as agent-ready daily driver.',
+            date: '2025-12-03'
+        },
+        impact: 'Pushed open-source reasoning/agent capabilities forward at low cost. Demonstrated thinking/tool-use integration without proprietary data. Speciale\'s competition-level wins (e.g., IMO gold) reinforced Chinese labs\' frontier parity. Trade-offs (token efficiency, temporary access) highlighted scaling challenges. Built hype for V4 coding pivot.',
+        tags: ['open-source', 'reasoning', 'agentic', 'tool-use', 'chinese-ai', 'efficiency']
+    },
+    {
+        id: 'deepseek-v3-2-speciale-gold-medal',
+        title: 'DeepSeek V3.2-Speciale Achieves Gold-Medal Results',
+        date: '2025-12-01',
+        category: 'models',
+        company: 'deepseek',
+        claimed: {
+            text: 'V3.2-Speciale variant delivers gold-medal performance across elite competitions: IMO 2025 (35/42 points), CMO, ICPC World Finals (10/12 problems solved, 2nd place), IOI 2025 (492/600 points). High scores on AIME 2025 (96.0%), HMMT (99.2%). Rivals or exceeds GPT-5-High and Gemini-3.0-Pro on math/coding olympiads.',
+            source: 'DeepSeek Tech Report',
+            url: 'https://huggingface.co/deepseek-ai/DeepSeek-V3.2-Speciale'
+        },
+        outcome: {
+            text: 'Announced with V3.2 launch December 1, 2025. Results independently verifiable via competition archives. Speciale requires more tokens but excels on complex, long-horizon tasks. Temporary API access spurred researcher evaluation; positioned as proof-of-concept for open reasoning at closed-source levels.',
+            date: '2025-12-05'
+        },
+        impact: 'Showcased open-weights models competing at highest academic competition levels. Challenged assumptions on proprietary training data/compute for olympiad mastery. Intensified global debate on AI progress transparency and accessibility. Set benchmark for future agent/math-focused releases.',
+        tags: ['reasoning', 'math', 'competition', 'open-source', 'benchmark', 'chinese-ai']
+    },
     {
         id: 'gpt-5-2-launch',
         title: 'GPT-5.2 Family Released',
@@ -2513,6 +2566,24 @@ const EVENTS = [
         tags: ['open-source', 'multilingual', 'arabic', 'hybrid-architecture', 'efficiency']
     },
     {
+        id: 'deepseek-v4-announcement-tease',
+        title: 'DeepSeek V4 Teased for Mid-February 2026 Release',
+        date: '2026-01-09',
+        category: 'models',
+        company: 'deepseek',
+        claimed: {
+            text: 'Next-generation flagship V4 with strong coding focus. Internal tests suggest outperformance vs. Claude/GPT series on coding tasks, breakthroughs in long-context coding prompts (>1M tokens via Engram memory architecture). Targets software engineering dominance.',
+            source: 'The Information / DeepSeek Reports',
+            url: 'https://www.theinformation.com/articles/deepseek-release-next-flagship-ai-model-strong-coding-ability'
+        },
+        outcome: {
+            text: 'Reported January 9, 2026 (citing insiders). Expected mid-February 2026 (around Lunar New Year Feb 17). Builds on R1 transparency and V3.2 agent gains; incorporates new memory tech for efficient retrieval. No official release yet; community anticipation high for coding/complex-project leadership.',
+            date: '2026-01-15'
+        },
+        impact: 'Signals DeepSeek\'s pivot to specialized coding frontier after reasoning wins. Could further erode Western moats on developer tools. Engram architecture promises cost/efficiency gains. If benchmarks hold, reinforces paradigm of rapid, low-cost iteration challenging massive-scale labs.',
+        tags: ['coding', 'long-context', 'upcoming', 'chinese-ai', 'efficiency', 'specialized-model']
+    },
+    {
         id: 'openai-codex-jetbrains',
         title: 'OpenAI Codex Native Integration in JetBrains',
         date: '2026-01-22',
@@ -2619,6 +2690,24 @@ const EVENTS = [
         },
         impact: 'Microsoft enters physical AI domain. Small model philosophy applied to robotics. Shows foundation models scaling to embodied systems.',
         tags: ['robotics', 'vla', 'physical-ai', 'small-models', 'microsoft']
+    },
+    {
+        id: 'deepseek-ocr-2-release',
+        title: 'DeepSeek Releases DeepSeek-OCR-2',
+        date: '2026-01-28',
+        category: 'models',
+        company: 'deepseek',
+        claimed: {
+            text: 'Advanced vision/OCR model with "Visual Causal Flow" encoding for more human-like visual understanding and processing. Improves on prior DeepSeek VL/OCR capabilities with better context handling and accuracy in document/image analysis tasks.',
+            source: 'DeepSeek / Hugging Face',
+            url: 'https://huggingface.co/deepseek-ai/DeepSeek-OCR-2'
+        },
+        outcome: {
+            text: 'Released January 28, 2026. Open weights available via Hugging Face; inference optimized for NVIDIA GPUs. Accompanied by arXiv paper detailing causal flow architecture. Community testing shows strong gains in OCR/document understanding benchmarks; positioned as efficient multimodal extension to their reasoning/coding lineup.',
+            date: '2026-01-30'
+        },
+        impact: 'Expands DeepSeek beyond text/reasoning into robust vision capabilities at low cost. Reinforces open-source multimodal leadership from China. Enables developer use cases like automated document processing without proprietary APIs. Complements V3/R1 strengths for agentic workflows involving images.',
+        tags: ['multimodal', 'vision', 'ocr', 'open-source', 'chinese-ai', 'efficiency']
     },
     {
         id: 'nvidia-alpamayo-autonomous-vehicles',
