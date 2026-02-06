@@ -2325,6 +2325,24 @@ const EVENTS = [
         tags: ['safety', 'international', 'standards', 'governance', 'coordination']
     },
     {
+        id: 'openai-gpt-5-2-codex',
+        title: 'OpenAI Releases GPT-5.2-Codex',
+        date: '2025-12-18',
+        category: 'applications',
+        company: 'openai',
+        claimed: {
+            text: 'Most advanced agentic coding model yet for complex software engineering. Optimized for long-horizon work via context compaction, large refactors/migrations, Windows environments, stronger cybersecurity capabilities (below "High" Preparedness Framework threshold), reliable tool calling, and improved factuality.',
+            source: 'OpenAI Blog',
+            url: 'https://openai.com/index/introducing-gpt-5-2-codex/'
+        },
+        outcome: {
+            text: 'Released December 18, 2025 in all Codex surfaces for paid ChatGPT users immediately. API access rolled out in coming weeks. Invite-only trusted access piloted for vetted defensive cybersecurity professionals. Builds on GPT-5.2 with native compaction for token efficiency and endless coherent sessions. SOTA performance on key coding benchmarks.',
+            date: '2025-12-18'
+        },
+        impact: 'Major step in agentic coding frontiers. Addresses dual-use concerns (esp. cybersecurity) with responsible safeguards and phased deployment. Enables dependable long-running tasks. Sets stage for subsequent Codex expansions and model iterations.',
+        tags: ['coding', 'cybersecurity', 'dual-use', 'agentic', 'responsible-deployment', 'safety']
+    },
+    {
         id: 'openai-year-in-review',
         title: 'OpenAI 2025 Year in Review',
         date: '2025-12-20',
@@ -2678,22 +2696,58 @@ const EVENTS = [
 
     // === FEBRUARY 2026 ===
     {
-        id: 'gpt-5-2-codex-launch',
-        title: 'GPT-5.2-Codex Released',
+        id: 'openai-codex-app-launch',
+        title: 'OpenAI Launches Codex App for macOS',
         date: '2026-02-02',
         category: 'applications',
         company: 'openai',
         claimed: {
-            text: 'Most advanced agentic coding model for complex software engineering. Optimized for long-horizon work, large refactors/migrations, Windows environments. Significantly stronger cybersecurity capabilities (below "High" Preparedness Framework threshold).',
+            text: 'New macOS app as a command center for managing multiple parallel coding agents. Builds on GPT-5.2-Codex foundation (from Dec 2025) to transform developer workflows with agent orchestration, CLI/IDE integration, and expanded accessibility.',
             source: 'OpenAI Blog',
-            url: 'https://openai.com/index/introducing-gpt-5-2-codex/'
+            url: 'https://openai.com/index/introducing-the-codex-app'
         },
         outcome: {
-            text: 'SWE-Bench Pro and Terminal-Bench 2.0 state-of-the-art. React vulnerability discovered/disclosed by researcher using GPT-5.1-Codex-Max. 40% latency reduction announced Feb 3. Gradual rollout: paid ChatGPT immediately, API coming weeks, invite-only trusted access for vetted cybersecurity professionals.',
-            date: '2026-02-03'
+            text: 'Released February 2, 2026. Immediate download for macOS users signed in with ChatGPT. Doubled overall Codex usage since GPT-5.2-Codex launch. Plans for Windows version and further inference speedups announced. Precursor to intensified agentic competition.',
+            date: '2026-02-02'
         },
-        impact: 'Dual-use AI concerns actualized with responsible disclosure approach. Professional cybersecurity tool with deployment safeguards. Context compaction enables endless sessions. Native compaction improves token efficiency. Deployment strategy designed for future capability growth and safety scaling.',
-        tags: ['coding', 'cybersecurity', 'dual-use', 'agentic', 'responsible-deployment', 'safety']
+        impact: 'Shifts Codex from tool to full agent ecosystem. Boosts adoption among developers. Highlights rapid iteration in agentic AI interfaces. Sets context for Feb 5 model races with Anthropic and OpenAI\'s own GPT-5.3-Codex follow-up.',
+        tags: ['coding', 'agentic', 'tool', 'app', 'workflow', 'openai']
+    },
+    {
+        id: 'anthropic-claude-opus-4-6',
+        title: 'Anthropic Releases Claude Opus 4.6',
+        date: '2026-02-05',
+        category: 'applications',
+        company: 'anthropic',
+        claimed: {
+            text: 'Most capable Opus-class model yet with enhanced agentic coding, longer task sustainment, reliable operation in large codebases, self-debugging, and first 1M token context window in beta for Opus series. State-of-the-art on Terminal-Bench 2.0, Humanity’s Last Exam, GDPval-AA, and BrowseComp.',
+            source: 'Anthropic Blog',
+            url: 'https://www.anthropic.com/news/claude-opus-4-6'
+        },
+        outcome: {
+            text: 'Released February 5, 2026. Immediate availability on claude.ai, Claude API, Claude Code, and major cloud platforms (pricing unchanged at $5/$25 per million tokens). Introduces agent teams for parallel task handling and major improvements in professional workflows like finance/legal analysis and document creation. Accompanied by updated system card highlighting cybersecurity capability gains and new safeguards.',
+            date: '2026-02-05'
+        },
+        impact: 'Pushes frontier in reliable agentic AI for complex, long-horizon coding and knowledge work. 1M context enables true multi-document reasoning without degradation. Strengthens Anthropic’s position in enterprise and coding agents amid intense competition. Highlights dual-use potential with responsible mitigations.',
+        tags: ['coding', 'agentic', 'long-context', 'reasoning', 'anthropic', 'frontier-model']
+    },
+    {
+        id: 'openai-gpt-5-3-codex',
+        title: 'OpenAI Releases GPT-5.3-Codex',
+        date: '2026-02-05',
+        category: 'applications',
+        company: 'openai',
+        claimed: {
+            text: 'Most capable agentic coding model to date, combining GPT-5.2-Codex frontier coding with GPT-5.2 reasoning/professional knowledge in one faster (25% latency reduction) model. Enables long-running tasks with research, tool use, computer operation, mid-turn steering, and progress updates—like a human colleague.',
+            source: 'OpenAI Blog',
+            url: 'https://openai.com/index/introducing-gpt-5-3-codex'
+        },
+        outcome: {
+            text: 'Announced and released February 5, 2026 (minutes after Anthropic’s Opus 4.6). Available immediately to paid ChatGPT users via Codex app, CLI, IDE extensions, and web; API rollout planned soon with safety gating. First model instrumental in its own creation (used for self-debugging/evaluation). Treated as "High" in cybersecurity Preparedness Framework with comprehensive mitigations, trusted access controls, and monitoring.',
+            date: '2026-02-05'
+        },
+        impact: 'Expands Codex beyond code writing to full professional computer workflows and multi-day complex builds. Accelerates agentic development while addressing heightened cyber risks through precautionary safeguards. Intensifies OpenAI-Anthropic rivalry in agentic coding tools. Signals shift toward steerable, persistent AI teammates.',
+        tags: ['coding', 'agentic', 'cybersecurity', 'tool-use', 'openai', 'dual-use']
     }
 
 ];
