@@ -2328,7 +2328,7 @@ const EVENTS = [
         id: 'openai-gpt-5-2-codex',
         title: 'OpenAI Releases GPT-5.2-Codex',
         date: '2025-12-18',
-        category: 'applications',
+        category: 'models',
         company: 'openai',
         claimed: {
             text: 'Most advanced agentic coding model yet for complex software engineering. Optimized for long-horizon work via context compaction, large refactors/migrations, Windows environments, stronger cybersecurity capabilities (below "High" Preparedness Framework threshold), reliable tool calling, and improved factuality.',
@@ -2717,7 +2717,7 @@ const EVENTS = [
         id: 'anthropic-claude-opus-4-6',
         title: 'Anthropic Releases Claude Opus 4.6',
         date: '2026-02-05',
-        category: 'applications',
+        category: 'models',
         company: 'anthropic',
         claimed: {
             text: 'Most capable Opus-class model yet with enhanced agentic coding, longer task sustainment, reliable operation in large codebases, self-debugging, and first 1M token context window in beta for Opus series. State-of-the-art on Terminal-Bench 2.0, Humanity’s Last Exam, GDPval-AA, and BrowseComp.',
@@ -2735,7 +2735,7 @@ const EVENTS = [
         id: 'openai-gpt-5-3-codex',
         title: 'OpenAI Releases GPT-5.3-Codex',
         date: '2026-02-05',
-        category: 'applications',
+        category: 'models',
         company: 'openai',
         claimed: {
             text: 'Most capable agentic coding model to date, combining GPT-5.2-Codex frontier coding with GPT-5.2 reasoning/professional knowledge in one faster (25% latency reduction) model. Enables long-running tasks with research, tool use, computer operation, mid-turn steering, and progress updates—like a human colleague.',
