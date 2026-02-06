@@ -433,6 +433,7 @@
                 <div class="timeline-event-dot"></div>
                 <div class="timeline-event-connector"></div>
                 <div class="timeline-event-card">
+                    <span class="timeline-event-company">${getCompanyLabel(event.company)}</span>
                     <div class="timeline-event-title">${event.title}</div>
                     <div class="timeline-event-date">${formatDate(event.date)}</div>
                     <div class="timeline-event-category" data-category="${event.category}">
