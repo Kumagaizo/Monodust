@@ -2415,6 +2415,7 @@ body {
 
 .tag-connection-item {
     color: var(--text-secondary);
+    text-transform: uppercase;
 }
 
 .tag-connection-link {
